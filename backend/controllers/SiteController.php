@@ -2,15 +2,17 @@
 namespace backend\controllers;
 
 use Yii;
-use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use common\models\LoginForm;
+use backend\models\LoginForm;
+use yii\web\HttpException;
+use yii\base\UserException;
+use yii\web\Response;
 
 /**
  * Site controller
  */
-class SiteController extends Controller
+class SiteController extends \yii\web\Controller
 {
     /**
      * @inheritdoc
@@ -20,13 +22,10 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
+                'only' => ['index', 'logout'],
                 'rules' => [
                     [
-                        'actions' => ['login', 'error'],
-                        'allow' => true,
-                    ],
-                    [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['index', 'logout'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -60,9 +59,49 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        return $this->render('/site/index');
     }
 
+    public function actionError()
+    {
+        if (Yii::$app->user->isGuest) {
+            $this->layout = 'simple';
+        }
+
+        if (($exception = Yii::$app->getErrorHandler()->exception) === null) {
+            return '';
+        }
+
+        if ($exception instanceof HttpException) {
+            $code = $exception->statusCode;
+        } else {
+            $code = $exception->getCode();
+        }
+        if ($exception instanceof \Exception) {
+            $name = $exception->getName();
+        } else {
+            $name = '错误';
+        }
+        if ($code) {
+            $name .= " (#$code)";
+        }
+
+        if ($exception instanceof UserException) {
+            $message = $exception->getMessage();
+        } else {
+            $message = '服务器错误！';
+        }
+
+        if (Yii::$app->getRequest()->getIsAjax()) {
+            return "$name: $message";
+        } else {
+            return $this->render('error', [
+                'name' => $name,
+                'message' => $message,
+                'exception' => $exception,
+            ]);
+        }
+    }
     /**
      * Login action.
      *
@@ -70,12 +109,14 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
+        $this->layout = 'base';
+
+        if (!\Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->login()) {
             return $this->goBack();
         } else {
             return $this->render('login', [
