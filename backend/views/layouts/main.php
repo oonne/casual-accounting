@@ -9,11 +9,18 @@ $route = Yii::$app->requestedAction->uniqueId;
 
 $menu = [
     [
-        'label' => '系统',
+        'label' => '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-set"></use></svg>  系统',
         'url' => '#',
         'items' => [
             'site' => ['label' => '系统信息', 'url' => ['site/index'], 'active' => in_array($route, ['site/index'])],
             'usersuper' => ['label' => '用户管理', 'url' => ['usersuper/index'], 'active' => in_array($route, ['usersuper/index', 'usersuper/create-user', 'usersuper/update-user'])],
+        ],
+    ],
+    [
+        'label' => '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-bill"></use></svg>  账单',
+        'url' => '#',
+        'items' => [
+            'categorysuper' => ['label' => '分类管理', 'url' => ['categorysuper/index'], 'active' => in_array($route, ['categorysuper/index', 'categorysuper/create-category', 'categorysuper/update-category'])],
         ]
     ],
 ];

@@ -9,6 +9,13 @@ html,body {
     background-color: #f8f8f8;
     font-size: 14px;
 }
+.icon {
+    width: 1rem;
+    height: 1rem;
+    vertical-align: -0.15rem;
+    fill: currentColor;
+    overflow: hidden;
+}
 .table-center > thead > tr > th,
 .table-center > tbody > tr > td {
     text-align: center;
@@ -117,8 +124,9 @@ td .btn {
     background-color: #333;
 }
 .sidebar .nav-second-level li a {
-    padding-left: 24px;
+    padding-left: 34px;
     background-color: #444;
+    font-size: 0.9rem;
 }
 .sidebar .nav-second-level li.active a{
     color: #fff;

@@ -2,6 +2,7 @@
 
 use yii\db\Migration;
 use common\models\User;
+use common\models\Category;
 
 class m130524_201442_init extends Migration
 {
@@ -36,10 +37,29 @@ class m130524_201442_init extends Migration
 
         $this->insert('{{%user}}',$admin->toArray());
 
+        // Crear category table
+        $this->createTable('{{%category}}', [
+            'id' => $this->primaryKey(),
+            'category_name' => $this->string(32)->notNull(),
+            'category_sequence' => $this->integer()->notNull(),
+            'created_at' => $this->integer()->notNull(),
+            'updated_at' => $this->integer()->notNull(),
+            'last_editor' => $this->integer()->notNull(),
+        ], $tableOptions);
+
+        // Initialize the category Default
+        $defaultCategory = new Category();
+        $defaultCategory->category_name = '默认分类';
+        $defaultCategory->category_sequence = 1;
+        $defaultCategory->created_at = $defaultCategory->updated_at = time();
+        $defaultCategory->last_editor = 1;
+
+        $this->insert('{{%category}}',$defaultCategory->toArray());
     }
 
     public function down()
     {
         $this->dropTable('{{%user}}');
+        $this->dropTable('{{%category}}');
     }
 }
