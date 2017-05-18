@@ -21,6 +21,7 @@ $menu = [
         'url' => '#',
         'items' => [
             'categorysuper' => ['label' => '分类管理', 'url' => ['categorysuper/index'], 'active' => in_array($route, ['categorysuper/index', 'categorysuper/create-category', 'categorysuper/update-category'])],
+            'handlersuper' => ['label' => '经手人管理', 'url' => ['handlersuper/index'], 'active' => in_array($route, ['handlersuper/index', 'handlersuper/create-handler', 'handlersuper/update-handler'])],
         ]
     ],
 ];

@@ -2,6 +2,7 @@
 
 use yii\db\Migration;
 use common\models\User;
+use common\models\Handler;
 use common\models\Category;
 
 class m130524_201442_init extends Migration
@@ -37,6 +38,23 @@ class m130524_201442_init extends Migration
 
         $this->insert('{{%user}}',$admin->toArray());
 
+        // Crear handler table
+        $this->createTable('{{%handler}}', [
+            'id' => $this->primaryKey(),
+            'handler_name' => $this->string(32)->notNull(),
+            'created_at' => $this->integer()->notNull(),
+            'updated_at' => $this->integer()->notNull(),
+            'last_editor' => $this->integer()->notNull(),
+        ], $tableOptions);
+
+        // Initialize the handler Default
+        $defaultCategory = new Handler();
+        $defaultCategory->handler_name = '经手人';
+        $defaultCategory->created_at = $defaultCategory->updated_at = time();
+        $defaultCategory->last_editor = 1;
+
+        $this->insert('{{%handler}}',$defaultCategory->toArray());
+
         // Crear category table
         $this->createTable('{{%category}}', [
             'id' => $this->primaryKey(),
@@ -60,6 +78,7 @@ class m130524_201442_init extends Migration
     public function down()
     {
         $this->dropTable('{{%user}}');
+        $this->dropTable('{{%handler}}');
         $this->dropTable('{{%category}}');
     }
 }
