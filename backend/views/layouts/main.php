@@ -14,6 +14,7 @@ $menu = [
         'items' => [
             'site' => ['label' => '系统信息', 'url' => ['site/index'], 'active' => in_array($route, ['site/index'])],
             'usersuper' => ['label' => '用户管理', 'url' => ['usersuper/index'], 'active' => in_array($route, ['usersuper/index', 'usersuper/create-user', 'usersuper/update-user'])],
+            'handlersuper' => ['label' => '经手人管理', 'url' => ['handlersuper/index'], 'active' => in_array($route, ['handlersuper/index', 'handlersuper/create-handler', 'handlersuper/update-handler'])],
         ],
     ],
     [
@@ -21,7 +22,6 @@ $menu = [
         'url' => '#',
         'items' => [
             'categorysuper' => ['label' => '分类管理', 'url' => ['categorysuper/index'], 'active' => in_array($route, ['categorysuper/index', 'categorysuper/create-category', 'categorysuper/update-category'])],
-            'handlersuper' => ['label' => '经手人管理', 'url' => ['handlersuper/index'], 'active' => in_array($route, ['handlersuper/index', 'handlersuper/create-handler', 'handlersuper/update-handler'])],
         ]
     ],
 ];
