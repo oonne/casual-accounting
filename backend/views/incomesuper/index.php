@@ -6,10 +6,9 @@ use yii\helpers\Url;
 use yii\widgets\Pjax;
 use kartik\daterange\DateRangePicker;
 use backend\widgets\Alert;
-use common\models\Category;
 use common\models\Handler;
 
-$this->title = '消费记录';
+$this->title = '存钱记录';
 ?>
 <div class="row">
     <div class="col-lg-12">
@@ -17,7 +16,7 @@ $this->title = '消费记录';
     </div>
 </div>
 <p>
-    <?= Html::a('添加记录', ['expensessuper/add-expenses'], ['class' => 'btn btn-success']) ?>
+    <?= Html::a('添加记录', ['incomesuper/add-income'], ['class' => 'btn btn-success']) ?>
 </p>
 <div class="row">
     <div class="col-lg-12">
@@ -41,26 +40,17 @@ $this->title = '消费记录';
                     'headerOptions' => ['class' => 'col-md-1'],
                 ],
                 [
-                    'attribute' => 'expenses_item',
+                    'attribute' => 'income_item',
                     'headerOptions' => ['class' => 'col-md-2'],
                     'filterInputOptions' => ['class' => 'form-control input-sm'],
                 ],
                 [
-                    'attribute' => 'expenses_money',
+                    'attribute' => 'income_money',
                     'headerOptions' => ['class' => 'col-md-1'],
                     'filterInputOptions' => ['class' => 'form-control input-sm'],
                 ],
                 [
-                    'attribute' => 'expenses_category',
-                    'filter' => Category::getKeyValuePairs(),
-                    'filterInputOptions' => ['class' => 'form-control input-sm'],
-                    'headerOptions' => ['class' => 'col-md-1'],
-                    'value' => function ($model, $key, $index, $column) {
-                        return $model->category ? $model->category->category_name : '<b class="text-danger">分类错误</b>';
-                    }
-                ],
-                [
-                    'attribute' => 'expenses_handler',
+                    'attribute' => 'income_handler',
                     'filter' => Handler::getKeyValuePairs(),
                     'filterInputOptions' => ['class' => 'form-control input-sm'],
                     'headerOptions' => ['class' => 'col-md-1'],
@@ -87,11 +77,11 @@ $this->title = '消费记录';
                     ]) . '</div>',
                     'headerOptions' => ['class' => 'col-md-2'],
                     'value' => function ($model, $key, $index, $column) {
-                        return $model->expenses_date;
+                        return $model->income_date;
                     }
                 ],
                 [
-                    'attribute' => 'expenses_remark',
+                    'attribute' => 'income_remark',
                     'headerOptions' => ['class' => 'col-md-2'],
                     'filterInputOptions' => ['class' => 'form-control input-sm'],
                 ],
@@ -102,10 +92,10 @@ $this->title = '消费记录';
                     'template' => '{update} {delete}',
                     'buttons' => [
                         'update' => function ($url, $model, $key) {
-                            return Html::a('修改', ['update-expenses', 'id' => $key], ['class' => 'btn btn-warning btn-xs']);
+                            return Html::a('修改', ['update-income', 'id' => $key], ['class' => 'btn btn-warning btn-xs']);
                         },
                         'delete' => function ($url, $model, $key) {
-                            return Html::a('删除', ['delete-expenses', 'id' => $key], ['class' => 'btn btn-danger btn-xs']);
+                            return Html::a('删除', ['delete-income', 'id' => $key], ['class' => 'btn btn-danger btn-xs']);
                         },
                     ]
                 ]

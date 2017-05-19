@@ -1,23 +1,18 @@
 <?php
-
 namespace backend\controllers;
 
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use yii\web\Response;
 use yii\web\BadRequestHttpException;
-use common\models\Handler;
-use backend\models\HandlerSearch;
-use common\models\Expenses;
+use yii\db\Query;
 use common\models\Income;
+use backend\models\IncomeSearch;
+use common\models\Recycle;
 
-/**
- * Handlersuper controller
- */
-class HandlersuperController extends Controller
+class IncomesuperController extends Controller
 {
-
+    
     public function behaviors()
     {
         return [
@@ -35,18 +30,19 @@ class HandlersuperController extends Controller
 
     public function actionIndex()
     {
-        $searchModel = new HandlerSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->get());
+        $searchModel = new IncomeSearch();
+        $data = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
-            'searchModel' => $searchModel
+            'searchModel' => $searchModel,
+            'dataProvider' => $data['dataProvider'],
+            'summary' => $data['summary'],
         ]);
     }
 
-    public function actionAddHandler()
+    public function actionAddIncome()
     {
-        $model = new Handler();
+        $model = new Income();
         $model->setScenario('creation');
 
         if ($model->load(Yii::$app->request->post())) {
@@ -66,9 +62,9 @@ class HandlersuperController extends Controller
         ]);
     }
 
-    public function actionUpdateHandler($id)
+    public function actionUpdateIncome($id)
     {
-        $model = Handler::findOne($id);
+        $model = Income::findOne($id);
 
         if (!$model) {
             throw new BadRequestHttpException('请求错误！');
@@ -87,26 +83,24 @@ class HandlersuperController extends Controller
         }
 
         return $this->render('form', [
-            'model' => $model
+            'model' => $model,
         ]);
     }
 
-   public function actionDeleteHandler($id)
+    public function actionDeleteIncome($id)
     {
-        $model = Handler::findOne($id);
+        $model = Income::findOne($id);
 
         if (!$model) {
             throw new BadRequestHttpException('请求错误！');
         }
 
-        $expenses = Expenses::find()->where(['expenses_handler' => $id])->exists();
-        $income = Income::find()->where(['income_handler' => $id])->exists();
-        if ( $expenses ) {
-            Yii::$app->session->setFlash('danger', '该经手人有消费记录，不能删除！');
-        } else if ( $income ) {
-            Yii::$app->session->setFlash('danger', '该经手人有存钱记录，不能删除！');
-        } else {
-            $transaction = Yii::$app->db->beginTransaction();
+        $transaction = Yii::$app->db->beginTransaction();
+        $recycleContent = $model->income_item .'<br>时间：'. $model->income_date .'<br>金额：'. $model->income_money .'<br>'. $model->income_remark;
+        $recycle = new Recycle();
+        $recycle->recycle_type = Recycle::TYPE_EXPENSES;
+        $recycle->recycle_content = $recycleContent;
+        if($recycle->validate()&&$recycle->save(false)){
             try {
                 if (!$model->delete()) {
                     throw new \Exception('删除失败！');
@@ -119,6 +113,9 @@ class HandlersuperController extends Controller
                 $transaction->rollBack();
                 Yii::$app->session->setFlash('danger', $e->getMessage());
             }
+        }else{
+            $transaction->rollBack();
+            Yii::$app->session->setFlash('danger', '回收失败');
         }
 
         return $this->redirect(['index']);
