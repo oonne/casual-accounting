@@ -9,6 +9,7 @@ use yii\web\Response;
 use yii\web\BadRequestHttpException;
 use common\models\Handler;
 use backend\models\HandlerSearch;
+use common\models\Expenses;
 
 /**
  * Handlersuper controller
@@ -42,7 +43,7 @@ class HandlersuperController extends Controller
         ]);
     }
 
-    public function actionCreateHandler()
+    public function actionAddHandler()
     {
         $model = new Handler();
         $model->setScenario('creation');
@@ -97,20 +98,25 @@ class HandlersuperController extends Controller
             throw new BadRequestHttpException('请求错误！');
         }
 
-        $transaction = Yii::$app->db->beginTransaction();
-        try {
-            if (!$model->delete()) {
-                throw new \Exception('删除失败！');
-            }
+        $expenses = Expenses::find()->where(['expenses_handler' => $id])->exists();
+        if ( $expenses ) {
+            Yii::$app->session->setFlash('danger', '该经手人有消费记录，不能删除！');
+        } else {
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
+                if (!$model->delete()) {
+                    throw new \Exception('删除失败！');
+                }
 
-            $transaction->commit();
-            Yii::$app->session->setFlash('success', '删除成功！');
-            return $this->redirect(['index']);
-        } catch (\Exception $e) {
-            $transaction->rollBack();
-            Yii::$app->session->setFlash('danger', $e->getMessage());
+                $transaction->commit();
+                Yii::$app->session->setFlash('success', '删除成功！');
+                return $this->redirect(['index']);
+            } catch (\Exception $e) {
+                $transaction->rollBack();
+                Yii::$app->session->setFlash('danger', $e->getMessage());
+            }
         }
-        
+
         return $this->redirect(['index']);
     }
 }

@@ -13,15 +13,18 @@ $menu = [
         'url' => '#',
         'items' => [
             'site' => ['label' => '系统信息', 'url' => ['site/index'], 'active' => in_array($route, ['site/index'])],
-            'usersuper' => ['label' => '用户管理', 'url' => ['usersuper/index'], 'active' => in_array($route, ['usersuper/index', 'usersuper/create-user', 'usersuper/update-user'])],
-            'handlersuper' => ['label' => '经手人管理', 'url' => ['handlersuper/index'], 'active' => in_array($route, ['handlersuper/index', 'handlersuper/create-handler', 'handlersuper/update-handler'])],
+            'usersuper' => ['label' => '用户管理', 'url' => ['usersuper/index'], 'active' => in_array($route, ['usersuper/index', 'usersuper/add-user', 'usersuper/update-user'])],
+            'handlersuper' => ['label' => '经手人管理', 'url' => ['handlersuper/index'], 'active' => in_array($route, ['handlersuper/index', 'handlersuper/add-handler', 'handlersuper/update-handler'])],
+            // 'recyclesuper' => ['label' => '回收站', 'url' => ['recyclesuper/index'], 'active' => in_array($route, ['recyclesuper/index', 'recyclesuper/view-recycle'])],
         ],
     ],
     [
         'label' => '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-bill"></use></svg>  账单',
         'url' => '#',
         'items' => [
-            'categorysuper' => ['label' => '分类管理', 'url' => ['categorysuper/index'], 'active' => in_array($route, ['categorysuper/index', 'categorysuper/create-category', 'categorysuper/update-category'])],
+            'categorysuper' => ['label' => '分类管理', 'url' => ['categorysuper/index'], 'active' => in_array($route, ['categorysuper/index', 'categorysuper/add-category', 'categorysuper/update-category'])],
+            'expensessuper' => ['label' => '消费管理', 'url' => ['expensessuper/index'], 'active' => in_array($route, ['expensessuper/index', 'expensessuper/add-expenses', 'expensessuper/update-expenses'])],
+            // 'incomesuper' => ['label' => '收入管理', 'url' => ['incomesuper/index'], 'active' => in_array($route, ['incomesuper/index', 'incomesuper/create-income', 'incomesuper/update-income'])],
         ]
     ],
 ];

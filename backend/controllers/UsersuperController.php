@@ -42,7 +42,7 @@ class UsersuperController extends Controller
         ]);
     }
 
-    public function actionCreateUser()
+    public function actionAddUser()
     {
         $model = new User();
         $model->setScenario('creation');

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "2408be6e38d0b844954132fdbdbb4fe3",
+    "content-hash": "9644d6194372550bb4035c31c3474715",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -54,6 +54,22 @@
                 "responsive",
                 "web"
             ]
+        },
+        {
+            "name": "bower-asset/echarts",
+            "version": "3.5.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ecomfe/echarts.git",
+                "reference": "99350dd4033ea7d3f39a4205a53ccd701f6e7433"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ecomfe/echarts/zipball/99350dd4033ea7d3f39a4205a53ccd701f6e7433",
+                "reference": "99350dd4033ea7d3f39a4205a53ccd701f6e7433",
+                "shasum": ""
+            },
+            "type": "bower-asset-library"
         },
         {
             "name": "bower-asset/jquery",
@@ -291,6 +307,51 @@
                 "markdown-extra"
             ],
             "time": "2016-09-14T20:40:20+00:00"
+        },
+        {
+            "name": "daixianceng/yii2-echarts",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/daixianceng/yii2-echarts.git",
+                "reference": "7f3c0b0b29a869781f8f8dbdba78e3b7f45d539d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/daixianceng/yii2-echarts/7f3c0b0b29a869781f8f8dbdba78e3b7f45d539d.zip",
+                "reference": "7f3c0b0b29a869781f8f8dbdba78e3b7f45d539d",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/echarts": "*",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "daixianceng\\echarts\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Cosmo",
+                    "email": "daixianceng@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Echarts widget for Yii2.",
+            "homepage": "https://github.com/daixianceng/yii2-echarts",
+            "keywords": [
+                "chart",
+                "echarts",
+                "extension",
+                "yii2"
+            ],
+            "time": "2016-04-17T08:48:35+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -729,48 +790,6 @@
                 "web"
             ],
             "time": "2017-03-08T16:25:10+00:00"
-        },
-        {
-            "name": "oonne/yii2-scroll-to-top",
-            "version": "1.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/oonne/yii2-scroll-to-top.git",
-                "reference": "b0474d37cc568bfbe44d7d1684fe9f425aba06f9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://files.phpcomposer.com/files/oonne/yii2-scroll-to-top/b0474d37cc568bfbe44d7d1684fe9f425aba06f9.zip",
-                "reference": "b0474d37cc568bfbe44d7d1684fe9f425aba06f9",
-                "shasum": ""
-            },
-            "require": {
-                "yiisoft/yii2": "*"
-            },
-            "type": "yii2-extension",
-            "autoload": {
-                "psr-4": {
-                    "oonne\\scrollTop\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "JAY"
-                }
-            ],
-            "description": "A Yii 2 widget to add scroll-to-top button.",
-            "keywords": [
-                "extension",
-                "scroll",
-                "scroll-to-top",
-                "top",
-                "yii2"
-            ],
-            "time": "2017-04-12T02:37:33+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

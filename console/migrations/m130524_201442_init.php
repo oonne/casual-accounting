@@ -75,28 +75,28 @@ class m130524_201442_init extends Migration
 
         $this->insert('{{%category}}',$defaultCategory->toArray());
 
-        // Crear income table
-        $this->createTable('{{%income}}', [
-            'id' => $this->primaryKey(),
-            'income_item' => $this->string(32)->notNull(),
-            'income_money' => $this->money()->notNull(),
-            'income_date' => $this->date()->notNull(),
-            'income_handler' => $this->integer()->notNull(),
-            'income_remark' => $this->string(255)->notNull(),
-            'created_at' => $this->datetime()->notNull(),
-            'updated_at' => $this->timestamp()->notNull(),
-            'last_editor' => $this->integer()->notNull(),
-        ], $tableOptions);
-
         // Crear expenses table
         $this->createTable('{{%expenses}}', [
             'id' => $this->primaryKey(),
             'expenses_item' => $this->string(32)->notNull(),
             'expenses_category' => $this->integer()->notNull(),
-            'expenses_money' => $this->money()->notNull(),
+            'expenses_money' => $this->decimal(8,2)->notNull(),
             'expenses_date' => $this->date()->notNull(),
             'expenses_handler' => $this->integer()->notNull(),
             'expenses_remark' => $this->string(255)->notNull(),
+            'created_at' => $this->datetime()->notNull(),
+            'updated_at' => $this->timestamp()->notNull(),
+            'last_editor' => $this->integer()->notNull(),
+        ], $tableOptions);
+
+        // Crear income table
+        $this->createTable('{{%income}}', [
+            'id' => $this->primaryKey(),
+            'income_item' => $this->string(32)->notNull(),
+            'income_money' => $this->decimal(8,2)->notNull(),
+            'income_date' => $this->date()->notNull(),
+            'income_handler' => $this->integer()->notNull(),
+            'income_remark' => $this->string(255)->notNull(),
             'created_at' => $this->datetime()->notNull(),
             'updated_at' => $this->timestamp()->notNull(),
             'last_editor' => $this->integer()->notNull(),
@@ -117,8 +117,8 @@ class m130524_201442_init extends Migration
         $this->dropTable('{{%user}}');
         $this->dropTable('{{%handler}}');
         $this->dropTable('{{%category}}');
-        $this->dropTable('{{%income}}');
         $this->dropTable('{{%expenses}}');
+        $this->dropTable('{{%income}}');
         $this->dropTable('{{%recycle}}');
     }
 }

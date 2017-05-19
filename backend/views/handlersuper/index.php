@@ -14,7 +14,7 @@ $this->title = '经手人管理';
     </div>
 </div>
 <p>
-    <?= Html::a('增加经手人', ['handlersuper/create-handler'], ['class' => 'btn btn-success']) ?>
+    <?= Html::a('增加经手人', ['handlersuper/add-handler'], ['class' => 'btn btn-success']) ?>
 </p>
 <div class="row">
     <div class="col-lg-12">

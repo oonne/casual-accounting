@@ -24,7 +24,7 @@
         "onokumus/metismenu": "*",
         "nterms/yii2-pagesize-widget": "*",
         "himiklab/yii2-sortable-grid-view-widget": "*",
-        "oonne/yii2-scroll-to-top": "*"
+        "daixianceng/yii2-echarts": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

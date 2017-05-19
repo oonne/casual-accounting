@@ -14,7 +14,7 @@ $this->title = '分类管理';
     </div>
 </div>
 <p>
-    <?= Html::a('创建分类', ['categorysuper/create-category'], ['class' => 'btn btn-success']) ?>
+    <?= Html::a('创建分类', ['categorysuper/add-category'], ['class' => 'btn btn-success']) ?>
 </p>
 <div class="row">
     <div class="col-lg-12">

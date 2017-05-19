@@ -15,7 +15,7 @@ $this->title = '用户管理';
 </div>
 <p>
     <?= Html::beginForm(['/site/logout']) ?>
-    <?= Html::a('创建用户', ['usersuper/create-user'], ['class' => 'btn btn-success']) ?>
+    <?= Html::a('创建用户', ['usersuper/add-user'], ['class' => 'btn btn-success']) ?>
     <?= Html::submitButton('退出登录', ['class' => 'btn btn-danger']) ?>
     <?= Html::endForm() ?>
 </p>
