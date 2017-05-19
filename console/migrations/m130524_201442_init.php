@@ -105,8 +105,8 @@ class m130524_201442_init extends Migration
         // Crear recycle table
         $this->createTable('{{%recycle}}', [
             'id' => $this->primaryKey(),
-            'recycle_type' => $this->integer()->notNull(),
-            'recycle_content' => $this->string(255)->notNull(),
+            'recycle_type' => $this->string(32)->notNull(),
+            'recycle_content' => $this->string(512)->notNull(),
             'created_at' => $this->datetime()->notNull(),
             'last_editor' => $this->integer()->notNull(),
         ], $tableOptions);

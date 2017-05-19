@@ -53,6 +53,7 @@ class Recycle extends ActiveRecord
             'recycle_content' => '关键内容',
             'created_at' => '删除时间',
             'last_editor' => '删除的帐号id',
+            'dateRange' => '删除时间',
         ];
     }
 
