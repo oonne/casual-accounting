@@ -55,7 +55,7 @@ $this->title = '存钱记录';
                     'filterInputOptions' => ['class' => 'form-control input-sm'],
                     'headerOptions' => ['class' => 'col-md-1'],
                     'value' => function ($model, $key, $index, $column) {
-                        return $model->handler ? $model->handler->handler_name : '<b class="text-danger">经手人错误</b>';
+                        return $model->handler ? $model->handler->handler_name : Html::tag('b', '经手人错误', ['class' => 'text-danger']);
                     }
                 ],
                 [
@@ -89,8 +89,11 @@ $this->title = '存钱记录';
                     'class' => 'yii\grid\ActionColumn',
                     'header' => '操作',
                     'headerOptions' => ['class' => 'col-md-2'],
-                    'template' => '{update} {delete}',
+                    'template' => '{view} {update} {delete}',
                     'buttons' => [
+                        'view' => function ($url, $model, $key) {
+                            return Html::a('查看', ['view-income', 'id' => $key], ['class' => 'btn btn-info btn-xs']);
+                        },
                         'update' => function ($url, $model, $key) {
                             return Html::a('修改', ['update-income', 'id' => $key], ['class' => 'btn btn-warning btn-xs']);
                         },

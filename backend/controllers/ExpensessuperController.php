@@ -67,7 +67,8 @@ class ExpensessuperController extends Controller
         $model = Expenses::findOne($id);
 
         if (!$model) {
-            throw new BadRequestHttpException('请求错误！');
+            Yii::$app->session->setFlash('danger', '查无记录');
+            return $this->redirect(['index']);
         }
 
         if ($model->load(Yii::$app->request->post())) {
@@ -87,12 +88,27 @@ class ExpensessuperController extends Controller
         ]);
     }
 
+    public function actionViewExpenses($id)
+    {
+        $model = Expenses::findOne($id);
+
+        if (!$model) {
+            Yii::$app->session->setFlash('danger', '查无记录');
+            return $this->redirect(['index']);
+        }
+
+        return $this->render('view', [
+            'model' => $model
+        ]);
+    }
+
     public function actionDeleteExpenses($id)
     {
         $model = Expenses::findOne($id);
 
         if (!$model) {
-            throw new BadRequestHttpException('请求错误！');
+            Yii::$app->session->setFlash('danger', '查无记录');
+            return $this->redirect(['index']);
         }
 
         $transaction = Yii::$app->db->beginTransaction();
