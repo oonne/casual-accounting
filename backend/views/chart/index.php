@@ -29,6 +29,90 @@ $this->title = '统计图表';
 </div>
 
 <div class="row">
+    <div class="text-center col-md-12">
+        <h3>收支趋势</h3>
+        <?= ECharts::widget([
+            'responsive' => true,
+            'options' => [
+                'style' => 'height: 440px;'
+            ],
+            'pluginOptions' => [
+                'option' => [
+                    'grid' => [
+                        'left' => '2%',
+                        'right' => '3%',
+                        'bottom' => '2%',
+                        'top' => '20%',
+                        'containLabel' => true
+                    ],
+                    'tooltip' => [
+                        'trigger' => 'axis'
+                    ],
+                    'legend' => [
+                        'data' => [
+                            '月存钱',
+                            '月消费'
+                        ]
+                    ],
+                    'xAxis' => [
+                        'name' => '月份',
+                        'type' => 'category',
+                        'boundaryGap' => false,
+                        'data' => $month,
+                    ],
+                    'yAxis' => [
+                        'name' => '金额',
+                        'type' => 'value'
+                    ],
+                    'series' => [
+                        [
+                            'name' => '月消费',
+                            'type' => 'line',
+                            'data' => $monthlyExpenses,
+                            'markLine' => [
+                                'data' => [
+                                    [
+                                        'type' => 'average',
+                                        'name' => '平均消费'
+                                    ]
+                                ]
+                            ],
+                            'markPoint' => [
+                                'data' => [
+                                    [
+                                        'type' => 'max',
+                                        'name' => '最高消费',
+                                        'symbolSize' => 100,
+                                    ],
+                                    [
+                                        'type' => 'min',
+                                        'name' => '最低消费',
+                                        'symbolSize' => 100,
+                                    ],
+                                ],
+                            ],
+                        ],
+                        [
+                            'name' => '月存钱',
+                            'type' => 'line',
+                            'data' => $monthlyIncome,
+                            'markLine' => [
+                                'data' => [
+                                    [
+                                        'type' => 'average',
+                                        'name' => '平均消费'
+                                    ]
+                                ],
+                            ]
+                        ],
+                    ]
+                ]
+            ]
+        ]) ?>
+    </div>
+</div>
+
+<div class="row">
     <div class="text-center col-md-6">
         <h3>消费统计</h3>
         <?= ECharts::widget([
