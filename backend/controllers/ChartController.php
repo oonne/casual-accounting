@@ -42,6 +42,42 @@ class ChartController extends Controller
                     ->from([Expenses::tableName()]);
         $expensesTotal = ($expensesQuery->createCommand()->queryOne())['summary'];
 
+        // monthly data
+        $monthlyExpenses = [];
+        $monthlyExpensesQuery = (new Query())->select([
+                'month' => "DATE_FORMAT(T0.expenses_date, '%Y-%m')",
+                'money' => 'SUM(T0.expenses_money)'])
+            ->from(['T0' => Expenses::tableName()])
+            ->groupBy(["DATE_FORMAT(T0.expenses_date, '%Y-%m')"]);
+        $monthlyExpensesResult = $monthlyExpensesQuery->createCommand()->queryAll();
+
+        $monthlyIncome = [];
+        $monthlyIncomeQuery = (new Query())->select([
+                'month' => "DATE_FORMAT(T0.income_date, '%Y-%m')",
+                'money' => 'SUM(T0.income_money)'])
+            ->from(['T0' => Income::tableName()])
+            ->groupBy(["DATE_FORMAT(T0.income_date, '%Y-%m')"]);
+        $monthlyIncomeResult = $monthlyIncomeQuery->createCommand()->queryAll();
+
+        $month = $this->_getMonth($monthlyExpensesResult, $monthlyIncomeResult);
+        foreach ($month as $m) {
+            $expenses = '0.00';
+            foreach ($monthlyExpensesResult as $expensesResult) {
+                if ($expensesResult['month'] == $m) {
+                    $expenses = $expensesResult['money'];
+                }
+            }
+            $monthlyExpenses[] = $expenses;
+
+            $income = '0.00';
+            foreach ($monthlyIncomeResult as $incomeResult) {
+                if ($incomeResult['month'] == $m) {
+                    $income = $incomeResult['money'];
+                }
+            }
+            $monthlyIncome[] = $income;
+        }
+
         // proportion data
         $expensesCategory = [];
         $expensesCategoryQuery = (new Query())->select([
@@ -84,52 +120,15 @@ class ChartController extends Controller
                 }
             }
         }
-
-        // monthly data
-        $monthlyExpenses = [];
-        $monthlyExpensesQuery = (new Query())->select([
-                'month' => "DATE_FORMAT(T0.expenses_date, '%Y-%m')",
-                'money' => 'SUM(T0.expenses_money)'])
-            ->from(['T0' => Expenses::tableName()])
-            ->groupBy(["DATE_FORMAT(T0.expenses_date, '%Y-%m')"]);
-        $monthlyExpensesResult = $monthlyExpensesQuery->createCommand()->queryAll();
-
-        $monthlyIncome = [];
-        $monthlyIncomeQuery = (new Query())->select([
-                'month' => "DATE_FORMAT(T0.income_date, '%Y-%m')",
-                'money' => 'SUM(T0.income_money)'])
-            ->from(['T0' => Income::tableName()])
-            ->groupBy(["DATE_FORMAT(T0.income_date, '%Y-%m')"]);
-        $monthlyIncomeResult = $monthlyIncomeQuery->createCommand()->queryAll();
-
-        $month = $this->_getMonth($monthlyExpensesResult, $monthlyIncomeResult);
-        foreach ($month as $m) {
-            $expenses = '0.00';
-            foreach ($monthlyExpensesResult as $expensesResult) {
-                if ($expensesResult['month'] == $m) {
-                    $expenses = $expensesResult['money'];
-                }
-            }
-            $monthlyExpenses[] = $expenses;
-
-            $income = '0.00';
-            foreach ($monthlyIncomeResult as $incomeResult) {
-                if ($incomeResult['month'] == $m) {
-                    $income = $incomeResult['money'];
-                }
-            }
-            $monthlyIncome[] = $income;
-        }
-
+        
         return $this->render('index', [
             'incomeTotal' => $incomeTotal,
             'expensesTotal' => $expensesTotal,
-            'expensesCategory' => $expensesCategory,
-            'incomeHandler' => $incomeHandler,
             'month' => $month,
             'monthlyIncome' => $monthlyIncome,
             'monthlyExpenses' => $monthlyExpenses,
-            'data' => $monthlyExpenses,
+            'expensesCategory' => $expensesCategory,
+            'incomeHandler' => $incomeHandler,
         ]);
     }
 

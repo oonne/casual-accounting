@@ -28,7 +28,7 @@ $this->title = '统计图表';
     </div>
 </div>
 
-<div class="row">
+<div class="row fms-summary-chart">
     <div class="text-center col-md-12">
         <h3>收支趋势</h3>
         <?= ECharts::widget([
@@ -112,7 +112,7 @@ $this->title = '统计图表';
     </div>
 </div>
 
-<div class="row">
+<div class="row fms-summary-chart">
     <div class="text-center col-md-6">
         <h3>消费统计</h3>
         <?= ECharts::widget([
