@@ -25,6 +25,7 @@ $menu = [
             'categorysuper' => ['label' => '分类管理', 'url' => ['categorysuper/index'], 'active' => in_array($route, ['categorysuper/index', 'categorysuper/add-category', 'categorysuper/update-category'])],
             'expensessuper' => ['label' => '消费记录', 'url' => ['expensessuper/index'], 'active' => in_array($route, ['expensessuper/index', 'expensessuper/add-expenses', 'expensessuper/update-expenses', 'expensessuper/view-expenses'])],
             'incomesuper' => ['label' => '存钱记录', 'url' => ['incomesuper/index'], 'active' => in_array($route, ['incomesuper/index', 'incomesuper/add-income', 'incomesuper/update-income', 'incomesuper/view-income'])],
+            'chart' => ['label' => '统计图表', 'url' => ['chart/index'], 'active' => in_array($route, ['chart/index'])],
         ]
     ],
 ];
