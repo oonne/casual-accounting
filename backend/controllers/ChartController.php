@@ -5,7 +5,6 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\BadRequestHttpException;
-use yii\db\Query;
 use common\models\Expenses;
 use common\models\Income;
 use common\models\Category;
@@ -44,7 +43,7 @@ class ChartController extends Controller
 
         // monthly data
         $monthlyExpenses = [];
-        $monthlyExpensesQuery = (new Query())->select([
+        $monthlyExpensesQuery = Expenses::find()->select([
                 'month' => "DATE_FORMAT(T0.expenses_date, '%Y-%m')",
                 'money' => 'SUM(T0.expenses_money)'])
             ->from(['T0' => Expenses::tableName()])
@@ -52,7 +51,7 @@ class ChartController extends Controller
         $monthlyExpensesResult = $monthlyExpensesQuery->createCommand()->queryAll();
 
         $monthlyIncome = [];
-        $monthlyIncomeQuery = (new Query())->select([
+        $monthlyIncomeQuery = Income::find()->select([
                 'month' => "DATE_FORMAT(T0.income_date, '%Y-%m')",
                 'money' => 'SUM(T0.income_money)'])
             ->from(['T0' => Income::tableName()])
@@ -60,6 +59,7 @@ class ChartController extends Controller
         $monthlyIncomeResult = $monthlyIncomeQuery->createCommand()->queryAll();
 
         $month = $this->_getMonth($monthlyExpensesResult, $monthlyIncomeResult);
+        $monthlybalance = [];
         foreach ($month as $m) {
             $expenses = '0.00';
             foreach ($monthlyExpensesResult as $expensesResult) {
@@ -80,7 +80,7 @@ class ChartController extends Controller
 
         // proportion data
         $expensesCategory = [];
-        $expensesCategoryQuery = (new Query())->select([
+        $expensesCategoryQuery = Expenses::find()->select([
                 'category' => 'T0.expenses_category',
                 'value' => 'SUM(T0.expenses_money)'])
             ->from(['T0' => Expenses::tableName()])
@@ -101,7 +101,7 @@ class ChartController extends Controller
         }
 
         $incomeHandler = [];
-        $incomeHandlerQuery = (new Query())->select([
+        $incomeHandlerQuery = Income::find()->select([
                 'handler' => 'T0.income_handler',
                 'value' => 'SUM(T0.income_money)'])
             ->from(['T0' => Income::tableName()])
@@ -120,7 +120,7 @@ class ChartController extends Controller
                 }
             }
         }
-        
+
         return $this->render('index', [
             'incomeTotal' => $incomeTotal,
             'expensesTotal' => $expensesTotal,
