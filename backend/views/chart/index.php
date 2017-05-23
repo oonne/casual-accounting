@@ -113,6 +113,55 @@ $this->title = '统计图表';
 </div>
 
 <div class="row fms-summary-chart">
+    <div class="text-center col-md-12">
+        <h3>每月结余</h3>
+        <?= ECharts::widget([
+            'responsive' => true,
+            'options' => [
+                'style' => 'height: 440px;'
+            ],
+            'pluginOptions' => [
+                'option' => [
+                    'grid' => [
+                        'left' => '2%',
+                        'right' => '3%',
+                        'bottom' => '2%',
+                        'top' => '20%',
+                        'containLabel' => true
+                    ],
+                    'tooltip' => [
+                        'trigger' => 'axis'
+                    ],
+                    'xAxis' => [
+                        'name' => '月份',
+                        'type' => 'category',
+                        'data' => $month,
+                    ],
+                    'yAxis' => [
+                        'name' => '金额',
+                        'type' => 'value'
+                    ],
+                    'series' => [
+                        [
+                            'name' => '每月结余',
+                            'type' => 'bar',
+                            'barWidth' =>  '60%',
+                            'label' => [
+                                'normal' => [
+                                    'position' => 'top',
+                                    'show' => true
+                                ]
+                            ],
+                            'data' => $monthlybalance,
+                        ]
+                    ]
+                ]
+            ]
+        ]) ?>
+    </div>
+</div>
+
+<div class="row fms-summary-chart">
     <div class="text-center col-md-6">
         <h3>消费统计</h3>
         <?= ECharts::widget([

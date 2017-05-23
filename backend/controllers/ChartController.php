@@ -32,30 +32,26 @@ class ChartController extends Controller
     {
         // sum data
         $incomeQuery = Income::find()
-                    ->select(['summary' => 'SUM(income_money)'])
-                    ->from([Income::tableName()]);
+                    ->select(['summary' => 'SUM(income_money)']);
         $incomeTotal = ($incomeQuery->createCommand()->queryOne())['summary'];
         
         $expensesQuery = Expenses::find()
-                    ->select(['summary' => 'SUM(expenses_money)'])
-                    ->from([Expenses::tableName()]);
+                    ->select(['summary' => 'SUM(expenses_money)']);
         $expensesTotal = ($expensesQuery->createCommand()->queryOne())['summary'];
 
         // monthly data
         $monthlyExpenses = [];
         $monthlyExpensesQuery = Expenses::find()->select([
-                'month' => "DATE_FORMAT(T0.expenses_date, '%Y-%m')",
-                'money' => 'SUM(T0.expenses_money)'])
-            ->from(['T0' => Expenses::tableName()])
-            ->groupBy(["DATE_FORMAT(T0.expenses_date, '%Y-%m')"]);
+                'month' => "DATE_FORMAT(expenses_date, '%Y-%m')",
+                'money' => 'SUM(expenses_money)'])
+            ->groupBy(["DATE_FORMAT(expenses_date, '%Y-%m')"]);
         $monthlyExpensesResult = $monthlyExpensesQuery->createCommand()->queryAll();
 
         $monthlyIncome = [];
         $monthlyIncomeQuery = Income::find()->select([
-                'month' => "DATE_FORMAT(T0.income_date, '%Y-%m')",
-                'money' => 'SUM(T0.income_money)'])
-            ->from(['T0' => Income::tableName()])
-            ->groupBy(["DATE_FORMAT(T0.income_date, '%Y-%m')"]);
+                'month' => "DATE_FORMAT(income_date, '%Y-%m')",
+                'money' => 'SUM(income_money)'])
+            ->groupBy(["DATE_FORMAT(income_date, '%Y-%m')"]);
         $monthlyIncomeResult = $monthlyIncomeQuery->createCommand()->queryAll();
 
         $month = $this->_getMonth($monthlyExpensesResult, $monthlyIncomeResult);
@@ -76,15 +72,26 @@ class ChartController extends Controller
                 }
             }
             $monthlyIncome[] = $income;
+
+            $monthlyIncomeTotalQuery = Income::find()->select([
+                            'summary' => 'SUM(income_money)'])
+                        ->where(['<=', "DATE_FORMAT(income_date, '%Y-%m')", $m]);
+            $monthlyIncomeTotalResult = $monthlyIncomeTotalQuery->createCommand()->queryOne();
+            
+            $monthlyExpensesTotalQuery = Expenses::find()->select([
+                            'summary' => 'SUM(expenses_money)'])
+                        ->where(['<=', "DATE_FORMAT(expenses_date, '%Y-%m')", $m]);
+            $monthlyExpensesTotalResult = $monthlyExpensesTotalQuery->createCommand()->queryOne();
+
+            $monthlybalance[] = $monthlyIncomeTotalResult['summary'] - $monthlyExpensesTotalResult['summary'];
         }
 
         // proportion data
         $expensesCategory = [];
         $expensesCategoryQuery = Expenses::find()->select([
-                'category' => 'T0.expenses_category',
-                'value' => 'SUM(T0.expenses_money)'])
-            ->from(['T0' => Expenses::tableName()])
-            ->groupBy(['T0.expenses_category']);
+                'category' => 'expenses_category',
+                'value' => 'SUM(expenses_money)'])
+            ->groupBy(['expenses_category']);
         $expensesCategoryResult = $expensesCategoryQuery->createCommand()->queryAll();
 
         $categoryList = Category::getCategoryList();
@@ -102,10 +109,9 @@ class ChartController extends Controller
 
         $incomeHandler = [];
         $incomeHandlerQuery = Income::find()->select([
-                'handler' => 'T0.income_handler',
-                'value' => 'SUM(T0.income_money)'])
-            ->from(['T0' => Income::tableName()])
-            ->groupBy(['T0.income_handler']);
+                'handler' => 'income_handler',
+                'value' => 'SUM(income_money)'])
+            ->groupBy(['income_handler']);
         $incomeHandlerResult = $incomeHandlerQuery->createCommand()->queryAll();
 
         $handlerList = Handler::getHandlerList();
@@ -127,8 +133,9 @@ class ChartController extends Controller
             'month' => $month,
             'monthlyIncome' => $monthlyIncome,
             'monthlyExpenses' => $monthlyExpenses,
+            'monthlybalance' => $monthlybalance,
             'expensesCategory' => $expensesCategory,
-            'incomeHandler' => $incomeHandler,
+            'incomeHandler' => $incomeHandler
         ]);
     }
 
