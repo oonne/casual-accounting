@@ -32,7 +32,7 @@ class Income extends ActiveRecord
 
             [['income_item'], 'string', 'max' => 32],
             [['income_money'], 'number'],
-            [['income_date'], 'date', 'format' => 'yyyy-MM-dd'],
+            [['income_date'], 'date', 'format' => 'yyyy-mm-dd'],
 
             [
                 ['income_handler'],
