@@ -30,7 +30,7 @@ $this->title = $model->isNewRecord ? '添加' : '修改';
         <?= $form->field($model, 'expenses_date')->widget(DatePicker::className(), [
             'options' => ['class' => 'form-control'],
             'clientOptions' => ['firstDay' => 0],
-            'dateFormat' => 'yyyy-mm-dd'
+            'dateFormat' => 'yyyy-MM-dd'
         ]) ?>
         <?= $form->field($model, 'expenses_handler')->dropDownList(Handler::getKeyValuePairs()) ?>
         <?= $form->field($model, 'expenses_remark') ?>

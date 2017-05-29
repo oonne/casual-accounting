@@ -28,7 +28,7 @@ $this->title = $model->isNewRecord ? '添加' : '修改';
         <?= $form->field($model, 'income_date')->widget(DatePicker::className(), [
             'options' => ['class' => 'form-control'],
             'clientOptions' => ['firstDay' => 0],
-            'dateFormat' => 'yyyy-mm-dd'
+            'dateFormat' => 'yyyy-MM-dd'
         ]) ?>
         <?= $form->field($model, 'income_handler')->dropDownList(Handler::getKeyValuePairs()) ?>
         <?= $form->field($model, 'income_remark') ?>
