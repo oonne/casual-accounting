@@ -1,0 +1,1 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Casual Accounting</title></head><body><div id="app"></div><script src="index.js?v=68745276"></script></body></html>
