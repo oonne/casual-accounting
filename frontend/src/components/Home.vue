@@ -1,18 +1,19 @@
 <template>
-  <div class="home">
-    <input v-model="message">
-    {{ message }}
-  </div>
+    <div class="home">
+        <input v-model="message">
+        {{ message }}
+        <router-link :to="{ name: 'Login'}">login</router-link>
+    </div>
 </template>
 
 <script>
 export default {
-  name: 'home',
-  data () {
-    return {
-      message: 'Hello world'
+    name: 'home',
+    data () {
+        return {
+            message: 'TODO'
+        }
     }
-  }
 }
 </script>
 
@@ -20,3 +21,5 @@ export default {
 <style lang="scss" scoped>
 
 </style>
+
+
