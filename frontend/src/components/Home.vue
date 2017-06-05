@@ -2,17 +2,25 @@
     <div class="home">
         <input v-model="message">
         {{ message }}
-        <router-link :to="{ name: 'Login'}">login</router-link>
     </div>
 </template>
 
 <script>
+import base from './base';
+
 export default {
+    extends: base,
     name: 'home',
     data () {
         return {
             message: 'TODO'
         }
+    },
+    created: function () {
+        let vm = this;
+        this.getUser(function(token){
+            console.log(vm.config);
+        });
     }
 }
 </script>

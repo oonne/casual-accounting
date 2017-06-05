@@ -10,26 +10,12 @@ new Vue({
 	template: '<App/>',
 	components: { App },
 	beforeCreate : function () {
+		// login
 		let user = localStorage.getItem('user');
-		if (user) {
-			router.push('/');
-		} else {
+		if (!user) {
 			console.warn('未登录');
 			router.push('login');
 		}
 	}
 })
 
-// router.beforeEach((to, from, next) => {
-// 	if (to.name != 'Login') {
-// 		let user = localStorage.getItem('user');
-// 		if (user) {
-// 			next();
-// 		} else {
-// 			console.warn('未登录');
-// 			router.push('login');
-// 		}
-// 	} else {
-// 		next();
-// 	}
-// })

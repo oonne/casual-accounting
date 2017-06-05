@@ -28,13 +28,13 @@ class UserController extends Controller
         if ($model->login()) {
             $data = $model->user->toArray(['username', 'nickname', 'access_token']);
             return [
-                'iRet' => 0,
+                'Ret' => 0,
                 'Data' => $data
             ];
         } else {
             Yii::warning('用户登录失败！');
             return [
-                'iRet' => 1,
+                'Ret' => 1,
                 'Data' => [
                     'errors' => $model->getFirstErrors()
                 ]
