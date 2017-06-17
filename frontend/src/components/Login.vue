@@ -2,7 +2,7 @@
     <div class="login">
         <div class="logo">
             <svg class="icon logo-bg" aria-hidden="true"><use xlink:href="#icon-hexagon"></use></svg>
-            <h1 class="logo-text">趣饮吧</h1>
+            <h1 class="logo-text">FMS</h1>
         </div>
         <div class="form" :class="{shake: hasError }">
             <input v-model="username" placeholder="帐号">
