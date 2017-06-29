@@ -42,10 +42,8 @@ class ExpensesSearch extends Expenses
 
         $dates = explode('~', $this ->dateRange, 2);
         if (count($dates) == 2) {
-            $_dateFrom = $dates[0];
-            $_dateTo = $dates[1];
-            $query->andFilterWhere(['>=', 'expenses_date', $_dateFrom ])
-                  ->andFilterWhere(['<=', 'expenses_date', $_dateTo ]);
+            $query->andFilterWhere(['>=', 'expenses_date', $dates[0] ])
+                  ->andFilterWhere(['<=', 'expenses_date', $dates[1] ]);
         }
 
         $query->andFilterWhere(['like', 'expenses_item', $this->expenses_item])
@@ -70,10 +68,8 @@ class ExpensesSearch extends Expenses
 
         $dates = explode('~', $this ->dateRange, 2);
         if (count($dates) == 2) {
-            $_dateFrom = $dates[0];
-            $_dateTo = $dates[1];
-            $query->andFilterWhere(['>=', 'expenses_date', $_dateFrom ])
-                  ->andFilterWhere(['<=', 'expenses_date', $_dateTo ]);
+            $query->andFilterWhere(['>=', 'expenses_date', $dates[0] ])
+                  ->andFilterWhere(['<=', 'expenses_date', $dates[1] ]);
         }
 
         if ($this->expenses_item) {

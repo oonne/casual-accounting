@@ -15,7 +15,7 @@ class RecycleSearch extends Recycle
     public function rules()
     {
         return [
-            [['recycle_type', 'recycle_content', 'recycleTimeFrom', 'recycleTimeTo'], 'string'],
+            [['recycle_type', 'recycle_content', 'dateRange'], 'string'],
         ];
     }
 
@@ -34,10 +34,8 @@ class RecycleSearch extends Recycle
 
         $recycleTime = explode('~', $this ->dateRange, 2);
         if (count($recycleTime) == 2){
-            $_recycleTimeFrom = $recycleTime[0];
-            $_recycleTimeTo = date('Y-m-d', strtotime($recycleTime[1])+86400);
-            $query->andFilterWhere(['>=', 'created_at', $_recycleTimeFrom ])
-                  ->andFilterWhere(['<=', 'created_at', $_recycleTimeTo ]);
+            $query->andFilterWhere(['>=', 'created_at', $recycleTime[0] ])
+                  ->andFilterWhere(['<=', "DATE_FORMAT(`created_at`, '%Y-%m-%d')", $recycleTime[1] ]);
         }
 
         // grid filtering conditions

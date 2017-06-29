@@ -42,10 +42,8 @@ class IncomeSearch extends Income
 
         $dates = explode('~', $this ->dateRange, 2);
         if (count($dates) == 2) {
-            $_dateFrom = $dates[0];
-            $_dateTo = $dates[1];
-            $query->andFilterWhere(['>=', 'income_date', $_dateFrom ])
-                  ->andFilterWhere(['<=', 'income_date', $_dateTo ]);
+            $query->andFilterWhere(['>=', 'income_date', $dates[0] ])
+                  ->andFilterWhere(['<=', 'income_date', $dates[1] ]);
         }
 
         $query->andFilterWhere(['like', 'income_item', $this->income_item])
@@ -69,10 +67,8 @@ class IncomeSearch extends Income
 
         $dates = explode('~', $this ->dateRange, 2);
         if (count($dates) == 2) {
-            $_dateFrom = $dates[0];
-            $_dateTo = $dates[1];
-            $query->andFilterWhere(['>=', 'income_date', $_dateFrom ])
-                  ->andFilterWhere(['<=', 'income_date', $_dateTo ]);
+            $query->andFilterWhere(['>=', 'income_date', $dates[0] ])
+                  ->andFilterWhere(['<=', 'income_date', $dates[1] ]);
         }
 
         if ($this->income_item) {
