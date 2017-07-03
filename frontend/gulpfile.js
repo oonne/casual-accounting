@@ -30,6 +30,6 @@ gulp.task('html', function(){
 
 // watch
 gulp.task('watch', function () {
-    gulp.watch(['src/router/index.js', 'src/components/*.vue'], ['build']);
+    gulp.watch(['src/router/index.js', 'src/assets/base.scss', 'src/components/*.vue'], ['build']);
     gulp.watch(['dist/index.html', 'dist/index.js'], ['js', 'html']);
 });

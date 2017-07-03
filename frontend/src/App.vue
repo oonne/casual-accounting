@@ -10,7 +10,9 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+    @import "assets/base.scss";
+
     * {
         margin: 0;
         padding: 0;
@@ -22,19 +24,26 @@ export default {
     a {
         text-decoration: none;
     }
+    li {
+        list-style-type: none;
+    }
+    input,select,button{
+        -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+        outline: 0;
+        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        -webkit-user-modify: read-write-plaintext-only;
+    }
     html,body{
     	background-color: #eee;
+        width: 100%;
+        min-height: 100%;
         font-size: 16px;
+        line-height: 1.6;
     }
     .icon {
        width: 1em; height: 1em;
        vertical-align: -0.15em;
        fill: currentColor;
        overflow: hidden;
-    }
-    input,select,button{
-        -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-        outline: 0;
-        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
     }
 </style>
