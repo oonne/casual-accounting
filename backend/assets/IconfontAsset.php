@@ -10,6 +10,6 @@ use yii\web\AssetBundle;
 class IconfontAsset extends AssetBundle
 {
     public $js = [
-        '//at.alicdn.com/t/font_7a4nmk9fwn91wcdi.js'
+        '//at.alicdn.com/t/font_pwn582i4qjq3erk9.js'
     ];
 }

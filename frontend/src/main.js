@@ -11,10 +11,10 @@ new Vue({
 	components: { App },
 	beforeCreate : function () {
 		// login
-		let user = localStorage.getItem('user');
+		let user = localStorage.getItem('user')
 		if (!user) {
-			console.warn('未登录');
-			router.push('login');
+			console.warn('未登录')
+			router.push('/login')
 		}
 	}
 })

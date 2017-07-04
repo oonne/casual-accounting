@@ -1,5 +1,9 @@
 /*golbal config & base class*/
 
+    $bottomNavHeight: 48;       //底导航高度
+    $mainColor: #fc5b00;        //主要颜色
+    $lineColor: #d9d9d9;        //分割线颜色
+
 // All
 	.btn {
         display: block;
@@ -20,6 +24,31 @@
     }
     .btn-success:active {
         background-color: #4cae4c;
+    }
+
+// Line
+    .line {
+        position: absolute;
+        content: " ";
+        width: 100%;
+        height: 1px;
+        left: 0;
+        right: 0;
+        margin: auto;
+        color: $lineColor;
+        transform: scaleY(0.5);
+    }
+    .line-top {
+        @extend .line;
+        top: 0;
+        transform-origin: 0 0;
+        border-top: 1px solid $lineColor;
+    }
+    .line-bottom {
+        @extend .line;
+        bottom: 0;
+        transform-origin: 0 100%;
+        border-bottom: 1px solid $lineColor;
     }
 
 // Error shake

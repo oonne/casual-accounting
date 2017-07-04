@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import Base from './Base';
+import Base from './Base'
 
 export default {
     extends: Base,
@@ -28,8 +28,8 @@ export default {
     methods: {
         login: function(){
             let vm = this;
-            if ( !vm.username || !vm.password) {
-                vm.errorMsg = '请填写帐号和密码';
+            if ( !vm.username || !vm.password ) {
+                vm.errorMsg = '请填写帐号和密码'
             } else {
                 fetch('/api/user/login', {
                     method: 'POST',
@@ -46,24 +46,24 @@ export default {
                     if (response.status == 200) {
                         return response.json()
                     } else {
-                        vm.errorMsg = response.statusText;
+                        vm.errorMsg = response.statusText
                     }
                 })
                 .then(function (data) {
                     if (data) {
                         if (data.Ret) {
-                            vm.errorMsg = vm.getFirstAttr(data.Data.errors);
-                            console.warn(data.Data.errors);
+                            vm.errorMsg = vm.getFirstAttr(data.Data.errors)
+                            console.warn(data.Data.errors)
                         } else {
-                            localStorage.setItem('user', JSON.stringify(data.Data));
-                            vm.$router.push('/');
+                            localStorage.setItem('user', JSON.stringify(data.Data))
+                            vm.$router.push('/expenses')
                         }
                     }
                 })
                 .catch(function (error) {
-                    console.error(error);
-                    vm.errorMsg = '服务器故障';
-                });
+                    console.error(error)
+                    vm.errorMsg = '服务器故障'
+                })
             }
         }
     },

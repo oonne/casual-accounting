@@ -1,26 +1,32 @@
 <template>
-    <div class="home">
+    <div class="user">
+        <BottomNav active='user' />
+
         <input v-model="message">
         {{ message }}
     </div>
 </template>
 
 <script>
-import Base from './Base';
+import Base from './Base'
+import BottomNav from './BottomNav';
 
 export default {
     extends: Base,
-    name: 'home',
+    name: 'user',
+    components: {
+        'BottomNav': BottomNav,
+    },
     data () {
         return {
-            message: 'TODO'
+            message: 'TODO-user'
         }
     },
     created: function () {
-        let vm = this;
+        let vm = this
         this.getUser(function(token){
-            console.log(vm.config);
-        });
+
+        })
     }
 }
 </script>
