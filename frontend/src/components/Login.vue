@@ -7,14 +7,13 @@
         <div class="form" :class="{shake: error }">
             <input v-model="username" placeholder="帐号">
             <input v-model="password" placeholder="密码">
-            <button class="button" @click="login">登录</button>
+            <button class="btn-success" @click="login">登录</button>
             <div class="error-msg">{{errorMsg}}</div>
         </div>
     </div>
 </template>
 
 <script>
-import axios from 'axios';
 import Base from './Base';
 
 export default {
@@ -24,48 +23,47 @@ export default {
         return {
             username: '',
             password: '',
-            error: false,
-            errorMsg: ''
-        }
-    },
-    watch: {
-        error: function (error) {
-            let vm = this;
-            if (vm.error) {
-                setTimeout(function(){
-                    vm.error = false;
-                }, 1000);
-            }
         }
     },
     methods: {
         login: function(){
             let vm = this;
             if ( !vm.username || !vm.password) {
-                vm.error = true;
                 vm.errorMsg = '请填写帐号和密码';
             } else {
-                axios.post('/api/user/login', {username: vm.username, password: vm.password})
-                    .then(function (response) {
-                        if (response.status == 200) {
-                            if (response.data.Ret) {
-                                vm.error = true;
-                                vm.errorMsg = vm.getFirstAttr(response.data.Data.errors);
-                                console.warn(response.data.Data.errors);
-                            } else {
-                                localStorage.setItem('user', JSON.stringify(response.data.Data));
-                                vm.$router.push('/');
-                            }
-                        } else {
-                            vm.error = true;
-                            vm.errorMsg = response.statusText;
-                        }
+                fetch('/api/user/login', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: vm.username,
+                        password: vm.password,
                     })
-                    .catch(function (error) {
-                        vm.error = true;
-                        vm.errorMsg = '服务器故障';
-                        console.error(error);
-                    });
+                })
+                .then(function (response) {
+                    if (response.status == 200) {
+                        return response.json()
+                    } else {
+                        vm.errorMsg = response.statusText;
+                    }
+                })
+                .then(function (data) {
+                    if (data) {
+                        if (data.Ret) {
+                            vm.errorMsg = vm.getFirstAttr(data.Data.errors);
+                            console.warn(data.Data.errors);
+                        } else {
+                            localStorage.setItem('user', JSON.stringify(data.Data));
+                            vm.$router.push('/');
+                        }
+                    }
+                })
+                .catch(function (error) {
+                    console.error(error);
+                    vm.errorMsg = '服务器故障';
+                });
             }
         }
     },
@@ -140,52 +138,11 @@ export default {
                 background-color: #ddd;
                 color: #333;
             }
-            button {
-                display: block;
-                width: 100%;
-                height: 2.5rem;
-                line-height: 2.5rem;
-                margin: 20px 0;
-                background-color: #5cb85c;
-                border-color: #4cae4c;
-                border-radius: 4px;
-                border: none;
-                text-align: center;
-                color: #fff;
-            }
-            button:active {
-                background-color: #4cae4c;
-            }
 
             .error-msg {
                 color: #a94442;
                 text-align: center;
                 font-style: 0.8rem;
-            }
-        }
-
-        // error shake
-        .shake {
-            animation: shake linear .4s;
-        }
-        @keyframes shake {
-            0% {
-                transform: translateX(-10px);
-            }
-            20% {
-                transform: translateX(8px);
-            }
-            40% {
-                transform: translateX(-6px);
-            }
-            60% {
-                transform: translateX(4px);
-            }
-            80% {
-                transform: translateX(-2px);
-            }
-            100% {
-                transform: translateX(0);
             }
         }
 
