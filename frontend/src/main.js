@@ -15,6 +15,8 @@ new Vue({
 		if (!user) {
 			console.warn('未登录')
 			router.push('/login')
+		} else {
+			router.push('/expenses')
 		}
 	}
 })

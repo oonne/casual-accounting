@@ -52,11 +52,11 @@ export default {
                 .then(function (data) {
                     if (data) {
                         if (data.Ret) {
-                            vm.errorMsg = vm.getFirstAttr(data.Data.errors)
-                            console.warn(data.Data.errors)
-                        } else {
                             localStorage.setItem('user', JSON.stringify(data.Data))
                             vm.$router.push('/expenses')
+                        } else {
+                            vm.errorMsg = vm.getFirstAttr(data.Data.errors)
+                            console.warn(data.Data.errors)
                         }
                     }
                 })

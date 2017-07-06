@@ -6,6 +6,8 @@ export default {
     data () {
         return {
             token: '',
+            pageCount: 1,   //总页数
+            currentPage: 1, //当前页数
             loading: true,  //加载中
             error: false,   //错误
             errorMsg: '',   //错误提示

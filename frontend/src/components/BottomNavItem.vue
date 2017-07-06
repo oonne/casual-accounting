@@ -27,7 +27,7 @@ export default {
 
 		.nav-icon{
 			display: block;
-			margin: 6px auto 1px;
+			margin: 6px auto 0;
 			font-size: 24px;
 			line-height: 24px;
 		}
