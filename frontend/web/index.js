@@ -10785,8 +10785,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 
 
@@ -10801,12 +10799,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     data() {
         return {
-            message: 'TODO-expenses'
+            expensesList: []
         };
     },
     created: function () {
         let vm = this;
-        this.getUser(function () {
+        this.getUser(vm.init);
+    },
+    methods: {
+        init: function () {
+            let vm = this;
+            vm.getList(function (data) {
+                console.log(vm.expensesList);
+            });
+        },
+        getList: function (callback) {
+            let vm = this;
             fetch('/api/expenses/index?page=' + vm.currentPage, {
                 method: 'GET',
                 headers: {
@@ -10824,9 +10832,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     vm.errorMsg = response.statusText;
                 }
             }).then(function (data) {
+                vm.loading = false;
                 if (data) {
                     if (!data.Ret) {
-                        console.log(data);
+                        vm.pageCount = data.Meta.pageCount;
+                        vm.currentPage = data.Meta.currentPage;
+                        vm.expensesList.push(data.Data);
+                        if (typeof callback == 'function') return callback(data);
                     } else {
                         vm.errorMsg = vm.getFirstAttr(data.Data.errors);
                         console.warn(data.Data.errors);
@@ -10836,7 +10848,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.error(error);
                 vm.errorMsg = '服务器故障';
             });
-        });
+        }
     }
 });
 
@@ -11094,7 +11106,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, ".btn[data-v-61368c48],.btn-success[data-v-61368c48]{display:block;width:100%;height:2.5rem;line-height:2.5rem;margin:20px 0;border-radius:4px;border:none;text-align:center}.btn-success[data-v-61368c48]{background-color:#5cb85c;border-color:#4cae4c;color:#fff}.btn-success[data-v-61368c48]:active{background-color:#4cae4c}.line[data-v-61368c48],.line-bottom[data-v-61368c48],.line-top[data-v-61368c48]{position:absolute;content:\" \";width:100%;height:1px;left:0;right:0;margin:auto;color:#d9d9d9;transform:scaleY(.5)}.line-top[data-v-61368c48]{top:0;transform-origin:0 0;border-top:1px solid #d9d9d9}.line-bottom[data-v-61368c48]{bottom:0;transform-origin:0 100%;border-bottom:1px solid #d9d9d9}.shake[data-v-61368c48]{animation:a-data-v-61368c48 linear .4s}@keyframes a-data-v-61368c48{0%{transform:translateX(-10px)}20%{transform:translateX(8px)}40%{transform:translateX(-6px)}60%{transform:translateX(4px)}80%{transform:translateX(-2px)}to{transform:translateX(0)}}.fade-enter-active[data-v-61368c48],.fade-leave-active[data-v-61368c48]{transition:opacity .3s}.fade-enter[data-v-61368c48],.fade-leave-active[data-v-61368c48]{opacity:0}.nav-item[data-v-61368c48]{width:100%;height:100%;text-align:center;color:#999}.nav-item .nav-icon[data-v-61368c48]{display:block;margin:6px auto 0;font-size:24px;line-height:24px}.nav-item p[data-v-61368c48]{font-size:12px}.active[data-v-61368c48]{color:#fc5b00}", ""]);
+exports.push([module.i, ".btn[data-v-61368c48],.btn-success[data-v-61368c48]{display:block;width:100%;height:2.5rem;line-height:2.5rem;margin:20px 0;border-radius:4px;border:none;text-align:center}.btn-success[data-v-61368c48]{background-color:#5cb85c;border-color:#4cae4c;color:#fff}.btn-success[data-v-61368c48]:active{background-color:#4cae4c}.line[data-v-61368c48],.line-bottom[data-v-61368c48],.line-top[data-v-61368c48]{position:absolute;content:\" \";width:100%;height:1px;left:0;right:0;margin:auto;color:#d9d9d9;transform:scaleY(.5)}.line-top[data-v-61368c48]{top:0;transform-origin:0 0;border-top:1px solid #d9d9d9}.line-bottom[data-v-61368c48]{bottom:0;transform-origin:0 100%;border-bottom:1px solid #d9d9d9}.shake[data-v-61368c48]{animation:a-data-v-61368c48 linear .4s}@keyframes a-data-v-61368c48{0%{transform:translateX(-10px)}20%{transform:translateX(8px)}40%{transform:translateX(-6px)}60%{transform:translateX(4px)}80%{transform:translateX(-2px)}to{transform:translateX(0)}}.fade-enter-active[data-v-61368c48],.fade-leave-active[data-v-61368c48]{transition:opacity .3s}.fade-enter[data-v-61368c48],.fade-leave-active[data-v-61368c48]{opacity:0}.nav-item[data-v-61368c48]{width:100%;height:100%;text-align:center;color:#999}.nav-item .nav-icon[data-v-61368c48]{display:block;margin:6px auto 0;font-size:24px;line-height:24px}.nav-item p[data-v-61368c48]{font-size:12px}.active[data-v-61368c48]{color:#3097d1}", ""]);
 
 // exports
 
@@ -11529,23 +11541,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "active": "expenses"
     }
-  }), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.message),
-      expression: "message"
-    }],
-    domProps: {
-      "value": (_vm.message)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.message = $event.target.value
-      }
-    }
-  }), _vm._v("\n    " + _vm._s(_vm.message) + "\n")], 1)
+  })], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

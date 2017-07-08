@@ -3,8 +3,6 @@
         <ErrorBar :text="errorMsg" />
         <BottomNav active='expenses' />
 
-        <input v-model="message">
-        {{ message }}
     </div>
 </template>
 
@@ -22,12 +20,22 @@ export default {
     },
     data () {
         return {
-            message: 'TODO-expenses'
+            expensesList: []
         }
     },
     created: function () {
         let vm = this
-        this.getUser(function(){
+        this.getUser(vm.init)
+    },
+    methods: {
+        init: function () {
+            let vm = this
+            vm.getList(function(data){
+                console.log(vm.expensesList)
+            })
+        },
+        getList: function (callback) {
+            let vm = this;
             fetch('/api/expenses/index?page='+vm.currentPage, {
                 method: 'GET',
                 headers: {
@@ -47,9 +55,13 @@ export default {
                 }
             })
             .then(function (data) {
+                vm.loading = false
                 if (data) {
                     if (!data.Ret) {
-                        console.log(data);
+                        vm.pageCount = data.Meta.pageCount
+                        vm.currentPage = data.Meta.currentPage
+                        vm.expensesList.push(data.Data)
+                        if (typeof callback == 'function') return callback(data)
                     } else {
                         vm.errorMsg = vm.getFirstAttr(data.Data.errors)
                         console.warn(data.Data.errors)
@@ -60,7 +72,7 @@ export default {
                 console.error(error)
                 vm.errorMsg = '服务器故障'
             })
-        })
+        },
     }
 }
 </script>

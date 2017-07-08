@@ -34,14 +34,18 @@ class ExpensesController extends Controller
             'sort' => ['defaultOrder' => ['expenses_date' => SORT_DESC, 'updated_at' => SORT_DESC]]
         ]);
 
-        $data = [];
-        foreach ($dataProvider->getModels() as $model) {
-            array_push($data, $model);
-        }
+        $data = $dataProvider->getModels();
+        $meta = [
+            'totalCount' => $dataProvider->pagination->totalCount,
+            'pageCount' => $dataProvider->pagination->getPageCount(),
+            'currentPage' => $dataProvider->pagination->getPage() + 1,
+            'perPage' => $dataProvider->pagination->getPageSize(),
+        ];
 
         return [
             'Ret' => 0,
-            'Data' => $data
+            'Data' => $data,
+            'Meta' => $meta,
         ];
     }
 
