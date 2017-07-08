@@ -10596,27 +10596,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         noLog: function () {
             this.$router.push('/login');
+        }
+    },
+    watch: {
+        errorMsg: function () {
+            let vm = this;
+            if (vm.errorMsg) {
+                vm.error = true;
+            } else {
+                vm.error = false;
+            }
         },
-        watch: {
-            errorMsg: function () {
-                let vm = this;
-                if (vm.errorMsg) {
-                    vm.error = true;
-                } else {
-                    vm.error = false;
-                }
-            },
-            toastMsg: function () {
-                let vm = this;
-                if (vm.toastMsg) {
-                    vm.toast = true;
-                    setTimeout(function () {
-                        vm.toast = false;
-                    }, 1000);
-                    setTimeout(function () {
-                        vm.toastMsg = '';
-                    }, 1500);
-                }
+        toastMsg: function () {
+            let vm = this;
+            if (vm.toastMsg) {
+                vm.toast = true;
+                setTimeout(function () {
+                    vm.toast = false;
+                }, 1000);
+                setTimeout(function () {
+                    vm.toastMsg = '';
+                }, 1500);
             }
         }
     }
@@ -10952,11 +10952,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }).then(function (data) {
                     if (data) {
                         if (data.Ret) {
-                            localStorage.setItem('user', JSON.stringify(data.Data));
-                            vm.$router.push('/expenses');
-                        } else {
                             vm.errorMsg = vm.getFirstAttr(data.Data.errors);
                             console.warn(data.Data.errors);
+                        } else {
+                            localStorage.setItem('user', JSON.stringify(data.Data));
+                            vm.$router.push('/expenses');
                         }
                     }
                 }).catch(function (error) {

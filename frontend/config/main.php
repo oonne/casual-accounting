@@ -17,7 +17,6 @@ return [
         ],
         'user' => [
             'identityClass' => 'common\models\User',
-            'enableAutoLogin' => true,
             'loginUrl' => null,
             'enableSession' => false
         ],
@@ -36,7 +35,6 @@ return [
                 'application/json' => 'yii\web\JsonParser',
             ]
         ],
-
         'response' => [
             'format' => 'json'
         ]

@@ -173,7 +173,7 @@ $this->title = '统计图表';
             ],
             'pluginOptions' => [
                 'option' => [
-                    'color' => ['#1ca8dd', '#1bc98e', '#e64759'],
+                    'color' => ['#1ca8dd', '#1bc98e', '#e64759', '#e4d836', '#9f86ff'],
                     'tooltip' => [
                         'trigger' => 'item',
                         'formatter' => '{a} <br/>{b}: {c} ({d}%)'
