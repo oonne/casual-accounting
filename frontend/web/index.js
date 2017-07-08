@@ -11590,7 +11590,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   })]), _vm._v(" "), _c('h1', {
     staticClass: "logo-text"
-  }, [_vm._v("FMS")])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("趣饮吧")])]), _vm._v(" "), _c('div', {
     staticClass: "form",
     class: {
       shake: _vm.error
