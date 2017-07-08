@@ -164,13 +164,13 @@ td .btn {
     border-radius: 2px;
 }
 .fms-summary-income{
-    background-color: #f0db4f;
+    background-color: #1bc98e;
 }
 .fms-summary-expenses{
-    background-color: #3498db;
+    background-color: #e64759;
 }
 .fms-summary-balance{
-    background-color: #cf4646;
+    background-color: #9f86ff;
 }
 .fms-summary-attr{
     line-height: 1.6rem;
