@@ -10815,17 +10815,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     created: function () {
-        let vm = this;
-        this.getUser(vm.init);
+        this.getUser(this.init);
     },
     methods: {
         init: function () {
             let vm = this;
-            vm.getList(function (data) {
-                console.log(vm.expensesList);
-            });
+            vm.getList();
+            window.addEventListener('scroll', vm.handleScroll);
         },
-        getList: function (callback) {
+        getList: function () {
             let vm = this;
             fetch('/api/expenses/index?page=' + vm.currentPage, {
                 method: 'GET',
@@ -10850,7 +10848,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         vm.pageCount = data.Meta.pageCount;
                         vm.currentPage = data.Meta.currentPage;
                         vm.expensesList = vm.expensesList.concat(data.Data);
-                        if (typeof callback == 'function') return callback(data);
                     } else {
                         vm.errorMsg = vm.getFirstAttr(data.Data.errors);
                         console.warn(data.Data.errors);
@@ -10861,6 +10858,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.error(error);
                 vm.errorMsg = '服务器故障';
             });
+        },
+        handleScroll: function () {
+            let vm = this;
+            if (vm.checkScrollEnd() && !vm.loading) {
+                if (vm.pageCount > vm.currentPage) {
+                    vm.currentPage++;
+                    vm.loading = true;
+                    vm.getList();
+                }
+            };
         }
     }
 });
@@ -11705,7 +11712,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   })]), _vm._v(" "), _c('h1', {
     staticClass: "logo-text"
-  }, [_vm._v("趣饮吧")])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("FMS")])]), _vm._v(" "), _c('div', {
     staticClass: "form",
     class: {
       shake: _vm.error
