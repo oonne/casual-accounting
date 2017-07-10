@@ -10,7 +10,6 @@ new Vue({
 	template: '<App/>',
 	components: { App },
 	beforeCreate : function () {
-		// login
 		let user = localStorage.getItem('user')
 		if (!user) {
 			console.warn('未登录')
