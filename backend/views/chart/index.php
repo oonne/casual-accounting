@@ -11,20 +11,18 @@ $this->title = '统计图表';
     </div>
 </div>
 
-<div class="row">
-    <div class="fms-summary col-md-12">
-        <div class="fms-summary-item col-md-2 fms-summary-income">
-            <div class="fms-summary-attr">总收入</div>
-            <div class="fms-summary-num"><?= $incomeTotal ?></div>
-        </div>
-        <div class="fms-summary-item col-md-2 fms-summary-expenses">
-            <div class="fms-summary-attr">总支出</div>
-            <div class="fms-summary-num"><?= $expensesTotal ?></div>
-        </div>
-        <div class="fms-summary-item col-md-2 fms-summary-balance">
-            <div class="fms-summary-attr">结余</div>
-            <div class="fms-summary-num"><?= ($incomeTotal-$expensesTotal) ?></div>
-        </div>
+<div class="fms-summary">
+    <div class="fms-summary-item fms-summary-income">
+        <div class="fms-summary-attr">总收入</div>
+        <div class="fms-summary-num"><?= $incomeTotal ?></div>
+    </div>
+    <div class="fms-summary-item fms-summary-expenses">
+        <div class="fms-summary-attr">总支出</div>
+        <div class="fms-summary-num"><?= $expensesTotal ?></div>
+    </div>
+    <div class="fms-summary-item fms-summary-balance">
+        <div class="fms-summary-attr">结余</div>
+        <div class="fms-summary-num"><?= ($incomeTotal-$expensesTotal) ?></div>
     </div>
 </div>
 
@@ -38,7 +36,7 @@ $this->title = '统计图表';
             ],
             'pluginOptions' => [
                 'option' => [
-                    'color' => ['#e64759', '#1bc98e'],
+                    'color' => ['#72a4bb', '#add536'],
                     'grid' => [
                         'left' => '2%',
                         'right' => '3%',
@@ -123,7 +121,7 @@ $this->title = '统计图表';
             ],
             'pluginOptions' => [
                 'option' => [
-                    'color' => ['#9f86ff'],
+                    'color' => ['#ccd539'],
                     'grid' => [
                         'left' => '2%',
                         'right' => '3%',
@@ -173,7 +171,7 @@ $this->title = '统计图表';
             ],
             'pluginOptions' => [
                 'option' => [
-                    'color' => ['#1ca8dd', '#1bc98e', '#e64759', '#e4d836', '#9f86ff'],
+                    'color' => ['#a0c824', '#72a4bb', '#6c6669'],
                     'tooltip' => [
                         'trigger' => 'item',
                         'formatter' => '{a} <br/>{b}: {c} ({d}%)'
@@ -197,7 +195,7 @@ $this->title = '统计图表';
             ],
             'pluginOptions' => [
                 'option' => [
-                    'color' => ['#1ca8dd', '#1bc98e'],
+                    'color' => ['#a0c824', '#72a4bb', '#6c6669'],
                     'tooltip' => [
                         'trigger' => 'item',
                         'formatter' => '{a} <br/>{b}: {c} ({d}%)'
