@@ -1,5 +1,5 @@
 # casual-accounting
-A lightweight library for money. Base on Yii2.
+A lightweight library for money. Base on Yii2 & Vue2.
 
 [![Yii2](https://img.shields.io/badge/Powered_by-Yii_Framework-green.svg?style=flat)](http://www.yiiframework.com/)
 

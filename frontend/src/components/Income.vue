@@ -1,38 +1,145 @@
 <template>
-    <div class="income">
+    <div class="income-list">
+        <ErrorBar :text="errorMsg" />
         <BottomNav active='income' />
 
-        <input v-model="message">
-        {{ message }}
+        <ul>
+            <li v-for="income in incomeList">
+                <div class="category" :class="'color-'+income.income_handler"></div>
+
+                {{income.income_money}}<br>
+                {{income.income_item}}<br>
+                {{income.income_date}}<br>
+            </li>
+        </ul>
+        <LoadMore v-show="loading"/>        
     </div>
 </template>
 
 <script>
 import Base from './Base'
 import BottomNav from './BottomNav';
+import ErrorBar from './ErrorBar';
+import LoadMore from './LoadMore';
 
 export default {
     extends: Base,
     name: 'income',
     components: {
         'BottomNav': BottomNav,
+        'ErrorBar': ErrorBar,
+        'LoadMore': LoadMore,
     },
     data () {
         return {
-            message: 'TODO-income'
+            incomeList: []
         }
     },
     created: function () {
-        let vm = this
-        this.getUser(function(token){
-
-        })
+        this.getUser(this.init)
+    },
+    methods: {
+        init: function () {
+            let vm = this
+            vm.getList()
+            window.addEventListener('scroll', vm.handleScroll)
+        },
+        getList: function () {
+            let vm = this;
+            fetch('/api/income/index?page='+vm.currentPage, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-Auth-Token': vm.token
+                }
+            })
+            .then(function (response) {
+                if (response.status == 200) {
+                    return response.json()
+                } else if (response.status == 401) {
+                    vm.errorMsg = '未登录'
+                    vm.noLog()
+                } else {
+                    vm.errorMsg = response.statusText
+                }
+            })
+            .then(function (data) {
+                vm.loading = false
+                if (data) {
+                    if (!data.Ret) {
+                        vm.pageCount = data.Meta.pageCount
+                        vm.currentPage = data.Meta.currentPage
+                        vm.incomeList = vm.incomeList.concat(data.Data)
+                    } else {
+                        vm.errorMsg = vm.getFirstAttr(data.Data.errors)
+                        console.warn(data.Data.errors)
+                    }
+                }
+            })
+            .catch(function (error) {
+                vm.loading = false
+                console.error(error)
+                vm.errorMsg = '服务器故障'
+            })
+        },
+        handleScroll: function(){
+            let vm = this;
+            if(vm.checkScrollEnd() && !vm.loading){
+                if(vm.pageCount>vm.currentPage){
+                    vm.currentPage++;
+                    vm.loading = true;
+                    vm.getList();
+                }
+            };
+        },
     }
 }
 </script>
 
 <style lang="scss" scoped>
     @import "../assets/base.scss";
+
+    .color-1{
+        background-color: $colorA;
+    }
+    .color-2{
+        background-color: $colorB;
+    }
+    .color-3{
+        background-color: $colorC;
+    }
+    .color-4{
+        background-color: $colorD;
+    }
+
+    .income-list {
+        ul {
+            padding: 10px 10px #{($bottomNavHeight)+10}px 10px;
+
+            li {
+                position: relative;
+                width: 100%;
+                height: 100px;
+                margin-bottom: 10px;
+                padding: 10px;
+                background-color: #fff;
+                border-radius: 4px;
+                overflow: hidden;
+                box-shadow: 0 0 1px #ccc;
+                color: #666;
+
+                .category {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    bottom: 0;
+                    width: 6px;
+                    height: 100%;
+                }
+            }
+        }
+    }
 
 </style>
 

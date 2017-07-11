@@ -5,8 +5,10 @@
 
         <ul>
             <li v-for="expenses in expensesList">
-                {{expenses.expenses_item}}<br>
+                <div class="category" :class="'color-'+expenses.expenses_category"></div>
+
                 {{expenses.expenses_money}}<br>
+                {{expenses.expenses_item}}<br>
                 {{expenses.expenses_date}}<br>
             </li>
         </ul>
@@ -98,10 +100,23 @@ export default {
 <style lang="scss" scoped>
     @import "../assets/base.scss";
 
+    .color-1{
+        background-color: $colorA;
+    }
+    .color-2{
+        background-color: $colorB;
+    }
+    .color-3{
+        background-color: $colorC;
+    }
+    .color-4{
+        background-color: $colorD;
+    }
+
     .expenses-list {
         ul {
-            padding: 10px;
-
+            padding: 10px 10px #{($bottomNavHeight)+10}px 10px;
+            
             li {
                 position: relative;
                 width: 100%;
@@ -113,6 +128,15 @@ export default {
                 overflow: hidden;
                 box-shadow: 0 0 1px #ccc;
                 color: #666;
+
+                .category {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    bottom: 0;
+                    width: 6px;
+                    height: 100%;
+                }
             }
         }
     }
