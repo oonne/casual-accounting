@@ -1,5 +1,5 @@
 <?php
-use himiklab\sortablegrid\SortableGridView;
+use oonne\sortablegrid\SortableGridView;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\Pjax;

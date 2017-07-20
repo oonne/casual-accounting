@@ -39,7 +39,7 @@ $this->title = '统计图表';
                     'color' => ['#72a4bb', '#add536'],
                     'grid' => [
                         'left' => '2%',
-                        'right' => '10%',
+                        'right' => '6%',
                         'bottom' => '2%',
                         'top' => '20%',
                         'containLabel' => true
@@ -74,6 +74,11 @@ $this->title = '统计图表';
                                         'type' => 'average',
                                         'name' => '平均消费'
                                     ]
+                                ],
+                                'label' => [
+                                    'normal' => [
+                                        'position' => 'middle',
+                                    ]
                                 ]
                             ],
                             'markPoint' => [
@@ -102,6 +107,11 @@ $this->title = '统计图表';
                                         'name' => '平均消费'
                                     ]
                                 ],
+                                'label' => [
+                                    'normal' => [
+                                        'position' => 'middle',
+                                    ]
+                                ]
                             ]
                         ],
                     ]
