@@ -2,12 +2,13 @@
 
     $bottomNavHeight: 48;       //底导航高度
     $mainColor: #3b3c3e;        //主要颜色
+    $minorColor: #9c9fa4;       //次要颜色
     $lineColor: #d9d9d9;        //分割线颜色
 
     $colorA: #add536;           //绿
     $colorB: #72a4bb;           //蓝
-    $colorC: #d54936;           //红
-    $colorD: #d5b936;           //黄
+    $colorC: #d5b936;           //黄
+    $colorD: #d54936;           //红
 
 // All
 	.btn {
@@ -22,13 +23,29 @@
 	}
 
     .btn-success {
-    	@extend .btn;
+        @extend .btn;
         background-color: #5cb85c;
         border-color: #4cae4c;
         color: #fff;
     }
     .btn-success:active {
         background-color: #4cae4c;
+    }
+    .btn-danger {
+        @extend .btn;
+        background-color: #d9534f;
+        border-color: #d43f3a;
+        color: #fff;
+    }
+    .btn-danger:active {
+        background-color: #d43f3a;
+    }
+
+    .card {
+        background-color: #fff;
+        width: 100%;
+        border-radius: 3px;
+        box-shadow: 0 0 1px #ccc;
     }
 
 // Line

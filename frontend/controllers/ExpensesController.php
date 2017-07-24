@@ -34,7 +34,13 @@ class ExpensesController extends Controller
             'sort' => ['defaultOrder' => ['expenses_date' => SORT_DESC, 'updated_at' => SORT_DESC]]
         ]);
 
-        $data = $dataProvider->getModels();
+        $data = [];
+        foreach ($dataProvider->getModels() as $expenses) {
+            $expensesArr = $expenses->toArray(['id', 'expenses_date', 'expenses_item', 'expenses_money', 'expenses_category', 'expenses_handler', 'expenses_remark']);
+            $expensesArr['category'] = $expenses->category->category_name;
+            $expensesArr['handler'] = $expenses->handler->handler_name;
+            array_push($data, $expensesArr);
+        }
         $meta = [
             'totalCount' => $dataProvider->pagination->totalCount,
             'pageCount' => $dataProvider->pagination->getPageCount(),

@@ -19,7 +19,7 @@ export default {
 	    width: 1.6rem;
 	    height: 1.6rem;
 	    border-radius: 50%;
-	    box-shadow: inset 0 0 0 .1rem #88b7d1;
+	    box-shadow: inset 0 0 0 .1rem $minorColor;
 
 
 		i {

@@ -2,8 +2,10 @@
     <div class="user">
         <BottomNav active='user' />
 
-        <input v-model="message">
-        {{ message }}
+        <div class="user-info">
+            {{nickname}}
+        </div>
+        <div class="btn-danger" @click="logout">退出登录</div>
     </div>
 </template>
 
@@ -19,20 +21,38 @@ export default {
     },
     data () {
         return {
-            message: 'TODO-user'
+            nickname: ''
         }
     },
     created: function () {
         let vm = this
-        this.getUser(function(token){
-
+        this.getUser(function(user){
+            vm.nickname = user.nickname
         })
-    }
+    },
+    methods: {
+        logout: function(){
+            localStorage.clear()
+            sessionStorage.clear()
+            this.noLog()
+        },
+    },
 }
 </script>
 
 <style lang="scss" scoped>
     @import "../assets/base.scss";
+
+    .user {
+        padding: 10px 10px #{($bottomNavHeight)+10}px 10px;
+
+        .user-info {
+            @extend .card;
+            height: 60px;
+            line-height: 60px;
+            text-align: center;
+        }   
+    }
 
 </style>
 

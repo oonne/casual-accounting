@@ -5,11 +5,11 @@
 
         <ul>
             <li v-for="expenses in expensesList">
-                <div class="category" :class="'color-'+expenses.expenses_category"></div>
-
-                {{expenses.expenses_money}}<br>
-                {{expenses.expenses_item}}<br>
-                {{expenses.expenses_date}}<br>
+                <div class="info">
+                    <p class="item">{{expenses.expenses_item}}</p>
+                    <p class="date_category">{{expenses.expenses_date}} {{expenses.category}}</p>
+                </div>
+                <div class="money" :class="'color-'+expenses.expenses_category">{{expenses.expenses_money}}</div>
             </li>
         </ul>
         <LoadMore v-show="loading"/>        
@@ -113,29 +113,38 @@ export default {
         background-color: $colorD;
     }
 
+    $itemHeight: 64;
     .expenses-list {
         ul {
             padding: 10px 10px #{($bottomNavHeight)+10}px 10px;
             
             li {
-                position: relative;
-                width: 100%;
-                height: 100px;
+                height: #{$itemHeight}px;
                 margin-bottom: 10px;
-                padding: 10px;
-                background-color: #fff;
-                border-radius: 4px;
                 overflow: hidden;
-                box-shadow: 0 0 1px #ccc;
-                color: #666;
+                display: flex;
 
-                .category {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    bottom: 0;
-                    width: 6px;
-                    height: 100%;
+                .info {
+                    flex: 1 1 100%;
+                    height: #{$itemHeight}px;
+                    padding: 10px;
+
+                    .item {
+                        color: #666;
+                    }
+                    .date_category {
+                        color: #aaa;
+                        font-size: 0.8rem;
+                    }
+                }
+
+                .money {
+                    flex: 0 0 80px;
+                    width: 80px;
+                    height: #{$itemHeight}px;
+                    line-height: #{$itemHeight}px;
+                    color: #fff;
+                    text-align: center;
                 }
             }
         }

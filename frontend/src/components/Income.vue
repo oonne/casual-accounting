@@ -5,11 +5,11 @@
 
         <ul>
             <li v-for="income in incomeList">
-                <div class="category" :class="'color-'+income.income_handler"></div>
-
-                {{income.income_money}}<br>
-                {{income.income_item}}<br>
-                {{income.income_date}}<br>
+                <div class="info">
+                    <p class="item">{{income.income_item}}</p>
+                    <p class="date_handler">{{income.income_date}} {{income.handler}}</p>
+                </div>
+                <div class="money" :class="'color-'+income.income_handler">{{income.income_money}}</div>
             </li>
         </ul>
         <LoadMore v-show="loading"/>        
@@ -113,29 +113,39 @@ export default {
         background-color: $colorD;
     }
 
+    $itemHeight: 64;
     .income-list {
         ul {
             padding: 10px 10px #{($bottomNavHeight)+10}px 10px;
 
             li {
-                position: relative;
-                width: 100%;
-                height: 100px;
+                @extend .card;
+                height: #{$itemHeight}px;
                 margin-bottom: 10px;
-                padding: 10px;
-                background-color: #fff;
-                border-radius: 4px;
                 overflow: hidden;
-                box-shadow: 0 0 1px #ccc;
-                color: #666;
+                display: flex;
 
-                .category {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    bottom: 0;
-                    width: 6px;
-                    height: 100%;
+                .info {
+                    flex: 1 1 100%;
+                    height: #{$itemHeight}px;
+                    padding: 10px;
+
+                    .item {
+                        color: #666;
+                    }
+                    .date_handler {
+                        color: #aaa;
+                        font-size: 0.8rem;
+                    }
+                }
+
+                .money {
+                    flex: 0 0 80px;
+                    width: 80px;
+                    height: #{$itemHeight}px;
+                    line-height: #{$itemHeight}px;
+                    color: #fff;
+                    text-align: center;
                 }
             }
         }

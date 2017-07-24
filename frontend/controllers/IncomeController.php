@@ -34,7 +34,12 @@ class IncomeController extends Controller
             'sort' => ['defaultOrder' => ['income_date' => SORT_DESC, 'updated_at' => SORT_DESC]]
         ]);
 
-        $data = $dataProvider->getModels();
+        $data = [];
+        foreach ($dataProvider->getModels() as $income) {
+            $incomeArr = $income->toArray(['id', 'income_item', 'income_date', 'income_money', 'income_handler', 'income_remark']);
+            $incomeArr['handler'] = $income->handler->handler_name;
+            array_push($data, $incomeArr);
+        }
         $meta = [
             'totalCount' => $dataProvider->pagination->totalCount,
             'pageCount' => $dataProvider->pagination->getPageCount(),

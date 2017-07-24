@@ -28,7 +28,7 @@ export default {
             if(localStorage.getItem( 'user' )){
                 let user = eval('('+localStorage.getItem('user')+')')
                 this.token = user.access_token
-                if (typeof callback == 'function') return callback()
+                if (typeof callback == 'function') return callback(user)
             }else{
                 this.noLog()
             }   
