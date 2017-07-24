@@ -119,6 +119,7 @@ export default {
             padding: 10px 10px #{($bottomNavHeight)+10}px 10px;
             
             li {
+                @extend .card;
                 height: #{$itemHeight}px;
                 margin-bottom: 10px;
                 overflow: hidden;
