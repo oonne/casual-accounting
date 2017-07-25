@@ -12,8 +12,16 @@
                 <div class="money" :class="'color-'+expenses.expenses_category">{{expenses.expenses_money}}</div>
                 
                 <div class="edit">
-                    <div class="money_item" :class="'color-'+expenses.expenses_category">
-                        <div class="money">112</div>
+                    <div class="money_category_item" :class="'color-'+expenses.expenses_category">
+                        <div class="money">
+                            <input v-model="editingExpenses.expenses_money">
+                        </div>
+                        <div class="category">
+                            {{getCategoryName(expenses.expenses_category)}}
+                        </div>
+                        <div class="item">
+                            <input v-model="editingExpenses.expenses_item">
+                        </div>
                     </div>
                     <div class="handler_date">
 
@@ -138,12 +146,13 @@ export default {
             return name
         },
         editingOn: function(index){
-            // let vm = this
-            // if (vm.editingIndex === null) {
-            //     vm.editingIndex = index
-            //     let expenses = vm.expensesList[index]
-            //     console.log(expenses)
-            // }
+            let vm = this
+            if (vm.editingIndex === null) {
+                let expenses = vm.expensesList[index]
+                vm.editingIndex = index
+                vm.editingExpenses = expenses
+                console.log(expenses)
+            }
         }
     }
 }
@@ -215,8 +224,49 @@ export default {
                     transition: opacity .3s;
                     background-color: #fff;
 
-                    .money_item{
+                    input {
+                        border: none;
+                        background:transparent;
+                    }
+
+                    .money_category_item{
                         height: 100px;
+                        padding: 0 30px;
+
+                        .money {
+                            width: 70%;
+                            height: 50px;
+                            float: left;
+                            overflow: hidden;
+                            
+                            input {
+                                color: #fff;
+                                font-size: 2rem;   
+                                line-height: 50px;
+                            }
+                        }
+                        .category {
+                            width: 30%;
+                            float: right;
+                            text-align: right;
+                            color: #fff;
+                            line-height: 50px;
+                            font-size: 0.9rem;
+                        }
+                        .item {
+                            clear: both;
+                            width: 100%;
+                            height: 50px;
+                            border-top: 2px dashed #fff;
+
+                            input {
+                                width: 100%;
+                                text-align: center;
+                                color: #fff;   
+                                font-size: 1.1rem;   
+                                line-height: 50px;
+                            }
+                        }
                     }
 
                     .save-btn {

@@ -130,9 +130,9 @@ export default {
                 display: block;
                 width: 100%;
                 height: 2.4rem;
-                line-height: 2.4rem;
+                line-height: 1.6rem;
                 margin: 20px 0;
-                padding: 0 14px;
+                padding: 0.4rem 14px;
                 border-radius: 4px;
                 border: none;
                 background-color: #ddd;
