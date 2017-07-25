@@ -4,12 +4,22 @@
         <BottomNav active='expenses' />
 
         <ul>
-            <li v-for="expenses in expensesList">
+            <li v-for="(expenses, index) in expensesList" @click="editingOn(index)" :class="{ 'editing': (index==editingIndex) }">
                 <div class="info">
                     <p class="item">{{expenses.expenses_item}}</p>
-                    <p class="date_category">{{expenses.expenses_date}} {{expenses.category}}</p>
+                    <p class="date_category">{{expenses.expenses_date}} {{getCategoryName(expenses.expenses_category)}}</p>
                 </div>
                 <div class="money" :class="'color-'+expenses.expenses_category">{{expenses.expenses_money}}</div>
+                
+                <div class="edit">
+                    <div class="money_item" :class="'color-'+expenses.expenses_category">
+                        <div class="money">112</div>
+                    </div>
+                    <div class="handler_date">
+
+                    </div>
+                    <div class="save-btn" @click="">保存</div>
+                </div>
             </li>
         </ul>
         <LoadMore v-show="loading"/>        
@@ -32,7 +42,19 @@ export default {
     },
     data () {
         return {
-            expensesList: []
+            expensesList: [],
+            categoryList: [],
+            handlerList: [],
+            editingIndex: null,
+            editingExpenses: {
+                'id': null,
+                'expenses_date': null,
+                'expenses_item': '',
+                'expenses_money': 0,
+                'expenses_category': null,
+                'expenses_handler': null,
+                'expenses_remark': '',
+            },
         }
     },
     created: function () {
@@ -70,6 +92,8 @@ export default {
                     if (!data.Ret) {
                         vm.pageCount = data.Meta.pageCount
                         vm.currentPage = data.Meta.currentPage
+                        vm.categoryList = data.Extra.category
+                        vm.handlerList = data.Extra.handler
                         vm.expensesList = vm.expensesList.concat(data.Data)
                     } else {
                         vm.errorMsg = vm.getFirstAttr(data.Data.errors)
@@ -93,6 +117,34 @@ export default {
                 }
             };
         },
+        getCategoryName: function (id) {
+            let vm = this
+            let name = ''
+            for (let category of vm.categoryList) {
+                if (category.id == id) {
+                    name = category.category_name
+                }
+            }
+            return name
+        },
+        getHandlerName: function (id) {
+            let vm = this
+            let name = ''
+            for (let handler of vm.handlerList) {
+                if (handler.id == id) {
+                    name = handler.handler_name
+                }
+            }
+            return name
+        },
+        editingOn: function(index){
+            // let vm = this
+            // if (vm.editingIndex === null) {
+            //     vm.editingIndex = index
+            //     let expenses = vm.expensesList[index]
+            //     console.log(expenses)
+            // }
+        }
     }
 }
 </script>
@@ -114,13 +166,17 @@ export default {
     }
 
     $itemHeight: 64;
+    $itemEditingHeight: 200;
+
     .expenses-list {
         ul {
             padding: 10px 10px #{($bottomNavHeight)+10}px 10px;
             
             li {
                 @extend .card;
+                position: relative;
                 height: #{$itemHeight}px;
+                transition: height .3s;
                 margin-bottom: 10px;
                 overflow: hidden;
                 display: flex;
@@ -146,6 +202,34 @@ export default {
                     line-height: #{$itemHeight}px;
                     color: #fff;
                     text-align: center;
+                }
+
+                .edit {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    width: 100%;
+                    height: #{$itemEditingHeight}px;
+                    opacity: 0;
+                    transition: opacity .3s;
+                    background-color: #fff;
+
+                    .money_item{
+                        height: 100px;
+                    }
+
+                    .save-btn {
+                        display: none;
+                    }
+                }
+            }
+
+            .editing {
+                height: #{$itemEditingHeight}px;
+
+                .edit {
+                    opacity: 1;
                 }
             }
         }

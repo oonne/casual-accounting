@@ -4,7 +4,7 @@
         <BottomNav active='income' />
 
         <ul>
-            <li v-for="income in incomeList">
+            <li v-for="(income, index) in incomeList">
                 <div class="info">
                     <p class="item">{{income.income_item}}</p>
                     <p class="date_handler">{{income.income_date}} {{income.handler}}</p>

@@ -20,7 +20,7 @@ export default {
             for (let i in object) return object[i]
         },
         checkScrollEnd: function(){
-            let scrollTop = document.body.scrollTop
+            let scrollTop = document.documentElement.scrollTop
             let scrollHeight = document.documentElement.scrollHeight
             return (scrollHeight-scrollTop<1100)
         },

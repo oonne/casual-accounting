@@ -6,6 +6,8 @@ use Yii;
 use common\filters\auth\HeaderParamAuth;
 use yii\data\ActiveDataProvider;
 use common\models\Expenses;
+use common\models\Category;
+use common\models\Handler;
 
 class ExpensesController extends Controller
 {
@@ -27,20 +29,15 @@ class ExpensesController extends Controller
 
     public function actionIndex()
     {
-        $query = Expenses::find();
+        $query = Expenses::find()
+            ->select(['id', 'expenses_date', 'expenses_item', 'expenses_money', 'expenses_category', 'expenses_handler', 'expenses_remark']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => ['defaultOrder' => ['expenses_date' => SORT_DESC, 'updated_at' => SORT_DESC]]
         ]);
 
-        $data = [];
-        foreach ($dataProvider->getModels() as $expenses) {
-            $expensesArr = $expenses->toArray(['id', 'expenses_date', 'expenses_item', 'expenses_money', 'expenses_category', 'expenses_handler', 'expenses_remark']);
-            $expensesArr['category'] = $expenses->category->category_name;
-            $expensesArr['handler'] = $expenses->handler->handler_name;
-            array_push($data, $expensesArr);
-        }
+        $data = $dataProvider->getModels();
         $meta = [
             'totalCount' => $dataProvider->pagination->totalCount,
             'pageCount' => $dataProvider->pagination->getPageCount(),
@@ -48,11 +45,35 @@ class ExpensesController extends Controller
             'perPage' => $dataProvider->pagination->getPageSize(),
         ];
 
+        // Category & Handler
+        $extra = [];
+        
+        $category = Category::find()
+            ->select(['id', 'category_name'])
+            ->all();
+        $extra['category'] = $category;
+
+        $handler = Handler::find()
+            ->select(['id', 'handler_name'])
+            ->all();
+        $extra['handler'] = $category;
+
         return [
             'Ret' => 0,
             'Data' => $data,
             'Meta' => $meta,
+            'Extra' => $extra,
         ];
+    }
+
+    public function actionUpdate()
+    {
+        //TODO
+    }
+
+    public function actionDelete()
+    {
+        //TODO
     }
 
 }
