@@ -197,7 +197,47 @@ export default {
             }
         },
         deleteExpenses: function() {
-            alert('TODO');
+            let vm = this
+            if (vm.editingIndex != null) {
+                vm.loading = true
+                fetch('/api/expenses/delete', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'X-Auth-Token': vm.token
+                    },
+                    body: JSON.stringify({'id': vm.editingExpenses.id})
+                })
+                .then(function (response) {
+                    if (response.status == 200) {
+                        return response.json()
+                    } else if (response.status == 401) {
+                        vm.errorMsg = '未登录'
+                        vm.noLog()
+                    } else {
+                        vm.errorMsg = response.statusText
+                    }
+                })
+                .then(function (data) {
+                    vm.loading = false
+                    if (data) {
+                        if (!data.Ret) {
+                            console.log('OK')
+                            vm.expensesList.splice(vm.editingIndex, 1)
+                            vm.editingIndex = null
+                        } else {
+                            vm.errorMsg = vm.getFirstAttr(data.Data.errors)
+                            console.warn(data.Data.errors)
+                        }
+                    }
+                })
+                .catch(function (error) {
+                    vm.loading = false
+                    console.error(error)
+                    vm.errorMsg = '服务器故障'
+                })
+            }
         },
         saveExpenses: function() {
             let vm = this
