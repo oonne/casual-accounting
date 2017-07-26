@@ -11034,7 +11034,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         changeCategory: function () {
             let vm = this;
-            if (vm.editingIndex) {
+            if (vm.editingIndex != null) {
                 let id = 0;
                 for (let i in vm.categoryList) {
                     if (vm.categoryList[i].id == vm.editingExpenses.expenses_category) {
@@ -11050,7 +11050,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         changeHandler: function () {
             let vm = this;
-            if (vm.editingIndex) {
+            if (vm.editingIndex != null) {
                 let id = 0;
                 for (let i in vm.handlerList) {
                     if (vm.handlerList[i].id == vm.editingExpenses.expenses_handler) {
@@ -11069,7 +11069,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         saveExpenses: function () {
             let vm = this;
-            if (vm.editingIndex && vm.editingExpenses.expenses_item) {
+            if (vm.editingIndex != null && vm.editingExpenses.expenses_item) {
                 let expenses = JSON.stringify(vm.editingExpenses);
                 vm.loading = true;
                 fetch('/api/expenses/update', {
@@ -11142,6 +11142,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -11158,7 +11179,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     data() {
         return {
-            incomeList: []
+            incomeList: [],
+            handlerList: [],
+            editingIndex: null,
+            editingIncome: {
+                'id': null,
+                'income_date': null,
+                'income_item': '',
+                'income_money': 0,
+                'income_handler': null,
+                'income_remark': ''
+            }
         };
     },
     created: function () {
@@ -11194,6 +11225,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     if (!data.Ret) {
                         vm.pageCount = data.Meta.pageCount;
                         vm.currentPage = data.Meta.currentPage;
+                        vm.handlerList = data.Extra.handler;
                         vm.incomeList = vm.incomeList.concat(data.Data);
                     } else {
                         vm.errorMsg = vm.getFirstAttr(data.Data.errors);
@@ -11215,6 +11247,83 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     vm.getList();
                 }
             };
+        },
+        getHandlerName: function (id) {
+            let vm = this;
+            let name = '';
+            for (let handler of vm.handlerList) {
+                if (handler.id == id) {
+                    name = handler.handler_name;
+                }
+            }
+            return name;
+        },
+        editingOn: function (index) {
+            let vm = this;
+            if (vm.editingIndex === null) {
+                let income = vm.incomeList[index];
+                vm.editingIndex = index;
+                vm.editingIncome = income;
+            }
+        },
+        changeHandler: function () {
+            let vm = this;
+            if (vm.editingIndex != null) {
+                let id = 0;
+                for (let i in vm.handlerList) {
+                    if (vm.handlerList[i].id == vm.editingIncome.income_handler) {
+                        if (parseInt(i) + 1 < vm.handlerList.length) {
+                            id = vm.handlerList[parseInt(i) + 1].id;
+                        } else {
+                            id = vm.handlerList[0].id;
+                        }
+                    }
+                }
+                vm.editingIncome.income_handler = id;
+            }
+        },
+        deleteIncome: function () {
+            alert('TODO');
+        },
+        saveIncome: function () {
+            let vm = this;
+            if (vm.editingIndex != null && vm.editingIncome.income_item) {
+                let income = JSON.stringify(vm.editingIncome);
+                vm.loading = true;
+                fetch('/api/income/update', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'X-Auth-Token': vm.token
+                    },
+                    body: income
+                }).then(function (response) {
+                    if (response.status == 200) {
+                        return response.json();
+                    } else if (response.status == 401) {
+                        vm.errorMsg = '未登录';
+                        vm.noLog();
+                    } else {
+                        vm.errorMsg = response.statusText;
+                    }
+                }).then(function (data) {
+                    vm.loading = false;
+                    if (data) {
+                        if (!data.Ret) {
+                            vm.incomeList[vm.editingIndex] = vm.editingIncome;
+                            vm.editingIndex = null;
+                        } else {
+                            vm.errorMsg = vm.getFirstAttr(data.Data.errors);
+                            console.warn(data.Data.errors);
+                        }
+                    }
+                }).catch(function (error) {
+                    vm.loading = false;
+                    console.error(error);
+                    vm.errorMsg = '服务器故障';
+                });
+            }
         }
     }
 });
@@ -11486,7 +11595,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, ".btn[data-v-70702348],.btn-danger[data-v-70702348],.btn-default[data-v-70702348],.btn-success[data-v-70702348]{display:block;width:100%;height:2.5rem;line-height:2.5rem;margin:20px 0;border-radius:4px;border:1px solid transparent;text-align:center;-webkit-user-select:none;user-select:none}.btn-default[data-v-70702348]{background-color:#fff;border-color:#ccc;color:#333}.btn-default[data-v-70702348]:active{background-color:#e6e6e6;border-color:#adadad}.btn-success[data-v-70702348]{background-color:#5cb85c;border-color:#4cae4c;color:#fff}.btn-success[data-v-70702348]:active{background-color:#4cae4c}.btn-danger[data-v-70702348]{background-color:#d9534f;border-color:#d43f3a;color:#fff}.btn-danger[data-v-70702348]:active{background-color:#d43f3a}.card[data-v-70702348],.income-list ul li[data-v-70702348]{background-color:#fff;width:100%;border-radius:3px;box-shadow:0 0 1px #ccc}.line[data-v-70702348],.line-bottom[data-v-70702348],.line-top[data-v-70702348]{position:absolute;content:\" \";width:100%;height:1px;left:0;right:0;margin:auto;color:#d9d9d9;transform:scaleY(.5)}.line-top[data-v-70702348]{top:0;transform-origin:0 0;border-top:1px solid #d9d9d9}.line-bottom[data-v-70702348]{bottom:0;transform-origin:0 100%;border-bottom:1px solid #d9d9d9}.line-left[data-v-70702348],.line-right[data-v-70702348],.line-vertical[data-v-70702348]{position:absolute;content:\" \";width:1px;height:100%;top:0;bottom:0;margin:auto;color:#d9d9d9;transform:scaleX(.5)}.line-left[data-v-70702348]{left:0;transform-origin:0 0;border-left:1px solid #d9d9d9}.line-right[data-v-70702348]{right:0;transform-origin:100% 0;border-right:1px solid #d9d9d9}.shake[data-v-70702348]{animation:a-data-v-70702348 linear .4s}@keyframes a-data-v-70702348{0%{transform:translateX(-10px)}20%{transform:translateX(8px)}40%{transform:translateX(-6px)}60%{transform:translateX(4px)}80%{transform:translateX(-2px)}to{transform:translateX(0)}}.fade-enter-active[data-v-70702348],.fade-leave-active[data-v-70702348]{transition:opacity .3s}.fade-enter[data-v-70702348],.fade-leave-active[data-v-70702348]{opacity:0}.color-1[data-v-70702348]{background-color:#add536}.color-2[data-v-70702348]{background-color:#72a4bb}.color-3[data-v-70702348]{background-color:#d5b936}.color-4[data-v-70702348]{background-color:#d54936}.income-list ul[data-v-70702348]{padding:10px 10px 58px}.income-list ul li[data-v-70702348]{height:64px;margin-bottom:10px;overflow:hidden;display:flex}.income-list ul li .info[data-v-70702348]{flex:1 1 100%;height:64px;padding:10px}.income-list ul li .info .item[data-v-70702348]{color:#666}.income-list ul li .info .date_handler[data-v-70702348]{color:#aaa;font-size:.8rem}.income-list ul li .money[data-v-70702348]{flex:0 0 80px;width:80px;height:64px;line-height:64px;color:#fff;text-align:center}", ""]);
+exports.push([module.i, ".btn[data-v-70702348],.btn-danger[data-v-70702348],.btn-default[data-v-70702348],.btn-success[data-v-70702348]{display:block;width:100%;height:2.5rem;line-height:2.5rem;margin:20px 0;border-radius:4px;border:1px solid transparent;text-align:center;-webkit-user-select:none;user-select:none}.btn-default[data-v-70702348]{background-color:#fff;border-color:#ccc;color:#333}.btn-default[data-v-70702348]:active{background-color:#e6e6e6;border-color:#adadad}.btn-success[data-v-70702348]{background-color:#5cb85c;border-color:#4cae4c;color:#fff}.btn-success[data-v-70702348]:active{background-color:#4cae4c}.btn-danger[data-v-70702348]{background-color:#d9534f;border-color:#d43f3a;color:#fff}.btn-danger[data-v-70702348]:active{background-color:#d43f3a}.card[data-v-70702348],.income-list ul li[data-v-70702348]{background-color:#fff;width:100%;border-radius:3px;box-shadow:0 0 1px #ccc}.income-list ul li .edit .date[data-v-70702348]:after,.line[data-v-70702348],.line-bottom[data-v-70702348],.line-top[data-v-70702348]{position:absolute;content:\" \";width:100%;height:1px;left:0;right:0;margin:auto;color:#d9d9d9;transform:scaleY(.5)}.line-top[data-v-70702348]{top:0;transform-origin:0 0;border-top:1px solid #d9d9d9}.income-list ul li .edit .date[data-v-70702348]:after,.line-bottom[data-v-70702348]{bottom:0;transform-origin:0 100%;border-bottom:1px solid #d9d9d9}.income-list ul li .edit .income-btn-list .income-btn-save[data-v-70702348]:after,.line-left[data-v-70702348],.line-right[data-v-70702348],.line-vertical[data-v-70702348]{position:absolute;content:\" \";width:1px;height:100%;top:0;bottom:0;margin:auto;color:#d9d9d9;transform:scaleX(.5)}.income-list ul li .edit .income-btn-list .income-btn-save[data-v-70702348]:after,.line-left[data-v-70702348]{left:0;transform-origin:0 0;border-left:1px solid #d9d9d9}.line-right[data-v-70702348]{right:0;transform-origin:100% 0;border-right:1px solid #d9d9d9}.shake[data-v-70702348]{animation:a-data-v-70702348 linear .4s}@keyframes a-data-v-70702348{0%{transform:translateX(-10px)}20%{transform:translateX(8px)}40%{transform:translateX(-6px)}60%{transform:translateX(4px)}80%{transform:translateX(-2px)}to{transform:translateX(0)}}.fade-enter-active[data-v-70702348],.fade-leave-active[data-v-70702348]{transition:opacity .3s}.fade-enter[data-v-70702348],.fade-leave-active[data-v-70702348]{opacity:0}.color-1[data-v-70702348]{background-color:#add536}.color-2[data-v-70702348]{background-color:#72a4bb}.color-3[data-v-70702348]{background-color:#d5b936}.color-4[data-v-70702348]{background-color:#d54936}.income-list ul[data-v-70702348]{padding:10px 10px 58px}.income-list ul li[data-v-70702348]{position:relative;transition:height .3s;height:64px;margin-bottom:10px;overflow:hidden;display:flex}.income-list ul li .info[data-v-70702348]{flex:1 1 100%;height:64px;padding:10px}.income-list ul li .info .item[data-v-70702348]{color:#666}.income-list ul li .info .date_handler[data-v-70702348]{color:#aaa;font-size:.8rem}.income-list ul li .money[data-v-70702348]{flex:0 0 80px;width:80px;height:64px;line-height:64px;color:#fff;text-align:center}.income-list ul li .edit[data-v-70702348]{position:absolute;top:0;left:0;right:0;width:100%;height:230px;opacity:0;transition:opacity .3s;background-color:#fff}.income-list ul li .edit input[data-v-70702348]{border:none;background:transparent}.income-list ul li .edit .money_handler_item[data-v-70702348]{height:124px;padding:0 30px;transition:background-color .3s}.income-list ul li .edit .money_handler_item .money[data-v-70702348]{width:70%;height:64px;float:left;overflow:hidden}.income-list ul li .edit .money_handler_item .money input[data-v-70702348]{color:#fff;font-size:2rem;line-height:64px}.income-list ul li .edit .money_handler_item .handler[data-v-70702348]{width:30%;float:right;text-align:right;color:#fff;line-height:64px;font-size:.9rem}.income-list ul li .edit .money_handler_item .item[data-v-70702348]{clear:both;width:100%;height:60px;border-top:2px dashed #fff}.income-list ul li .edit .money_handler_item .item input[data-v-70702348]{width:100%;text-align:center;color:#fff;font-size:1.1rem;line-height:60px}.income-list ul li .edit .date[data-v-70702348]{padding:0 30px;height:56px;width:100%;position:relative}.income-list ul li .edit .date input[data-v-70702348]{height:56px;line-height:56px;border:none;background:transparent;color:#777}.income-list ul li .edit .income-btn-list[data-v-70702348]{width:100%;height:50px;display:flex;justify-content:space-between}.income-list ul li .edit .income-btn-list .income-btn[data-v-70702348],.income-list ul li .edit .income-btn-list .income-btn-delete[data-v-70702348],.income-list ul li .edit .income-btn-list .income-btn-save[data-v-70702348]{width:50%;height:50px;line-height:50px;text-align:center}.income-list ul li .edit .income-btn-list .income-btn-delete[data-v-70702348]{color:#a94442}.income-list ul li .edit .income-btn-list .income-btn-save[data-v-70702348]{position:relative;color:#333}.income-list ul li .edit .income-btn-list .income-btn-disable[data-v-70702348]{color:#999}.income-list ul .editing[data-v-70702348]{height:230px}.income-list ul .editing .edit[data-v-70702348]{opacity:1}", ""]);
 
 // exports
 
@@ -12146,16 +12255,119 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "active": "income"
     }
   }), _vm._v(" "), _c('ul', _vm._l((_vm.incomeList), function(income, index) {
-    return _c('li', [_c('div', {
+    return _c('li', {
+      class: {
+        'editing': (index == _vm.editingIndex)
+      },
+      on: {
+        "click": function($event) {
+          _vm.editingOn(index)
+        }
+      }
+    }, [_c('div', {
       staticClass: "info"
     }, [_c('p', {
       staticClass: "item"
     }, [_vm._v(_vm._s(income.income_item))]), _vm._v(" "), _c('p', {
       staticClass: "date_handler"
-    }, [_vm._v(_vm._s(income.income_date) + " " + _vm._s(income.handler))])]), _vm._v(" "), _c('div', {
+    }, [_vm._v(_vm._s(income.income_date) + " " + _vm._s(_vm.getHandlerName(income.income_handler)))])]), _vm._v(" "), _c('div', {
       staticClass: "money",
       class: 'color-' + income.income_handler
-    }, [_vm._v(_vm._s(income.income_money))])])
+    }, [_vm._v(_vm._s(income.income_money))]), _vm._v(" "), _c('div', {
+      staticClass: "edit"
+    }, [_c('div', {
+      staticClass: "money_handler_item",
+      class: 'color-' + income.income_handler
+    }, [_c('div', {
+      staticClass: "money"
+    }, [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model.number",
+        value: (_vm.editingIncome.income_money),
+        expression: "editingIncome.income_money",
+        modifiers: {
+          "number": true
+        }
+      }],
+      domProps: {
+        "value": (_vm.editingIncome.income_money)
+      },
+      on: {
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          _vm.editingIncome.income_money = _vm._n($event.target.value)
+        },
+        "blur": function($event) {
+          _vm.$forceUpdate()
+        }
+      }
+    })]), _vm._v(" "), _c('div', {
+      staticClass: "handler",
+      on: {
+        "click": _vm.changeHandler
+      }
+    }, [_vm._v("\n                        " + _vm._s(_vm.getHandlerName(income.income_handler)) + "\n                    ")]), _vm._v(" "), _c('div', {
+      staticClass: "item"
+    }, [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model.trim",
+        value: (_vm.editingIncome.income_item),
+        expression: "editingIncome.income_item",
+        modifiers: {
+          "trim": true
+        }
+      }],
+      domProps: {
+        "value": (_vm.editingIncome.income_item)
+      },
+      on: {
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          _vm.editingIncome.income_item = $event.target.value.trim()
+        },
+        "blur": function($event) {
+          _vm.$forceUpdate()
+        }
+      }
+    })])]), _vm._v(" "), _c('div', {
+      staticClass: "date"
+    }, [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (_vm.editingIncome.income_date),
+        expression: "editingIncome.income_date"
+      }],
+      attrs: {
+        "type": "date"
+      },
+      domProps: {
+        "value": (_vm.editingIncome.income_date)
+      },
+      on: {
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          _vm.editingIncome.income_date = $event.target.value
+        }
+      }
+    })]), _vm._v(" "), _c('div', {
+      staticClass: "income-btn-list"
+    }, [_c('div', {
+      staticClass: "income-btn-delete",
+      on: {
+        "click": _vm.deleteIncome
+      }
+    }, [_vm._v("删除")]), _vm._v(" "), _c('div', {
+      staticClass: "income-btn-save",
+      class: {
+        'income-btn-disable': !_vm.editingIncome.income_item
+      },
+      on: {
+        "click": _vm.saveIncome
+      }
+    }, [_vm._v("保存")])])])])
   })), _vm._v(" "), _c('LoadMore', {
     directives: [{
       name: "show",

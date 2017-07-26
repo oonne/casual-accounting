@@ -24,6 +24,9 @@ class ExpensesController extends Controller
     {
         return [
             'index' => ['get'],
+            'add' => ['post'],
+            'update' => ['post'],
+            'delete' => ['post'],
         ];
     }
 
@@ -64,6 +67,11 @@ class ExpensesController extends Controller
             'Meta' => $meta,
             'Extra' => $extra,
         ];
+    }
+
+    public function actionAdd()
+    {
+        //TODO
     }
 
     public function actionUpdate()

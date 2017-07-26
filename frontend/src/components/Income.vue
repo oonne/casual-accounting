@@ -4,12 +4,33 @@
         <BottomNav active='income' />
 
         <ul>
-            <li v-for="(income, index) in incomeList">
+            <li v-for="(income, index) in incomeList" @click="editingOn(index)" :class="{ 'editing': (index==editingIndex) }">
                 <div class="info">
                     <p class="item">{{income.income_item}}</p>
-                    <p class="date_handler">{{income.income_date}} {{income.handler}}</p>
+                    <p class="date_handler">{{income.income_date}} {{getHandlerName(income.income_handler)}}</p>
                 </div>
                 <div class="money" :class="'color-'+income.income_handler">{{income.income_money}}</div>
+            
+                <div class="edit">
+                    <div class="money_handler_item" :class="'color-'+income.income_handler">
+                        <div class="money">
+                            <input v-model.number="editingIncome.income_money">
+                        </div>
+                        <div class="handler" @click="changeHandler">
+                            {{getHandlerName(income.income_handler)}}
+                        </div>
+                        <div class="item">
+                            <input v-model.trim="editingIncome.income_item">
+                        </div>
+                    </div>
+                    <div class="date">
+                        <input type="date" v-model="editingIncome.income_date">
+                    </div>
+                    <div class="income-btn-list">
+                        <div class="income-btn-delete" @click="deleteIncome">删除</div>
+                        <div class="income-btn-save" :class="{ 'income-btn-disable': !editingIncome.income_item }" @click="saveIncome">保存</div>
+                    </div>
+                </div>
             </li>
         </ul>
         <LoadMore v-show="loading"/>        
@@ -32,7 +53,17 @@ export default {
     },
     data () {
         return {
-            incomeList: []
+            incomeList: [],
+            handlerList: [],
+            editingIndex: null,
+            editingIncome: {
+                'id': null,
+                'income_date': null,
+                'income_item': '',
+                'income_money': 0,
+                'income_handler': null,
+                'income_remark': '',
+            },
         }
     },
     created: function () {
@@ -70,6 +101,7 @@ export default {
                     if (!data.Ret) {
                         vm.pageCount = data.Meta.pageCount
                         vm.currentPage = data.Meta.currentPage
+                        vm.handlerList = data.Extra.handler
                         vm.incomeList = vm.incomeList.concat(data.Data)
                     } else {
                         vm.errorMsg = vm.getFirstAttr(data.Data.errors)
@@ -93,6 +125,86 @@ export default {
                 }
             };
         },
+        getHandlerName: function (id) {
+            let vm = this
+            let name = ''
+            for (let handler of vm.handlerList) {
+                if (handler.id == id) {
+                    name = handler.handler_name
+                }
+            }
+            return name
+        },
+        editingOn: function(index){
+            let vm = this
+            if (vm.editingIndex === null) {
+                let income = vm.incomeList[index]
+                vm.editingIndex = index
+                vm.editingIncome = income
+            }
+        },
+        changeHandler: function(){
+            let vm = this
+            if (vm.editingIndex != null) {
+                let id = 0
+                for (let i in vm.handlerList) {
+                    if (vm.handlerList[i].id == vm.editingIncome.income_handler) {
+                        if (parseInt(i)+1<vm.handlerList.length) {
+                            id = vm.handlerList[parseInt(i)+1].id
+                        } else {
+                            id = vm.handlerList[0].id
+                        }
+                    }
+                }
+                vm.editingIncome.income_handler = id
+            }
+        },
+        deleteIncome: function() {
+            alert('TODO');
+        },
+        saveIncome: function() {
+            let vm = this
+            if (vm.editingIndex != null && vm.editingIncome.income_item) {
+                let income = JSON.stringify(vm.editingIncome)
+                vm.loading = true
+                fetch('/api/income/update', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'X-Auth-Token': vm.token
+                    },
+                    body: income
+                })
+                .then(function (response) {
+                    if (response.status == 200) {
+                        return response.json()
+                    } else if (response.status == 401) {
+                        vm.errorMsg = '未登录'
+                        vm.noLog()
+                    } else {
+                        vm.errorMsg = response.statusText
+                    }
+                })
+                .then(function (data) {
+                    vm.loading = false
+                    if (data) {
+                        if (!data.Ret) {
+                            vm.incomeList[vm.editingIndex] = vm.editingIncome
+                            vm.editingIndex = null
+                        } else {
+                            vm.errorMsg = vm.getFirstAttr(data.Data.errors)
+                            console.warn(data.Data.errors)
+                        }
+                    }
+                })
+                .catch(function (error) {
+                    vm.loading = false
+                    console.error(error)
+                    vm.errorMsg = '服务器故障'
+                })
+            }
+        }
     }
 }
 </script>
@@ -114,12 +226,17 @@ export default {
     }
 
     $itemHeight: 64;
+    $itemEditingHeight: 230;
+
     .income-list {
         ul {
             padding: 10px 10px #{($bottomNavHeight)+10}px 10px;
 
             li {
                 @extend .card;
+                position: relative;
+                height: #{$itemHeight}px;
+                transition: height .3s;
                 height: #{$itemHeight}px;
                 margin-bottom: 10px;
                 overflow: hidden;
@@ -146,6 +263,118 @@ export default {
                     line-height: #{$itemHeight}px;
                     color: #fff;
                     text-align: center;
+                }
+
+                .edit {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    width: 100%;
+                    height: #{$itemEditingHeight}px;
+                    opacity: 0;
+                    transition: opacity .3s;
+                    background-color: #fff;
+
+                    input {
+                        border: none;
+                        background:transparent;
+                    }
+
+                    .money_handler_item{
+                        height: 124px;
+                        padding: 0 30px;
+                        transition: background-color .3s;
+
+                        .money {
+                            width: 70%;
+                            height: 64px;
+                            float: left;
+                            overflow: hidden;
+                            
+                            input {
+                                color: #fff;
+                                font-size: 2rem;   
+                                line-height: 64px;
+                            }
+                        }
+                        .handler {
+                            width: 30%;
+                            float: right;
+                            text-align: right;
+                            color: #fff;
+                            line-height: 64px;
+                            font-size: 0.9rem;
+                        }
+                        .item {
+                            clear: both;
+                            width: 100%;
+                            height: 60px;
+                            border-top: 2px dashed #fff;
+
+                            input {
+                                width: 100%;
+                                text-align: center;
+                                color: #fff;   
+                                font-size: 1.1rem;   
+                                line-height: 60px;
+                            }
+                        }
+                    }
+                    .date {
+                        padding: 0 30px;
+                        height: 56px;
+                        width: 100%;
+                        position: relative;
+
+                        input {
+                            height: 56px;
+                            line-height: 56px;
+                            border: none;
+                            background:transparent;
+                            color: #777;
+                        }
+                    }
+                    .date:after {
+                        @extend .line-bottom;
+                    }
+
+                    .income-btn-list {
+                        width: 100%;
+                        height: 50px;
+                        display: flex;
+                        justify-content: space-between;
+
+                        .income-btn {
+                            width: 50%;
+                            height: 50px;
+                            line-height: 50px;
+                            text-align: center;
+                        }
+                        .income-btn-delete {
+                            @extend .income-btn;
+                            color: $dangerColor;
+                        }
+                        .income-btn-save {
+                            @extend .income-btn;
+                            position: relative;
+                            color: #333;
+                        }
+                        .income-btn-save:after {
+                            @extend .line-left;
+                        }
+                        .income-btn-disable {
+                            color: #999;
+                        }
+                    }
+                }
+            }
+
+            .editing {
+                height: #{$itemEditingHeight}px;
+
+                .edit {
+                    opacity: 1;
                 }
             }
         }

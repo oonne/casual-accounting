@@ -6,6 +6,7 @@ use Yii;
 use common\filters\auth\HeaderParamAuth;
 use yii\data\ActiveDataProvider;
 use common\models\Income;
+use common\models\Handler;
 
 class IncomeController extends Controller
 {
@@ -22,24 +23,28 @@ class IncomeController extends Controller
     {
         return [
             'index' => ['get'],
+            'add' => ['post'],
+            'update' => ['post'],
+            'delete' => ['post'],
         ];
+    }
+
+    public function actionAdd()
+    {
+        //TODO
     }
 
     public function actionIndex()
     {
-        $query = Income::find();
+        $query = Income::find()
+            ->select(['id', 'income_item', 'income_date', 'income_money', 'income_handler', 'income_remark']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => ['defaultOrder' => ['income_date' => SORT_DESC, 'updated_at' => SORT_DESC]]
         ]);
 
-        $data = [];
-        foreach ($dataProvider->getModels() as $income) {
-            $incomeArr = $income->toArray(['id', 'income_item', 'income_date', 'income_money', 'income_handler', 'income_remark']);
-            $incomeArr['handler'] = $income->handler->handler_name;
-            array_push($data, $incomeArr);
-        }
+        $data = $dataProvider->getModels();
         $meta = [
             'totalCount' => $dataProvider->pagination->totalCount,
             'pageCount' => $dataProvider->pagination->getPageCount(),
@@ -47,11 +52,66 @@ class IncomeController extends Controller
             'perPage' => $dataProvider->pagination->getPageSize(),
         ];
 
+        // Handler
+        $extra = [];
+
+        $handler = Handler::find()
+            ->select(['id', 'handler_name'])
+            ->all();
+        $extra['handler'] = $handler;
+        
         return [
             'Ret' => 0,
             'Data' => $data,
             'Meta' => $meta,
+            'Extra' => $extra,
         ];
+    }
+
+
+    public function actionUpdate()
+    {
+        $income = Yii::$app->request->post();
+        $id = $income['id'];
+        $model = Income::findOne($id);
+
+        if (!$model) {
+            return [
+                'Ret' => 1,
+                'Data' => [
+                    'errors' => ['查无记录']
+                ]
+            ];
+        }
+
+        if ($model->load($income, '') && $model->validate()) {
+            $model->last_editor = Yii::$app->user->id;
+            if ($model->save(false)) {
+                return [
+                    'Ret' => 0,
+                    'Data' => '保存成功',
+                ];
+            } else {
+                return [
+                    'Ret' => 2,
+                    'Data' => [
+                        'errors' => ['保存失败']
+                    ]
+                ];
+            }
+        }
+
+        return [
+            'Ret' => 3,
+            'Data' => [
+                'errors' => ['更新失败']
+            ]
+        ];
+    }
+
+    public function actionDelete()
+    {
+        //TODO
     }
 
 }

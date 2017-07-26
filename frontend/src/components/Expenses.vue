@@ -163,7 +163,7 @@ export default {
         },
         changeCategory: function(){
             let vm = this
-            if (vm.editingIndex) {
+            if (vm.editingIndex != null) {
                 let id = 0
                 for (let i in vm.categoryList) {
                     if (vm.categoryList[i].id == vm.editingExpenses.expenses_category) {
@@ -179,7 +179,7 @@ export default {
         },
         changeHandler: function(){
             let vm = this
-            if (vm.editingIndex) {
+            if (vm.editingIndex != null) {
                 let id = 0
                 for (let i in vm.handlerList) {
                     if (vm.handlerList[i].id == vm.editingExpenses.expenses_handler) {
@@ -198,7 +198,7 @@ export default {
         },
         saveExpenses: function() {
             let vm = this
-            if (vm.editingIndex && vm.editingExpenses.expenses_item) {
+            if (vm.editingIndex != null && vm.editingExpenses.expenses_item) {
                 let expenses = JSON.stringify(vm.editingExpenses)
                 vm.loading = true
                 fetch('/api/expenses/update', {
