@@ -26,6 +26,9 @@
                     <div class="date">
                         <input type="date" v-model="editingIncome.income_date">
                     </div>
+                    <div class="remark">
+                        <input v-model.trim="editingIncome.income_remark" placeholder="备注">
+                    </div>
                     <div class="income-btn-list">
                         <div class="income-btn-delete" @click="deleteIncome">删除</div>
                         <div class="income-btn-save" :class="{ 'income-btn-disable': !editingIncome.income_item }" @click="saveIncome">保存</div>
@@ -226,7 +229,7 @@ export default {
     }
 
     $itemHeight: 64;
-    $itemEditingHeight: 230;
+    $itemEditingHeight: 276;
 
     .income-list {
         ul {
@@ -325,7 +328,6 @@ export default {
                         padding: 0 30px;
                         height: 56px;
                         width: 100%;
-                        position: relative;
 
                         input {
                             height: 56px;
@@ -335,7 +337,23 @@ export default {
                             color: #777;
                         }
                     }
-                    .date:after {
+                    .remark {
+                        position: relative;
+                        padding: 0 30px 10px;
+                        height: 54px;
+                        width: 100%;
+
+                        input {
+                            height: 44px;
+                            width: 100%;
+                            padding: 12px 0;
+                            line-height: 20px;
+                            border: none;
+                            background:transparent;
+                            color: #777;
+                        }
+                    }
+                    .remark:after {
                         @extend .line-bottom;
                     }
 

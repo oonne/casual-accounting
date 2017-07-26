@@ -31,6 +31,9 @@
                             {{getHandlerName(expenses.expenses_handler)}}
                         </div>
                     </div>
+                    <div class="remark">
+                        <input v-model="editingExpenses.expenses_remark" placeholder="备注">
+                    </div>
                     <div class="expenses-btn-list">
                         <div class="expenses-btn-delete" @click="deleteExpenses">删除</div>
                         <div class="expenses-btn-save" :class="{ 'expenses-btn-disable': !editingExpenses.expenses_item }" @click="saveExpenses">保存</div>
@@ -260,7 +263,7 @@ export default {
     }
 
     $itemHeight: 64;
-    $itemEditingHeight: 230;
+    $itemEditingHeight: 276;
 
     .expenses-list {
         ul {
@@ -356,16 +359,17 @@ export default {
                     }
                     .handler_date {
                         padding: 0 30px;
-                        height: 56px;
-                        position: relative;
+                        height: 48px;
                         display: flex;
                         justify-content: space-between;
 
                         .date {
                             flex: 1 1 50%;
+                            height: 48px;
 
                             input {
-                                line-height: 56px;
+                                height: 48px;
+                                line-height: 48px;
                                 border: none;
                                 background:transparent;
                                 color: #777;
@@ -373,12 +377,28 @@ export default {
                         }
                         .handler {
                             flex: 1 1 50%;
-                            line-height: 56px;
+                            line-height: 48px;
                             color: #777;
                             text-align: right;
                         }
                     }
-                    .handler_date:after {
+                    .remark {
+                        position: relative;
+                        padding: 0 30px 10px;
+                        height: 54px;
+                        width: 100%;
+
+                        input {
+                            height: 44px;
+                            width: 100%;
+                            padding: 12px 0;
+                            line-height: 20px;
+                            border: none;
+                            background:transparent;
+                            color: #777;
+                        }
+                    }
+                    .remark:after {
                         @extend .line-bottom;
                     }
 
