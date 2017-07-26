@@ -56,7 +56,7 @@ export default {
                             console.warn(data.Data.errors)
                         } else {
                             localStorage.setItem('user', JSON.stringify(data.Data))
-                            vm.$router.push('/expenses')
+                            vm.$router.push('/')
                         }
                     }
                 })

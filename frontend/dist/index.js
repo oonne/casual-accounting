@@ -10562,6 +10562,10 @@ __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].use(__WEBPACK_IMPORTED_MODU
 		name: 'Login',
 		component: __WEBPACK_IMPORTED_MODULE_2__components_Login___default.a
 	}, {
+		path: '/',
+		name: 'Expenses',
+		component: __WEBPACK_IMPORTED_MODULE_3__components_Expenses___default.a
+	}, {
 		path: '/expenses',
 		name: 'Expenses',
 		component: __WEBPACK_IMPORTED_MODULE_3__components_Expenses___default.a
@@ -11415,7 +11419,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                             console.warn(data.Data.errors);
                         } else {
                             localStorage.setItem('user', JSON.stringify(data.Data));
-                            vm.$router.push('/expenses');
+                            vm.$router.push('/');
                         }
                     }
                 }).catch(function (error) {
@@ -12098,9 +12102,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_c('input', {
       directives: [{
         name: "model",
-        rawName: "v-model",
+        rawName: "v-model.trim",
         value: (_vm.editingExpenses.expenses_remark),
-        expression: "editingExpenses.expenses_remark"
+        expression: "editingExpenses.expenses_remark",
+        modifiers: {
+          "trim": true
+        }
       }],
       attrs: {
         "placeholder": "备注"
@@ -12111,7 +12118,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       on: {
         "input": function($event) {
           if ($event.target.composing) { return; }
-          _vm.editingExpenses.expenses_remark = $event.target.value
+          _vm.editingExpenses.expenses_remark = $event.target.value.trim()
+        },
+        "blur": function($event) {
+          _vm.$forceUpdate()
         }
       }
     })]), _vm._v(" "), _c('div', {

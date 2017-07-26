@@ -32,7 +32,7 @@
                         </div>
                     </div>
                     <div class="remark">
-                        <input v-model="editingExpenses.expenses_remark" placeholder="备注">
+                        <input v-model.trim="editingExpenses.expenses_remark" placeholder="备注">
                     </div>
                     <div class="expenses-btn-list">
                         <div class="expenses-btn-delete" @click="deleteExpenses">删除</div>
