@@ -3,6 +3,7 @@
     $bottomNavHeight: 48;       //底导航高度
     $mainColor: #3b3c3e;        //主要颜色
     $minorColor: #9c9fa4;       //次要颜色
+    $dangerColor: #a94442;      //警告文本颜色
     $lineColor: #d9d9d9;        //分割线颜色
 
     $colorA: #add536;           //绿
@@ -82,6 +83,29 @@
         bottom: 0;
         transform-origin: 0 100%;
         border-bottom: 1px solid $lineColor;
+    }
+    .line-vertical {
+        position: absolute;
+        content: " ";
+        width: 1px;
+        height: 100%;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        color: $lineColor;
+        transform: scaleX(0.5);
+    }
+    .line-left {
+        @extend .line-vertical;
+        left: 0;
+        transform-origin: 0 0;
+        border-left: 1px solid $lineColor;
+    }
+    .line-right {
+        @extend .line-vertical;
+        right: 0;
+        transform-origin: 100% 0;
+        border-right: 1px solid $lineColor;
     }
 
 // Error shake

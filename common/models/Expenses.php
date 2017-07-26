@@ -31,7 +31,7 @@ class Expenses extends ActiveRecord
             [['expenses_item', 'expenses_category', 'expenses_money', 'expenses_date', 'expenses_handler'], 'required', 'on' => ['creation']],
 
             [['expenses_item'], 'string', 'max' => 32],
-            [['expenses_money'], 'number'],
+            [['expenses_money'], 'number', 'min' => '0.00'],
             [['expenses_date'], 'date', 'format' => 'yyyy-mm-dd'],
 
             [

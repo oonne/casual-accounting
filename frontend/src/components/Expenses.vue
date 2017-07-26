@@ -14,19 +14,27 @@
                 <div class="edit">
                     <div class="money_category_item" :class="'color-'+expenses.expenses_category">
                         <div class="money">
-                            <input v-model="editingExpenses.expenses_money">
+                            <input v-model.number="editingExpenses.expenses_money">
                         </div>
-                        <div class="category">
+                        <div class="category" @click="changeCategory">
                             {{getCategoryName(expenses.expenses_category)}}
                         </div>
                         <div class="item">
-                            <input v-model="editingExpenses.expenses_item">
+                            <input v-model.trim="editingExpenses.expenses_item">
                         </div>
                     </div>
                     <div class="handler_date">
-
+                        <div class="date">
+                            <input type="date" v-model="editingExpenses.expenses_date">
+                        </div>
+                        <div class="handler" @click="changeHandler">
+                            {{getHandlerName(expenses.expenses_handler)}}
+                        </div>
                     </div>
-                    <div class="save-btn" @click="">保存</div>
+                    <div class="expenses-btn-list">
+                        <div class="expenses-btn-delete" @click="deleteExpenses">删除</div>
+                        <div class="expenses-btn-save" :class="{ 'expenses-btn-disable': !editingExpenses.expenses_item }" @click="saveExpenses">保存</div>
+                    </div>
                 </div>
             </li>
         </ul>
@@ -151,7 +159,84 @@ export default {
                 let expenses = vm.expensesList[index]
                 vm.editingIndex = index
                 vm.editingExpenses = expenses
-                console.log(expenses)
+            }
+        },
+        changeCategory: function(){
+            let vm = this
+            if (vm.editingIndex) {
+                let id = 0
+                for (let i in vm.categoryList) {
+                    if (vm.categoryList[i].id == vm.editingExpenses.expenses_category) {
+                        if (parseInt(i)+1<vm.categoryList.length) {
+                            id = vm.categoryList[parseInt(i)+1].id
+                        } else {
+                            id = vm.categoryList[0].id
+                        }
+                    }
+                }
+                vm.editingExpenses.expenses_category = id   
+            }
+        },
+        changeHandler: function(){
+            let vm = this
+            if (vm.editingIndex) {
+                let id = 0
+                for (let i in vm.handlerList) {
+                    if (vm.handlerList[i].id == vm.editingExpenses.expenses_handler) {
+                        if (parseInt(i)+1<vm.handlerList.length) {
+                            id = vm.handlerList[parseInt(i)+1].id
+                        } else {
+                            id = vm.handlerList[0].id
+                        }
+                    }
+                }
+                vm.editingExpenses.expenses_handler = id
+            }
+        },
+        deleteExpenses: function() {
+            alert('TODO');
+        },
+        saveExpenses: function() {
+            let vm = this
+            if (vm.editingIndex && vm.editingExpenses.expenses_item) {
+                let expenses = JSON.stringify(vm.editingExpenses)
+                vm.loading = true
+                fetch('/api/expenses/update', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'X-Auth-Token': vm.token
+                    },
+                    body: expenses
+                })
+                .then(function (response) {
+                    if (response.status == 200) {
+                        return response.json()
+                    } else if (response.status == 401) {
+                        vm.errorMsg = '未登录'
+                        vm.noLog()
+                    } else {
+                        vm.errorMsg = response.statusText
+                    }
+                })
+                .then(function (data) {
+                    vm.loading = false
+                    if (data) {
+                        if (!data.Ret) {
+                            vm.expensesList[vm.editingIndex] = vm.editingExpenses
+                            vm.editingIndex = null
+                        } else {
+                            vm.errorMsg = vm.getFirstAttr(data.Data.errors)
+                            console.warn(data.Data.errors)
+                        }
+                    }
+                })
+                .catch(function (error) {
+                    vm.loading = false
+                    console.error(error)
+                    vm.errorMsg = '服务器故障'
+                })
             }
         }
     }
@@ -175,7 +260,7 @@ export default {
     }
 
     $itemHeight: 64;
-    $itemEditingHeight: 200;
+    $itemEditingHeight: 230;
 
     .expenses-list {
         ul {
@@ -230,19 +315,20 @@ export default {
                     }
 
                     .money_category_item{
-                        height: 100px;
+                        height: 124px;
                         padding: 0 30px;
+                        transition: background-color .3s;
 
                         .money {
                             width: 70%;
-                            height: 50px;
+                            height: 64px;
                             float: left;
                             overflow: hidden;
                             
                             input {
                                 color: #fff;
                                 font-size: 2rem;   
-                                line-height: 50px;
+                                line-height: 64px;
                             }
                         }
                         .category {
@@ -250,13 +336,13 @@ export default {
                             float: right;
                             text-align: right;
                             color: #fff;
-                            line-height: 50px;
+                            line-height: 64px;
                             font-size: 0.9rem;
                         }
                         .item {
                             clear: both;
                             width: 100%;
-                            height: 50px;
+                            height: 60px;
                             border-top: 2px dashed #fff;
 
                             input {
@@ -264,13 +350,65 @@ export default {
                                 text-align: center;
                                 color: #fff;   
                                 font-size: 1.1rem;   
-                                line-height: 50px;
+                                line-height: 60px;
                             }
                         }
                     }
+                    .handler_date {
+                        padding: 0 30px;
+                        height: 56px;
+                        position: relative;
+                        display: flex;
+                        justify-content: space-between;
 
-                    .save-btn {
-                        display: none;
+                        .date {
+                            flex: 1 1 50%;
+
+                            input {
+                                line-height: 56px;
+                                border: none;
+                                background:transparent;
+                                color: #777;
+                            }
+                        }
+                        .handler {
+                            flex: 1 1 50%;
+                            line-height: 56px;
+                            color: #777;
+                            text-align: right;
+                        }
+                    }
+                    .handler_date:after {
+                        @extend .line-bottom;
+                    }
+
+                    .expenses-btn-list {
+                        width: 100%;
+                        height: 50px;
+                        display: flex;
+                        justify-content: space-between;
+
+                        .expenses-btn {
+                            width: 50%;
+                            height: 50px;
+                            line-height: 50px;
+                            text-align: center;
+                        }
+                        .expenses-btn-delete {
+                            @extend .expenses-btn;
+                            color: $dangerColor;
+                        }
+                        .expenses-btn-save {
+                            @extend .expenses-btn;
+                            position: relative;
+                            color: #333;
+                        }
+                        .expenses-btn-save:after {
+                            @extend .line-left;
+                        }
+                        .expenses-btn-disable {
+                            color: #999;
+                        }
                     }
                 }
             }

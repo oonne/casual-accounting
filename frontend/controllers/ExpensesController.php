@@ -56,7 +56,7 @@ class ExpensesController extends Controller
         $handler = Handler::find()
             ->select(['id', 'handler_name'])
             ->all();
-        $extra['handler'] = $category;
+        $extra['handler'] = $handler;
 
         return [
             'Ret' => 0,
@@ -68,7 +68,42 @@ class ExpensesController extends Controller
 
     public function actionUpdate()
     {
-        //TODO
+        $expenses = Yii::$app->request->post();
+        $id = $expenses['id'];
+        $model = Expenses::findOne($id);
+
+        if (!$model) {
+            return [
+                'Ret' => 1,
+                'Data' => [
+                    'errors' => ['查无记录']
+                ]
+            ];
+        }
+
+        if ($model->load($expenses, '') && $model->validate()) {
+            $model->last_editor = Yii::$app->user->id;
+            if ($model->save(false)) {
+                return [
+                    'Ret' => 0,
+                    'Data' => '保存成功',
+                ];
+            } else {
+                return [
+                    'Ret' => 2,
+                    'Data' => [
+                        'errors' => ['保存失败']
+                    ]
+                ];
+            }
+        }
+
+        return [
+            'Ret' => 3,
+            'Data' => [
+                'errors' => ['更新失败']
+            ]
+        ];
     }
 
     public function actionDelete()

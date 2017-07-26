@@ -140,7 +140,7 @@ export default {
             }
 
             .error-msg {
-                color: #a94442;
+                color: $dangerColor;
                 text-align: center;
                 font-style: 0.8rem;
             }
