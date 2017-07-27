@@ -12,9 +12,6 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
-        'request' => [
-            'csrfParam' => '_csrf-frontend',
-        ],
         'user' => [
             'identityClass' => 'common\models\User',
             'loginUrl' => null,
@@ -31,6 +28,7 @@ return [
             ],
         ],
         'request' => [
+            'csrfParam' => '_csrf-frontend',
             'parsers' => [
                 'application/json' => 'yii\web\JsonParser',
             ]

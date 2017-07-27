@@ -32,7 +32,41 @@ class IncomeController extends Controller
 
     public function actionAdd()
     {
-        //TODO
+        $model = new Income();
+        $model->setScenario('creation');
+
+        if ($model->load(Yii::$app->request->post(), '')) {
+            if ($model->validate()) {
+                $model->last_editor = Yii::$app->user->id;
+                if ($model->save(false)) {
+                    return [
+                        'Ret' => 0,
+                        'Data' => '添加成功'
+                    ];
+                } else {
+                    return [
+                        'Ret' => 3,
+                        'Data' => [
+                            'errors' => ['添加失败']
+                        ]
+                    ];
+                }
+            } else {
+                return [
+                    'Ret' => 2,
+                    'Data' => [
+                        'errors' => ['填写信息有误']
+                    ]
+                ];                
+            }
+        }
+
+        return [
+            'Ret' => 1,
+            'Data' => [
+                'errors' => ['加载失败']
+            ]
+        ];
     }
 
     public function actionIndex()

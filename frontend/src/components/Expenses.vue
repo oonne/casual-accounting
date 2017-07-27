@@ -3,8 +3,39 @@
         <ErrorBar :text="errorMsg" />
         <BottomNav active='expenses' />
 
+        <div @click="addOn" class="add-expenses" :class="{'adding-expenses': (editingIndex=='new')}">
+            <div class="add-button">+</div>
+            <div class="edit">
+                <div class="money_category_item" :class="'color-'+editingExpenses.expenses_category">
+                    <div class="money">
+                        <input v-model.number="editingExpenses.expenses_money">
+                    </div>
+                    <div class="category" @click.stop="changeCategory">
+                        {{getCategoryName(editingExpenses.expenses_category)}}
+                    </div>
+                    <div class="item">
+                        <input v-model.trim="editingExpenses.expenses_item" placeholder="内容">
+                    </div>
+                </div>
+                <div class="handler_date">
+                    <div class="date">
+                        <input type="date" v-model="editingExpenses.expenses_date">
+                    </div>
+                    <div class="handler" @click.stop="changeHandler">
+                        {{getHandlerName(editingExpenses.expenses_handler)}}
+                    </div>
+                </div>
+                <div class="remark">
+                    <input v-model.trim="editingExpenses.expenses_remark" placeholder="备注">
+                </div>
+                <div class="expenses-btn-list">
+                    <div class="expenses-btn-delete" @click.stop="editingIndex = null">取消</div>
+                    <div class="expenses-btn-save" :class="{ 'expenses-btn-disable': !editingExpenses.expenses_item }" @click.stop="addSave">保存</div>
+                </div>
+            </div>
+        </div>
         <ul>
-            <li v-for="(expenses, index) in expensesList" @click="editingOn(index)" :class="{ 'editing': (index==editingIndex) }">
+            <li v-for="(expenses, index) in expensesList" @click="editingOn(index)" :class="{'editing': (index==editingIndex)}">
                 <div class="info">
                     <p class="item">{{expenses.expenses_item}}</p>
                     <p class="date_category">{{expenses.expenses_date}} {{getCategoryName(expenses.expenses_category)}}</p>
@@ -12,12 +43,12 @@
                 <div class="money" :class="'color-'+expenses.expenses_category">{{expenses.expenses_money}}</div>
                 
                 <div class="edit">
-                    <div class="money_category_item" :class="'color-'+expenses.expenses_category">
+                    <div class="money_category_item" :class="'color-'+editingExpenses.expenses_category">
                         <div class="money">
                             <input v-model.number="editingExpenses.expenses_money">
                         </div>
-                        <div class="category" @click="changeCategory">
-                            {{getCategoryName(expenses.expenses_category)}}
+                        <div class="category" @click.stop="changeCategory">
+                            {{getCategoryName(editingExpenses.expenses_category)}}
                         </div>
                         <div class="item">
                             <input v-model.trim="editingExpenses.expenses_item">
@@ -27,16 +58,16 @@
                         <div class="date">
                             <input type="date" v-model="editingExpenses.expenses_date">
                         </div>
-                        <div class="handler" @click="changeHandler">
-                            {{getHandlerName(expenses.expenses_handler)}}
+                        <div class="handler" @click.stop="changeHandler">
+                            {{getHandlerName(editingExpenses.expenses_handler)}}
                         </div>
                     </div>
                     <div class="remark">
                         <input v-model.trim="editingExpenses.expenses_remark" placeholder="备注">
                     </div>
                     <div class="expenses-btn-list">
-                        <div class="expenses-btn-delete" @click="deleteExpenses">删除</div>
-                        <div class="expenses-btn-save" :class="{ 'expenses-btn-disable': !editingExpenses.expenses_item }" @click="saveExpenses">保存</div>
+                        <div class="expenses-btn-delete" @click.stop="deleteExpenses">删除</div>
+                        <div class="expenses-btn-save" :class="{ 'expenses-btn-disable': !editingExpenses.expenses_item }" @click.stop="saveExpenses">保存</div>
                     </div>
                 </div>
             </li>
@@ -155,6 +186,63 @@ export default {
                 }
             }
             return name
+        },
+        addOn: function(index){
+            let vm = this
+            if (vm.editingIndex === null) {
+                vm.editingIndex = 'new'
+                vm.editingExpenses = {
+                    'expenses_date': vm.getToday(),
+                    'expenses_item': '',
+                    'expenses_money': 0,
+                    'expenses_category': vm.categoryList[0].id,
+                    'expenses_handler': vm.handlerList[0].id,
+                    'expenses_remark': '',
+                }
+            }
+        },
+        addSave: function(){
+            let vm = this
+            if (vm.editingIndex != null && vm.editingExpenses.expenses_item) {
+                let expenses = JSON.stringify(vm.editingExpenses)
+                vm.loading = true
+                fetch('/api/expenses/add', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'X-Auth-Token': vm.token
+                    },
+                    body: expenses
+                })
+                .then(function (response) {
+                    if (response.status == 200) {
+                        return response.json()
+                    } else if (response.status == 401) {
+                        vm.errorMsg = '未登录'
+                        vm.noLog()
+                    } else {
+                        vm.errorMsg = response.statusText
+                    }
+                })
+                .then(function (data) {
+                    vm.loading = false
+                    if (data) {
+                        if (!data.Ret) {
+                            vm.expensesList.unshift(vm.editingExpenses)
+                            vm.editingIndex = null
+                        } else {
+                            vm.errorMsg = vm.getFirstAttr(data.Data.errors)
+                            console.warn(data.Data.errors)
+                        }
+                    }
+                })
+                .catch(function (error) {
+                    vm.loading = false
+                    console.error(error)
+                    vm.errorMsg = '服务器故障'
+                })
+            }
         },
         editingOn: function(index){
             let vm = this
@@ -305,17 +393,179 @@ export default {
     $itemHeight: 64;
     $itemEditingHeight: 276;
 
+    .expenses-edit {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: #{$itemEditingHeight}px;
+        opacity: 0;
+        transition: opacity .3s;
+        background-color: #fff;
+
+        input {
+            border: none;
+            background:transparent;
+        }
+
+        .money_category_item{
+            height: 124px;
+            padding: 0 30px;
+            transition: background-color .3s;
+
+            .money {
+                width: 70%;
+                height: 64px;
+                float: left;
+                overflow: hidden;
+                
+                input {
+                    color: #fff;
+                    font-size: 2rem;   
+                    line-height: 64px;
+                }
+            }
+            .category {
+                width: 30%;
+                float: right;
+                text-align: right;
+                color: #fff;
+                line-height: 64px;
+                font-size: 0.9rem;
+            }
+            .item {
+                clear: both;
+                width: 100%;
+                height: 60px;
+                border-top: 2px dashed #fff;
+
+                input {
+                    width: 100%;
+                    text-align: center;
+                    color: #fff;   
+                    font-size: 1.1rem;   
+                    line-height: 60px;
+                }
+                input::-webkit-input-placeholder {
+                    color: #dfdfdf;
+                }
+            }
+        }
+        .handler_date {
+            padding: 0 30px;
+            height: 48px;
+            display: flex;
+            justify-content: space-between;
+
+            .date {
+                flex: 1 1 50%;
+                height: 48px;
+
+                input {
+                    height: 48px;
+                    line-height: 48px;
+                    border: none;
+                    background:transparent;
+                    color: #777;
+                }
+            }
+            .handler {
+                flex: 1 1 50%;
+                line-height: 48px;
+                color: #777;
+                text-align: right;
+            }
+        }
+        .remark {
+            position: relative;
+            padding: 0 30px 10px;
+            height: 54px;
+            width: 100%;
+
+            input {
+                height: 44px;
+                width: 100%;
+                padding: 12px 0;
+                line-height: 20px;
+                border: none;
+                background:transparent;
+                color: #777;
+            }
+        }
+        .remark:after {
+            @extend .line-bottom;
+        }
+
+        .expenses-btn-list {
+            width: 100%;
+            height: 50px;
+            display: flex;
+            justify-content: space-between;
+
+            .expenses-btn {
+                width: 50%;
+                height: 50px;
+                line-height: 50px;
+                text-align: center;
+            }
+            .expenses-btn-delete {
+                @extend .expenses-btn;
+                color: $dangerColor;
+            }
+            .expenses-btn-save {
+                @extend .expenses-btn;
+                position: relative;
+                color: #333;
+            }
+            .expenses-btn-save:after {
+                @extend .line-left;
+            }
+            .expenses-btn-disable {
+                color: #999;
+            }
+        }
+    }
+
     .expenses-list {
-        ul {
-            padding: 10px 10px #{($bottomNavHeight)+10}px 10px;
-            
+        padding: 10px 10px #{($bottomNavHeight)+10}px 10px;
+
+        .add-expenses {
+            transition: height .3s;
+            height: #{$itemHeight}px;
+            overflow: hidden;
+            margin-bottom: 10px;
+            position: relative;
+
+            .add-button {
+                width: 100%;
+                height: 100%;
+                border-radius: 3px;
+                border: 2px dashed #bbb;
+                text-align: center;
+                line-height: #{($itemHeight)-4}px;
+                color: #bbb;
+                font-size: 2rem;
+            }
+            .edit {
+                @extend .expenses-edit;
+            }
+        }
+        .adding-expenses {
+            height: #{$itemEditingHeight}px;
+
+            .edit {
+                opacity: 1;
+            }
+        }
+
+        ul {            
             li {
                 @extend .card;
                 position: relative;
                 height: #{$itemHeight}px;
                 transition: height .3s;
                 margin-bottom: 10px;
-                overflow: hidden;
                 display: flex;
 
                 .info {
@@ -342,134 +592,7 @@ export default {
                 }
 
                 .edit {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    right: 0;
-                    width: 100%;
-                    height: #{$itemEditingHeight}px;
-                    opacity: 0;
-                    transition: opacity .3s;
-                    background-color: #fff;
-
-                    input {
-                        border: none;
-                        background:transparent;
-                    }
-
-                    .money_category_item{
-                        height: 124px;
-                        padding: 0 30px;
-                        transition: background-color .3s;
-
-                        .money {
-                            width: 70%;
-                            height: 64px;
-                            float: left;
-                            overflow: hidden;
-                            
-                            input {
-                                color: #fff;
-                                font-size: 2rem;   
-                                line-height: 64px;
-                            }
-                        }
-                        .category {
-                            width: 30%;
-                            float: right;
-                            text-align: right;
-                            color: #fff;
-                            line-height: 64px;
-                            font-size: 0.9rem;
-                        }
-                        .item {
-                            clear: both;
-                            width: 100%;
-                            height: 60px;
-                            border-top: 2px dashed #fff;
-
-                            input {
-                                width: 100%;
-                                text-align: center;
-                                color: #fff;   
-                                font-size: 1.1rem;   
-                                line-height: 60px;
-                            }
-                        }
-                    }
-                    .handler_date {
-                        padding: 0 30px;
-                        height: 48px;
-                        display: flex;
-                        justify-content: space-between;
-
-                        .date {
-                            flex: 1 1 50%;
-                            height: 48px;
-
-                            input {
-                                height: 48px;
-                                line-height: 48px;
-                                border: none;
-                                background:transparent;
-                                color: #777;
-                            }
-                        }
-                        .handler {
-                            flex: 1 1 50%;
-                            line-height: 48px;
-                            color: #777;
-                            text-align: right;
-                        }
-                    }
-                    .remark {
-                        position: relative;
-                        padding: 0 30px 10px;
-                        height: 54px;
-                        width: 100%;
-
-                        input {
-                            height: 44px;
-                            width: 100%;
-                            padding: 12px 0;
-                            line-height: 20px;
-                            border: none;
-                            background:transparent;
-                            color: #777;
-                        }
-                    }
-                    .remark:after {
-                        @extend .line-bottom;
-                    }
-
-                    .expenses-btn-list {
-                        width: 100%;
-                        height: 50px;
-                        display: flex;
-                        justify-content: space-between;
-
-                        .expenses-btn {
-                            width: 50%;
-                            height: 50px;
-                            line-height: 50px;
-                            text-align: center;
-                        }
-                        .expenses-btn-delete {
-                            @extend .expenses-btn;
-                            color: $dangerColor;
-                        }
-                        .expenses-btn-save {
-                            @extend .expenses-btn;
-                            position: relative;
-                            color: #333;
-                        }
-                        .expenses-btn-save:after {
-                            @extend .line-left;
-                        }
-                        .expenses-btn-disable {
-                            color: #999;
-                        }
-                    }
+                    @extend .expenses-edit;
                 }
             }
 

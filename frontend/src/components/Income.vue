@@ -3,6 +3,32 @@
         <ErrorBar :text="errorMsg" />
         <BottomNav active='income' />
 
+        <div @click="addOn" class="add-income" :class="{'adding-income': (editingIndex=='new')}">
+            <div class="add-button">+</div>
+            <div class="edit">
+                <div class="money_handler_item" :class="'color-'+editingIncome.income_handler">
+                    <div class="money">
+                        <input v-model.number="editingIncome.income_money">
+                    </div>
+                    <div class="handler" @click.stop="changeHandler">
+                        {{getHandlerName(editingIncome.income_handler)}}
+                    </div>
+                    <div class="item">
+                        <input v-model.trim="editingIncome.income_item">
+                    </div>
+                </div>
+                <div class="date">
+                    <input type="date" v-model="editingIncome.income_date">
+                </div>
+                <div class="remark">
+                    <input v-model.trim="editingIncome.income_remark" placeholder="备注">
+                </div>
+                <div class="income-btn-list">
+                    <div class="income-btn-delete" @click.stop="editingIndex = null">取消</div>
+                    <div class="income-btn-save" :class="{ 'income-btn-disable': !editingIncome.income_item }" @click.stop="addSave">保存</div>
+                </div>
+            </div>
+        </div>
         <ul>
             <li v-for="(income, index) in incomeList" @click="editingOn(index)" :class="{ 'editing': (index==editingIndex) }">
                 <div class="info">
@@ -12,12 +38,12 @@
                 <div class="money" :class="'color-'+income.income_handler">{{income.income_money}}</div>
             
                 <div class="edit">
-                    <div class="money_handler_item" :class="'color-'+income.income_handler">
+                    <div class="money_handler_item" :class="'color-'+editingIncome.income_handler">
                         <div class="money">
                             <input v-model.number="editingIncome.income_money">
                         </div>
-                        <div class="handler" @click="changeHandler">
-                            {{getHandlerName(income.income_handler)}}
+                        <div class="handler" @click.stop="changeHandler">
+                            {{getHandlerName(editingIncome.income_handler)}}
                         </div>
                         <div class="item">
                             <input v-model.trim="editingIncome.income_item">
@@ -30,8 +56,8 @@
                         <input v-model.trim="editingIncome.income_remark" placeholder="备注">
                     </div>
                     <div class="income-btn-list">
-                        <div class="income-btn-delete" @click="deleteIncome">删除</div>
-                        <div class="income-btn-save" :class="{ 'income-btn-disable': !editingIncome.income_item }" @click="saveIncome">保存</div>
+                        <div class="income-btn-delete" @click.stop="deleteIncome">删除</div>
+                        <div class="income-btn-save" :class="{ 'income-btn-disable': !editingIncome.income_item }" @click.stop="saveIncome">保存</div>
                     </div>
                 </div>
             </li>
@@ -137,6 +163,62 @@ export default {
                 }
             }
             return name
+        },
+        addOn: function(index){
+            let vm = this
+            if (vm.editingIndex === null) {
+                vm.editingIndex = 'new'
+                vm.editingIncome = {
+                    'income_date': vm.getToday(),
+                    'income_item': '',
+                    'income_money': 0,
+                    'income_handler': vm.handlerList[0].id,
+                    'income_remark': '',
+                }
+            }
+        },
+        addSave: function(){
+            let vm = this
+            if (vm.editingIndex != null && vm.editingIncome.income_item) {
+                let income = JSON.stringify(vm.editingIncome)
+                vm.loading = true
+                fetch('/api/income/add', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'X-Auth-Token': vm.token
+                    },
+                    body: income
+                })
+                .then(function (response) {
+                    if (response.status == 200) {
+                        return response.json()
+                    } else if (response.status == 401) {
+                        vm.errorMsg = '未登录'
+                        vm.noLog()
+                    } else {
+                        vm.errorMsg = response.statusText
+                    }
+                })
+                .then(function (data) {
+                    vm.loading = false
+                    if (data) {
+                        if (!data.Ret) {
+                            vm.incomeList.unshift(vm.editingIncome)
+                            vm.editingIndex = null
+                        } else {
+                            vm.errorMsg = vm.getFirstAttr(data.Data.errors)
+                            console.warn(data.Data.errors)
+                        }
+                    }
+                })
+                .catch(function (error) {
+                    vm.loading = false
+                    console.error(error)
+                    vm.errorMsg = '服务器故障'
+                })
+            }
         },
         editingOn: function(index){
             let vm = this
@@ -271,10 +353,159 @@ export default {
     $itemHeight: 64;
     $itemEditingHeight: 276;
 
-    .income-list {
-        ul {
-            padding: 10px 10px #{($bottomNavHeight)+10}px 10px;
+    .income-edit {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: #{$itemEditingHeight}px;
+        opacity: 0;
+        transition: opacity .3s;
+        background-color: #fff;
 
+        input {
+            border: none;
+            background:transparent;
+        }
+
+        .money_handler_item{
+            height: 124px;
+            padding: 0 30px;
+            transition: background-color .3s;
+
+            .money {
+                width: 70%;
+                height: 64px;
+                float: left;
+                overflow: hidden;
+                
+                input {
+                    color: #fff;
+                    font-size: 2rem;   
+                    line-height: 64px;
+                }
+            }
+            .handler {
+                width: 30%;
+                float: right;
+                text-align: right;
+                color: #fff;
+                line-height: 64px;
+                font-size: 0.9rem;
+            }
+            .item {
+                clear: both;
+                width: 100%;
+                height: 60px;
+                border-top: 2px dashed #fff;
+
+                input {
+                    width: 100%;
+                    text-align: center;
+                    color: #fff;   
+                    font-size: 1.1rem;   
+                    line-height: 60px;
+                }
+            }
+        }
+        .date {
+            padding: 0 30px;
+            height: 56px;
+            width: 100%;
+
+            input {
+                height: 56px;
+                line-height: 56px;
+                border: none;
+                background:transparent;
+                color: #777;
+            }
+        }
+        .remark {
+            position: relative;
+            padding: 0 30px 10px;
+            height: 54px;
+            width: 100%;
+
+            input {
+                height: 44px;
+                width: 100%;
+                padding: 12px 0;
+                line-height: 20px;
+                border: none;
+                background:transparent;
+                color: #777;
+            }
+        }
+        .remark:after {
+            @extend .line-bottom;
+        }
+
+        .income-btn-list {
+            width: 100%;
+            height: 50px;
+            display: flex;
+            justify-content: space-between;
+
+            .income-btn {
+                width: 50%;
+                height: 50px;
+                line-height: 50px;
+                text-align: center;
+            }
+            .income-btn-delete {
+                @extend .income-btn;
+                color: $dangerColor;
+            }
+            .income-btn-save {
+                @extend .income-btn;
+                position: relative;
+                color: #333;
+            }
+            .income-btn-save:after {
+                @extend .line-left;
+            }
+            .income-btn-disable {
+                color: #999;
+            }
+        }
+    }
+
+    .income-list {
+        padding: 10px 10px #{($bottomNavHeight)+10}px 10px;
+        
+
+        .add-income {
+            transition: height .3s;
+            height: #{$itemHeight}px;
+            overflow: hidden;
+            margin-bottom: 10px;
+            position: relative;
+
+            .add-button {
+                width: 100%;
+                height: 100%;
+                border-radius: 3px;
+                border: 2px dashed #bbb;
+                text-align: center;
+                line-height: #{($itemHeight)-4}px;
+                color: #bbb;
+                font-size: 2rem;
+            }
+            .edit {
+                @extend .income-edit;
+            }
+        }
+        .adding-income {
+            height: #{$itemEditingHeight}px;
+
+            .edit {
+                opacity: 1;
+            }
+        }
+
+        ul {
             li {
                 @extend .card;
                 position: relative;
@@ -282,7 +513,6 @@ export default {
                 transition: height .3s;
                 height: #{$itemHeight}px;
                 margin-bottom: 10px;
-                overflow: hidden;
                 display: flex;
 
                 .info {
@@ -309,122 +539,7 @@ export default {
                 }
 
                 .edit {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    right: 0;
-                    width: 100%;
-                    height: #{$itemEditingHeight}px;
-                    opacity: 0;
-                    transition: opacity .3s;
-                    background-color: #fff;
-
-                    input {
-                        border: none;
-                        background:transparent;
-                    }
-
-                    .money_handler_item{
-                        height: 124px;
-                        padding: 0 30px;
-                        transition: background-color .3s;
-
-                        .money {
-                            width: 70%;
-                            height: 64px;
-                            float: left;
-                            overflow: hidden;
-                            
-                            input {
-                                color: #fff;
-                                font-size: 2rem;   
-                                line-height: 64px;
-                            }
-                        }
-                        .handler {
-                            width: 30%;
-                            float: right;
-                            text-align: right;
-                            color: #fff;
-                            line-height: 64px;
-                            font-size: 0.9rem;
-                        }
-                        .item {
-                            clear: both;
-                            width: 100%;
-                            height: 60px;
-                            border-top: 2px dashed #fff;
-
-                            input {
-                                width: 100%;
-                                text-align: center;
-                                color: #fff;   
-                                font-size: 1.1rem;   
-                                line-height: 60px;
-                            }
-                        }
-                    }
-                    .date {
-                        padding: 0 30px;
-                        height: 56px;
-                        width: 100%;
-
-                        input {
-                            height: 56px;
-                            line-height: 56px;
-                            border: none;
-                            background:transparent;
-                            color: #777;
-                        }
-                    }
-                    .remark {
-                        position: relative;
-                        padding: 0 30px 10px;
-                        height: 54px;
-                        width: 100%;
-
-                        input {
-                            height: 44px;
-                            width: 100%;
-                            padding: 12px 0;
-                            line-height: 20px;
-                            border: none;
-                            background:transparent;
-                            color: #777;
-                        }
-                    }
-                    .remark:after {
-                        @extend .line-bottom;
-                    }
-
-                    .income-btn-list {
-                        width: 100%;
-                        height: 50px;
-                        display: flex;
-                        justify-content: space-between;
-
-                        .income-btn {
-                            width: 50%;
-                            height: 50px;
-                            line-height: 50px;
-                            text-align: center;
-                        }
-                        .income-btn-delete {
-                            @extend .income-btn;
-                            color: $dangerColor;
-                        }
-                        .income-btn-save {
-                            @extend .income-btn;
-                            position: relative;
-                            color: #333;
-                        }
-                        .income-btn-save:after {
-                            @extend .line-left;
-                        }
-                        .income-btn-disable {
-                            color: #999;
-                        }
-                    }
+                    @extend .income-edit;
                 }
             }
 
