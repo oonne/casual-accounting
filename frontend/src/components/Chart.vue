@@ -20,11 +20,11 @@
             </div>
 
             <div class="chart-table">
-                <h2>销售统计</h2>
+                <h2>每月收支</h2>
                 <div id="monthly" class="chart-content" :style="chartTableStyle"></div>
             </div>
             <div class="chart-table">
-                <h2>订单统计</h2>
+                <h2>每月结余</h2>
                 <div id="balance" class="chart-content" :style="chartTableStyle"></div>
             </div>
             <div class="chart-pie">    

@@ -20967,7 +20967,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "summary-num"
   }, [_vm._v(_vm._s(_vm.summaryBalance))])])]), _vm._v(" "), _c('div', {
     staticClass: "chart-table"
-  }, [_c('h2', [_vm._v("销售统计")]), _vm._v(" "), _c('div', {
+  }, [_c('h2', [_vm._v("每月收支")]), _vm._v(" "), _c('div', {
     staticClass: "chart-content",
     style: (_vm.chartTableStyle),
     attrs: {
@@ -20975,7 +20975,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   })]), _vm._v(" "), _c('div', {
     staticClass: "chart-table"
-  }, [_c('h2', [_vm._v("订单统计")]), _vm._v(" "), _c('div', {
+  }, [_c('h2', [_vm._v("每月结余")]), _vm._v(" "), _c('div', {
     staticClass: "chart-content",
     style: (_vm.chartTableStyle),
     attrs: {
