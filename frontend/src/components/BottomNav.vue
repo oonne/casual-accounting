@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import BottomNavItem from './BottomNavItem';
+import BottomNavItem from './BottomNavItem'
 
 export default {
     name: 'bottom-nav',

@@ -78,9 +78,9 @@
 
 <script>
 import Base from './Base'
-import BottomNav from './BottomNav';
-import ErrorBar from './ErrorBar';
-import LoadMore from './LoadMore';
+import BottomNav from './BottomNav'
+import ErrorBar from './ErrorBar'
+import LoadMore from './LoadMore'
 
 export default {
     extends: Base,
@@ -117,7 +117,7 @@ export default {
             window.addEventListener('scroll', vm.handleScroll)
         },
         getList: function () {
-            let vm = this;
+            let vm = this
             fetch('/api/expenses/index?page='+vm.currentPage, {
                 method: 'GET',
                 headers: {
@@ -158,14 +158,14 @@ export default {
             })
         },
         handleScroll: function(){
-            let vm = this;
+            let vm = this
             if(vm.checkScrollEnd() && !vm.loading){
                 if(vm.pageCount>vm.currentPage){
-                    vm.currentPage++;
-                    vm.loading = true;
-                    vm.getList();
+                    vm.currentPage++
+                    vm.loading = true
+                    vm.getList()
                 }
-            };
+            }
         },
         getCategoryName: function (id) {
             let vm = this

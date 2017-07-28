@@ -27,7 +27,7 @@ export default {
     },
     methods: {
         login: function(){
-            let vm = this;
+            let vm = this
             if ( !vm.username || !vm.password ) {
                 vm.errorMsg = '请填写帐号和密码'
             } else {

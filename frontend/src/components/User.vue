@@ -11,7 +11,7 @@
 
 <script>
 import Base from './Base'
-import BottomNav from './BottomNav';
+import BottomNav from './BottomNav'
 
 export default {
     extends: Base,

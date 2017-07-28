@@ -60,7 +60,7 @@ export default {
             }
         },
         toastMsg: function () {
-            let vm = this;
+            let vm = this
             if (vm.toastMsg) {
                 vm.toast = true    
                 setTimeout(function(){

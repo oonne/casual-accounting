@@ -104,7 +104,7 @@ $this->title = '统计图表';
                                 'data' => [
                                     [
                                         'type' => 'average',
-                                        'name' => '平均消费'
+                                        'name' => '平均存钱'
                                     ]
                                 ],
                                 'label' => [
@@ -162,7 +162,7 @@ $this->title = '统计图表';
                                     'show' => true
                                 ]
                             ],
-                            'data' => $monthlybalance,
+                            'data' => $monthlyBalance,
                         ]
                     ]
                 ]

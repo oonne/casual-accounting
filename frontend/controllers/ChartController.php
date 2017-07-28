@@ -1,10 +1,10 @@
 <?php
-namespace backend\controllers;
+
+namespace frontend\controllers;
 
 use Yii;
-use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
-use yii\web\BadRequestHttpException;
+use common\filters\auth\HeaderParamAuth;
+use yii\data\ActiveDataProvider;
 use common\models\Expenses;
 use common\models\Income;
 use common\models\Category;
@@ -12,19 +12,19 @@ use common\models\Handler;
 
 class ChartController extends Controller
 {
-    
     public function behaviors()
     {
+        $behaviors = parent::behaviors();
+        $behaviors['authenticator'] = [
+            'class' => HeaderParamAuth::className(),
+        ];
+        return $behaviors;
+    }
+
+    protected function verbs()
+    {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ]
+            'index' => ['get'],
         ];
     }
 
@@ -127,18 +127,21 @@ class ChartController extends Controller
             }
         }
 
-        return $this->render('index', [
-            'incomeTotal' => $incomeTotal,
-            'expensesTotal' => $expensesTotal,
-            'month' => $month,
-            'monthlyIncome' => $monthlyIncome,
-            'monthlyExpenses' => $monthlyExpenses,
-            'monthlyBalance' => $monthlyBalance,
-            'expensesCategory' => $expensesCategory,
-            'incomeHandler' => $incomeHandler
-        ]);
+        return [
+            'Ret' => 0,
+            'Data' => [
+                'incomeTotal' => $incomeTotal,
+                'expensesTotal' => $expensesTotal,
+                'month' => $month,
+                'monthlyIncome' => $monthlyIncome,
+                'monthlyExpenses' => $monthlyExpenses,
+                'monthlyBalance' => $monthlyBalance,
+                'expensesCategory' => $expensesCategory,
+                'incomeHandler' => $incomeHandler
+            ],
+        ];
     }
-    
+
     protected function _getMonth($expensesResult, $incomeResult)
     {
         $mergeMonth = array_merge($expensesResult, $incomeResult);
