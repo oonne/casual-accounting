@@ -475,7 +475,6 @@ export default {
     .income-list {
         padding: 10px 10px #{($bottomNavHeight)+10}px 10px;
         
-
         .add-income {
             transition: height .3s;
             height: #{$itemHeight}px;

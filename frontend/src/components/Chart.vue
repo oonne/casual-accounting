@@ -4,10 +4,37 @@
         <LoadMore v-show="loading"/> 
 
         <div class="chart" v-show="chartData">
-            <div id="monthly" class="chart-content" :style="chartStyle"></div>
-            <div id="balance" class="chart-content" :style="chartStyle"></div>
-            <div id="category" class="chart-content" :style="chartStyle"></div>
-            <div id="handler" class="chart-content" :style="chartStyle"></div>
+            <div class="summary">
+                <div class="summary-income">
+                    <div class="summary-attr">总收入</div>
+                    <div class="summary-num">{{chartData ? chartData.incomeTotal : 0}}</div>
+                </div>
+                <div class="summary-expenses">
+                    <div class="summary-attr">总支出</div>
+                    <div class="summary-num">{{chartData ? chartData.expensesTotal : 0}}</div>
+                </div>
+                <div class="summary-balance">
+                    <div class="summary-attr">结余</div>
+                    <div class="summary-num">{{chartData ? chartData.incomeTotal-chartData.expensesTotal : 0}}</div>
+                </div>
+            </div>
+
+            <div class="chart-table">
+                <h2>销售统计</h2>
+                <div id="monthly" class="chart-content" :style="chartTableStyle"></div>
+            </div>
+            <div class="chart-table">
+                <h2>订单统计</h2>
+                <div id="balance" class="chart-content" :style="chartTableStyle"></div>
+            </div>
+            <div class="chart-pie">    
+                <h2>消费分类</h2>
+                <div id="category" class="chart-content" :style="chartPieStyle"></div>
+            </div>
+            <div class="chart-pie">
+                <h2>存钱比例</h2>
+                <div id="handler" class="chart-content" :style="chartPieStyle"></div>
+            </div>
         </div>
     </div>
 </template>
@@ -31,10 +58,15 @@ export default {
         }
     },
     computed: {
-        chartStyle: function () {
+        chartTableStyle: function () {
             let width = document.documentElement.clientWidth - 20
             return 'width: '+width+'px'
-        }
+        },
+        chartPieStyle: function () {
+            let width = document.documentElement.clientWidth - 20
+            width = width>380 ? 380 : width
+            return 'width: '+width+'px;'+'margin-top: -50px'
+        },
     },
     created: function () {
         this.getUser(this.init)
@@ -88,6 +120,7 @@ export default {
                 grid: {
                     left: '2%',
                     right: '6%',
+                    top: '20%',
                     containLabel: true
                 },
                 tooltip: {
@@ -162,6 +195,7 @@ export default {
                 grid: {
                     left: '2%',
                     right: '6%',
+                    top: '2%',
                     containLabel: true
                 },
                 tooltip: {
@@ -216,7 +250,7 @@ export default {
                     {
                         name: '金额',
                         type: 'pie',
-                        radius: ['40%', '54%'],
+                        radius: ['48%', '60%'],
                         data: data['expensesCategory']
                     }
                 ]
@@ -234,7 +268,7 @@ export default {
                     {
                         name: '金额',
                         type: 'pie',
-                        radius: ['40%', '54%'],
+                        radius: ['48%', '60%'],
                         data: data['incomeHandler']
                     }
                 ]
@@ -248,11 +282,69 @@ export default {
     @import "../assets/base.scss";
 
     .chart {
-        padding: 10px;
+        padding: 10px 10px #{($bottomNavHeight)+10}px 10px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        text-align: center;
 
-        .chart-content {
+        .summary {
             width: 100%;
-            height: 380px;
+            margin-bottom: 25px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-botween;
+
+            .summary-item {
+                color: #fff;
+                margin: 0 10px 10px 0;
+                padding: 10px 16px;
+                border-radius: 3px;
+                min-width: 120px;
+
+                .summary-attr{
+                    line-height: 1rem;
+                    font-size: 0.8rem;
+                    color: #fff;
+                }
+                .summary-num{
+                    line-height: 1.6rem;
+                    font-size: 1.2rem;
+                    color: #fff;
+                }
+            }
+            .summary-income {
+                @extend .summary-item;
+                background-color: $colorA;
+            }
+            .summary-expenses {
+                @extend .summary-item;
+                background-color: $colorB;
+            }
+            .summary-balance {
+                @extend .summary-item;
+                background-color: $colorE;
+            }
+        }
+            
+        $chartHeirht: 380;
+        .chart-table {
+            width: 100%;
+            height: #{$chartHeirht}px;
+        }
+        .chart-pie {
+            width: #{$chartHeirht}px;
+            height: #{$chartHeirht}px;
+            margin-bottom: -50px;
+        }
+        .chart-content {
+            height: #{$chartHeirht}px;
+            margin: auto;
+        }
+        h2 {
+            color: #555;
+            font-weight: 400;
+            font-size: 1.2rem;
         }
     }
 </style>

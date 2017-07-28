@@ -10857,6 +10857,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -10876,9 +10903,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     computed: {
-        chartStyle: function () {
+        chartTableStyle: function () {
             let width = document.documentElement.clientWidth - 20;
             return 'width: ' + width + 'px';
+        },
+        chartPieStyle: function () {
+            let width = document.documentElement.clientWidth - 20;
+            width = width > 380 ? 380 : width;
+            return 'width: ' + width + 'px;' + 'margin-top: -50px';
         }
     },
     created: function () {
@@ -10930,6 +10962,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 grid: {
                     left: '2%',
                     right: '6%',
+                    top: '20%',
                     containLabel: true
                 },
                 tooltip: {
@@ -10988,6 +11021,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 grid: {
                     left: '2%',
                     right: '6%',
+                    top: '2%',
                     containLabel: true
                 },
                 tooltip: {
@@ -11033,7 +11067,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 series: [{
                     name: '金额',
                     type: 'pie',
-                    radius: ['40%', '54%'],
+                    radius: ['48%', '60%'],
                     data: data['expensesCategory']
                 }]
             }, true
@@ -11049,7 +11083,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 series: [{
                     name: '金额',
                     type: 'pie',
-                    radius: ['40%', '54%'],
+                    radius: ['48%', '60%'],
                     data: data['incomeHandler']
                 }]
             }, true);
@@ -19731,7 +19765,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, ".btn[data-v-a3ccd9e2],.btn-danger[data-v-a3ccd9e2],.btn-default[data-v-a3ccd9e2],.btn-success[data-v-a3ccd9e2]{display:block;width:100%;height:2.5rem;line-height:2.5rem;margin:20px 0;border-radius:4px;border:1px solid transparent;text-align:center;-webkit-user-select:none;user-select:none}.btn-default[data-v-a3ccd9e2]{background-color:#fff;border-color:#ccc;color:#333}.btn-default[data-v-a3ccd9e2]:active{background-color:#e6e6e6;border-color:#adadad}.btn-success[data-v-a3ccd9e2]{background-color:#5cb85c;border-color:#4cae4c;color:#fff}.btn-success[data-v-a3ccd9e2]:active{background-color:#4cae4c}.btn-danger[data-v-a3ccd9e2]{background-color:#d9534f;border-color:#d43f3a;color:#fff}.btn-danger[data-v-a3ccd9e2]:active{background-color:#d43f3a}.card[data-v-a3ccd9e2]{background-color:#fff;width:100%;border-radius:3px;box-shadow:0 0 1px #ccc;overflow:hidden}.line[data-v-a3ccd9e2],.line-bottom[data-v-a3ccd9e2],.line-top[data-v-a3ccd9e2]{position:absolute;content:\" \";width:100%;height:1px;left:0;right:0;margin:auto;color:#d9d9d9;transform:scaleY(.5)}.line-top[data-v-a3ccd9e2]{top:0;transform-origin:0 0;border-top:1px solid #d9d9d9}.line-bottom[data-v-a3ccd9e2]{bottom:0;transform-origin:0 100%;border-bottom:1px solid #d9d9d9}.line-left[data-v-a3ccd9e2],.line-right[data-v-a3ccd9e2],.line-vertical[data-v-a3ccd9e2]{position:absolute;content:\" \";width:1px;height:100%;top:0;bottom:0;margin:auto;color:#d9d9d9;transform:scaleX(.5)}.line-left[data-v-a3ccd9e2]{left:0;transform-origin:0 0;border-left:1px solid #d9d9d9}.line-right[data-v-a3ccd9e2]{right:0;transform-origin:100% 0;border-right:1px solid #d9d9d9}.shake[data-v-a3ccd9e2]{animation:a-data-v-a3ccd9e2 linear .4s}@keyframes a-data-v-a3ccd9e2{0%{transform:translateX(-10px)}20%{transform:translateX(8px)}40%{transform:translateX(-6px)}60%{transform:translateX(4px)}80%{transform:translateX(-2px)}to{transform:translateX(0)}}.fade-enter-active[data-v-a3ccd9e2],.fade-leave-active[data-v-a3ccd9e2]{transition:opacity .3s}.fade-enter[data-v-a3ccd9e2],.fade-leave-active[data-v-a3ccd9e2]{opacity:0}.chart[data-v-a3ccd9e2]{padding:10px}.chart .chart-content[data-v-a3ccd9e2]{width:100%;height:380px}", ""]);
+exports.push([module.i, ".btn[data-v-a3ccd9e2],.btn-danger[data-v-a3ccd9e2],.btn-default[data-v-a3ccd9e2],.btn-success[data-v-a3ccd9e2]{display:block;width:100%;height:2.5rem;line-height:2.5rem;margin:20px 0;border-radius:4px;border:1px solid transparent;text-align:center;-webkit-user-select:none;user-select:none}.btn-default[data-v-a3ccd9e2]{background-color:#fff;border-color:#ccc;color:#333}.btn-default[data-v-a3ccd9e2]:active{background-color:#e6e6e6;border-color:#adadad}.btn-success[data-v-a3ccd9e2]{background-color:#5cb85c;border-color:#4cae4c;color:#fff}.btn-success[data-v-a3ccd9e2]:active{background-color:#4cae4c}.btn-danger[data-v-a3ccd9e2]{background-color:#d9534f;border-color:#d43f3a;color:#fff}.btn-danger[data-v-a3ccd9e2]:active{background-color:#d43f3a}.card[data-v-a3ccd9e2]{background-color:#fff;width:100%;border-radius:3px;box-shadow:0 0 1px #ccc;overflow:hidden}.line[data-v-a3ccd9e2],.line-bottom[data-v-a3ccd9e2],.line-top[data-v-a3ccd9e2]{position:absolute;content:\" \";width:100%;height:1px;left:0;right:0;margin:auto;color:#d9d9d9;transform:scaleY(.5)}.line-top[data-v-a3ccd9e2]{top:0;transform-origin:0 0;border-top:1px solid #d9d9d9}.line-bottom[data-v-a3ccd9e2]{bottom:0;transform-origin:0 100%;border-bottom:1px solid #d9d9d9}.line-left[data-v-a3ccd9e2],.line-right[data-v-a3ccd9e2],.line-vertical[data-v-a3ccd9e2]{position:absolute;content:\" \";width:1px;height:100%;top:0;bottom:0;margin:auto;color:#d9d9d9;transform:scaleX(.5)}.line-left[data-v-a3ccd9e2]{left:0;transform-origin:0 0;border-left:1px solid #d9d9d9}.line-right[data-v-a3ccd9e2]{right:0;transform-origin:100% 0;border-right:1px solid #d9d9d9}.shake[data-v-a3ccd9e2]{animation:a-data-v-a3ccd9e2 linear .4s}@keyframes a-data-v-a3ccd9e2{0%{transform:translateX(-10px)}20%{transform:translateX(8px)}40%{transform:translateX(-6px)}60%{transform:translateX(4px)}80%{transform:translateX(-2px)}to{transform:translateX(0)}}.fade-enter-active[data-v-a3ccd9e2],.fade-leave-active[data-v-a3ccd9e2]{transition:opacity .3s}.fade-enter[data-v-a3ccd9e2],.fade-leave-active[data-v-a3ccd9e2]{opacity:0}.chart[data-v-a3ccd9e2]{padding:10px 10px 58px;justify-content:center;text-align:center}.chart[data-v-a3ccd9e2],.chart .summary[data-v-a3ccd9e2]{display:flex;flex-wrap:wrap}.chart .summary[data-v-a3ccd9e2]{width:100%;margin-bottom:25px;justify-content:space-botween}.chart .summary .summary-balance[data-v-a3ccd9e2],.chart .summary .summary-expenses[data-v-a3ccd9e2],.chart .summary .summary-income[data-v-a3ccd9e2],.chart .summary .summary-item[data-v-a3ccd9e2]{color:#fff;margin:0 10px 10px 0;padding:10px 16px;border-radius:3px;min-width:120px}.chart .summary .summary-balance .summary-attr[data-v-a3ccd9e2],.chart .summary .summary-expenses .summary-attr[data-v-a3ccd9e2],.chart .summary .summary-income .summary-attr[data-v-a3ccd9e2],.chart .summary .summary-item .summary-attr[data-v-a3ccd9e2]{line-height:1rem;font-size:.8rem;color:#fff}.chart .summary .summary-balance .summary-num[data-v-a3ccd9e2],.chart .summary .summary-expenses .summary-num[data-v-a3ccd9e2],.chart .summary .summary-income .summary-num[data-v-a3ccd9e2],.chart .summary .summary-item .summary-num[data-v-a3ccd9e2]{line-height:1.6rem;font-size:1.2rem;color:#fff}.chart .summary .summary-income[data-v-a3ccd9e2]{background-color:#add536}.chart .summary .summary-expenses[data-v-a3ccd9e2]{background-color:#72a4bb}.chart .summary .summary-balance[data-v-a3ccd9e2]{background-color:#6c6669}.chart .chart-table[data-v-a3ccd9e2]{width:100%;height:380px}.chart .chart-pie[data-v-a3ccd9e2]{width:380px;height:380px;margin-bottom:-50px}.chart .chart-content[data-v-a3ccd9e2]{height:380px;margin:auto}.chart h2[data-v-a3ccd9e2]{color:#555;font-weight:400;font-size:1.2rem}", ""]);
 
 // exports
 
@@ -20903,30 +20937,58 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "chart"
   }, [_c('div', {
+    staticClass: "summary"
+  }, [_c('div', {
+    staticClass: "summary-income"
+  }, [_c('div', {
+    staticClass: "summary-attr"
+  }, [_vm._v("总收入")]), _vm._v(" "), _c('div', {
+    staticClass: "summary-num"
+  }, [_vm._v(_vm._s(_vm.chartData ? _vm.chartData.incomeTotal : 0))])]), _vm._v(" "), _c('div', {
+    staticClass: "summary-expenses"
+  }, [_c('div', {
+    staticClass: "summary-attr"
+  }, [_vm._v("总支出")]), _vm._v(" "), _c('div', {
+    staticClass: "summary-num"
+  }, [_vm._v(_vm._s(_vm.chartData ? _vm.chartData.expensesTotal : 0))])]), _vm._v(" "), _c('div', {
+    staticClass: "summary-balance"
+  }, [_c('div', {
+    staticClass: "summary-attr"
+  }, [_vm._v("结余")]), _vm._v(" "), _c('div', {
+    staticClass: "summary-num"
+  }, [_vm._v(_vm._s(_vm.chartData ? _vm.chartData.incomeTotal - _vm.chartData.expensesTotal : 0))])])]), _vm._v(" "), _c('div', {
+    staticClass: "chart-table"
+  }, [_c('h2', [_vm._v("销售统计")]), _vm._v(" "), _c('div', {
     staticClass: "chart-content",
-    style: (_vm.chartStyle),
+    style: (_vm.chartTableStyle),
     attrs: {
       "id": "monthly"
     }
-  }), _vm._v(" "), _c('div', {
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "chart-table"
+  }, [_c('h2', [_vm._v("订单统计")]), _vm._v(" "), _c('div', {
     staticClass: "chart-content",
-    style: (_vm.chartStyle),
+    style: (_vm.chartTableStyle),
     attrs: {
       "id": "balance"
     }
-  }), _vm._v(" "), _c('div', {
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "chart-pie"
+  }, [_c('h2', [_vm._v("消费分类")]), _vm._v(" "), _c('div', {
     staticClass: "chart-content",
-    style: (_vm.chartStyle),
+    style: (_vm.chartPieStyle),
     attrs: {
       "id": "category"
     }
-  }), _vm._v(" "), _c('div', {
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "chart-pie"
+  }, [_c('h2', [_vm._v("存钱比例")]), _vm._v(" "), _c('div', {
     staticClass: "chart-content",
-    style: (_vm.chartStyle),
+    style: (_vm.chartPieStyle),
     attrs: {
       "id": "handler"
     }
-  })])], 1)
+  })])])], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
