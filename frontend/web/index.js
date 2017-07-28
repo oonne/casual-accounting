@@ -10903,6 +10903,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     computed: {
+        summaryBalance: function () {
+            let vm = this;
+            if (vm.chartData) {
+                let balance = (Math.round(vm.chartData.incomeTotal * 100 - vm.chartData.expensesTotal * 100) / 100).toFixed(2);
+                return balance;
+            } else {
+                return 0;
+            }
+        },
         chartTableStyle: function () {
             let width = document.documentElement.clientWidth - 20;
             return 'width: ' + width + 'px';
@@ -20956,7 +20965,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "summary-attr"
   }, [_vm._v("结余")]), _vm._v(" "), _c('div', {
     staticClass: "summary-num"
-  }, [_vm._v(_vm._s(_vm.chartData ? _vm.chartData.incomeTotal - _vm.chartData.expensesTotal : 0))])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.summaryBalance))])])]), _vm._v(" "), _c('div', {
     staticClass: "chart-table"
   }, [_c('h2', [_vm._v("销售统计")]), _vm._v(" "), _c('div', {
     staticClass: "chart-content",

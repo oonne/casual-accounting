@@ -15,7 +15,7 @@
                 </div>
                 <div class="summary-balance">
                     <div class="summary-attr">结余</div>
-                    <div class="summary-num">{{chartData ? chartData.incomeTotal-chartData.expensesTotal : 0}}</div>
+                    <div class="summary-num">{{summaryBalance}}</div>
                 </div>
             </div>
 
@@ -58,6 +58,15 @@ export default {
         }
     },
     computed: {
+        summaryBalance: function () {
+            let vm = this
+            if (vm.chartData) {
+                let balance = (Math.round(vm.chartData.incomeTotal*100-vm.chartData.expensesTotal*100)/100).toFixed(2)
+                return balance
+            } else {
+                return 0
+            }
+        },
         chartTableStyle: function () {
             let width = document.documentElement.clientWidth - 20
             return 'width: '+width+'px'
