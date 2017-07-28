@@ -73,7 +73,7 @@ export default {
         },
         chartPieStyle: function () {
             let width = document.documentElement.clientWidth - 20
-            width = width>380 ? 380 : width
+            width = width>372 ? 372 : width
             return 'width: '+width+'px;'+'margin-top: -50px'
         },
     },
@@ -299,16 +299,16 @@ export default {
 
         .summary {
             width: 100%;
-            margin-bottom: 25px;
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
 
             .summary-item {
                 color: #fff;
-                margin: 0 10px 10px 0;
+                margin: 0 5px 20px;
                 padding: 10px 16px;
                 border-radius: 3px;
+                width: 30%;
                 min-width: 120px;
 
                 .summary-attr{
@@ -336,7 +336,7 @@ export default {
             }
         }
             
-        $chartHeirht: 380;
+        $chartHeirht: 372;
         .chart-table {
             width: 100%;
             height: #{$chartHeirht}px;
