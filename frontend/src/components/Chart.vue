@@ -302,7 +302,7 @@ export default {
             margin-bottom: 25px;
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-botween;
+            justify-content: space-between;
 
             .summary-item {
                 color: #fff;

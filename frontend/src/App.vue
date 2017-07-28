@@ -38,6 +38,7 @@ export default {
         width: 100%;
         min-height: 100%;
         font-size: 16px;
+        font-family: -apple-system-font, "Helvetica Neue", sans-serif;
         line-height: 1.6;
     }
     .icon {
