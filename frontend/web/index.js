@@ -10971,7 +10971,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 grid: {
                     left: '2%',
                     right: '6%',
-                    top: '20%',
+                    top: '10%',
                     containLabel: true
                 },
                 tooltip: {
@@ -11004,9 +11004,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                                 position: 'middle'
                             }
                         }
-                    },
-                    markPoint: {
-                        data: [{ type: 'max', name: '最高消费' }, { type: 'min', name: '最低消费' }]
                     }
                 }, {
                     name: '月存钱',

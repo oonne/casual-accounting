@@ -129,7 +129,7 @@ export default {
                 grid: {
                     left: '2%',
                     right: '6%',
-                    top: '20%',
+                    top: '10%',
                     containLabel: true
                 },
                 tooltip: {
@@ -171,12 +171,6 @@ export default {
                                     position: 'middle'
                                 }
                             }
-                        },
-                        markPoint: {
-                            data: [
-                                {type: 'max', name: '最高消费'},
-                                {type: 'min', name: '最低消费'}
-                            ]
                         }
                     },
                     {
