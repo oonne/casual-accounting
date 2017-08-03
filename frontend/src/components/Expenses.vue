@@ -8,7 +8,7 @@
             <div class="edit">
                 <div class="money_category_item" :class="'color-'+editingExpenses.expenses_category">
                     <div class="money">
-                        <input v-model.number="editingExpenses.expenses_money">
+                        <input v-model.number="editingExpenses.expenses_money" @blur="formatMoney">
                     </div>
                     <div class="category" @click.stop="changeCategory">
                         {{getCategoryName(editingExpenses.expenses_category)}}
@@ -45,7 +45,7 @@
                 <div class="edit">
                     <div class="money_category_item" :class="'color-'+editingExpenses.expenses_category">
                         <div class="money">
-                            <input v-model.number="editingExpenses.expenses_money">
+                            <input v-model.number="editingExpenses.expenses_money" @blur="formatMoney">
                         </div>
                         <div class="category" @click.stop="changeCategory">
                             {{getCategoryName(editingExpenses.expenses_category)}}
@@ -283,6 +283,9 @@ export default {
                 }
                 vm.editingExpenses.expenses_handler = id
             }
+        },
+        formatMoney: function() {
+            this.editingExpenses.expenses_money = this.editingExpenses.expenses_money.toFixed(2)
         },
         deleteExpenses: function() {
             let vm = this

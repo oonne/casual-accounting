@@ -11419,6 +11419,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 vm.editingExpenses.expenses_handler = id;
             }
         },
+        formatMoney: function () {
+            this.editingExpenses.expenses_money = this.editingExpenses.expenses_money.toFixed(2);
+        },
         deleteExpenses: function () {
             let vm = this;
             if (vm.editingIndex != null) {
@@ -11755,6 +11758,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
                 vm.editingIncome.income_handler = id;
             }
+        },
+        formatMoney: function () {
+            this.editingIncome.income_money = this.editingIncome.income_money.toFixed(2);
         },
         deleteIncome: function () {
             let vm = this;
@@ -20161,12 +20167,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.editingExpenses.expenses_money)
     },
     on: {
+      "blur": [_vm.formatMoney, function($event) {
+        _vm.$forceUpdate()
+      }],
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.editingExpenses.expenses_money = _vm._n($event.target.value)
-      },
-      "blur": function($event) {
-        _vm.$forceUpdate()
       }
     }
   })]), _vm._v(" "), _c('div', {
@@ -20323,12 +20329,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": (_vm.editingExpenses.expenses_money)
       },
       on: {
+        "blur": [_vm.formatMoney, function($event) {
+          _vm.$forceUpdate()
+        }],
         "input": function($event) {
           if ($event.target.composing) { return; }
           _vm.editingExpenses.expenses_money = _vm._n($event.target.value)
-        },
-        "blur": function($event) {
-          _vm.$forceUpdate()
         }
       }
     })]), _vm._v(" "), _c('div', {
@@ -20625,12 +20631,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.editingIncome.income_money)
     },
     on: {
+      "blur": [_vm.formatMoney, function($event) {
+        _vm.$forceUpdate()
+      }],
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.editingIncome.income_money = _vm._n($event.target.value)
-      },
-      "blur": function($event) {
-        _vm.$forceUpdate()
       }
     }
   })]), _vm._v(" "), _c('div', {
@@ -20774,12 +20780,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": (_vm.editingIncome.income_money)
       },
       on: {
+        "blur": [_vm.formatMoney, function($event) {
+          _vm.$forceUpdate()
+        }],
         "input": function($event) {
           if ($event.target.composing) { return; }
           _vm.editingIncome.income_money = _vm._n($event.target.value)
-        },
-        "blur": function($event) {
-          _vm.$forceUpdate()
         }
       }
     })]), _vm._v(" "), _c('div', {

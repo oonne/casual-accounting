@@ -8,7 +8,7 @@
             <div class="edit">
                 <div class="money_handler_item" :class="'color-'+editingIncome.income_handler">
                     <div class="money">
-                        <input v-model.number="editingIncome.income_money">
+                        <input v-model.number="editingIncome.income_money" @blur="formatMoney">
                     </div>
                     <div class="handler" @click.stop="changeHandler">
                         {{getHandlerName(editingIncome.income_handler)}}
@@ -40,7 +40,7 @@
                 <div class="edit">
                     <div class="money_handler_item" :class="'color-'+editingIncome.income_handler">
                         <div class="money">
-                            <input v-model.number="editingIncome.income_money">
+                            <input v-model.number="editingIncome.income_money" @blur="formatMoney">
                         </div>
                         <div class="handler" @click.stop="changeHandler">
                             {{getHandlerName(editingIncome.income_handler)}}
@@ -243,6 +243,9 @@ export default {
                 }
                 vm.editingIncome.income_handler = id
             }
+        },
+        formatMoney: function() {
+            this.editingIncome.income_money = this.editingIncome.income_money.toFixed(2)
         },
         deleteIncome: function() {
             let vm = this
