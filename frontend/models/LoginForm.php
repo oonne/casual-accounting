@@ -30,11 +30,8 @@ class LoginForm extends Model
             [['username'], 'match', 'pattern' => '/^[A-Za-z_-][A-Za-z0-9_-]+$/'],
             [['username'], 'string', 'max' => 32],
 
-            [['password'], 'required', 'on' => ['creation']],
-            [['password'], 'trim'],
             [['password'], 'match', 'pattern' => '/^\S+$/'],
             [['password'], 'string', 'length' => [6, 32]],
-            [['password'], 'default'],
             [['password'], 'validatePassword']
         ];
     }
