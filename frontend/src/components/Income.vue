@@ -386,7 +386,9 @@ export default {
                 input {
                     color: #fff;
                     font-size: 2rem;   
-                    line-height: 64px;
+                    height: 64px;   
+                    line-height: 40px;
+                    padding: 12px 2px;
                 }
             }
             .handler {
@@ -408,7 +410,9 @@ export default {
                     text-align: center;
                     color: #fff;   
                     font-size: 1.1rem;   
-                    line-height: 60px;
+                    height: 60px;
+                    line-height: 36px;
+                    padding: 12px 2px;
                 }
             }
         }
