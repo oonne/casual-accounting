@@ -17,7 +17,6 @@ export default {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        user-select: auto;
         font-size: 16px;
         -webkit-tap-highlight-color: rgba(0,0,0,0);
     }
