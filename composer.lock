@@ -58,6 +58,7 @@
         },
         {
             "name": "bower-asset/echarts",
+<<<<<<< HEAD
             "version": "4.0.4",
             "source": {
                 "type": "git",
@@ -68,12 +69,25 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/ecomfe/echarts/zipball/871af5ec38649984ca326ce689603ce8f51ec85c",
                 "reference": "871af5ec38649984ca326ce689603ce8f51ec85c",
+=======
+            "version": "3.8.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ecomfe/echarts.git",
+                "reference": "eb95d20f527c5e91f98579647c6343b07b4f8c6e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ecomfe/echarts/zipball/eb95d20f527c5e91f98579647c6343b07b4f8c6e",
+                "reference": "eb95d20f527c5e91f98579647c6343b07b4f8c6e",
+>>>>>>> 984168ad95eb34edce8d8e852ffbbebf639a1255
                 "shasum": ""
             },
             "type": "bower-asset-library"
         },
         {
             "name": "bower-asset/inputmask",
+<<<<<<< HEAD
             "version": "3.3.11",
             "source": {
                 "type": "git",
@@ -84,6 +98,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/RobinHerbots/Inputmask/zipball/5e670ad62f50c738388d4dcec78d2888505ad77b",
                 "reference": "5e670ad62f50c738388d4dcec78d2888505ad77b",
+=======
+            "version": "3.3.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/RobinHerbots/Inputmask.git",
+                "reference": "14873e5775964275d13621cbe2b52e4448af3707"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/RobinHerbots/Inputmask/zipball/14873e5775964275d13621cbe2b52e4448af3707",
+                "reference": "14873e5775964275d13621cbe2b52e4448af3707",
+>>>>>>> 984168ad95eb34edce8d8e852ffbbebf639a1255
                 "shasum": ""
             },
             "require": {
@@ -130,7 +156,11 @@
                 "mask",
                 "plugins"
             ],
+<<<<<<< HEAD
             "time": "2017-11-21T11:46:23+00:00"
+=======
+            "time": "2017-10-16T09:33:03+00:00"
+>>>>>>> 984168ad95eb34edce8d8e852ffbbebf639a1255
         },
         {
             "name": "bower-asset/jquery",
@@ -166,6 +196,7 @@
         },
         {
             "name": "bower-asset/jquery-ui",
+<<<<<<< HEAD
             "version": "1.12.1",
             "source": {
                 "type": "git",
@@ -176,6 +207,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/components/jqueryui/zipball/44ecf3794cc56b65954cc19737234a3119d036cc",
                 "reference": "44ecf3794cc56b65954cc19737234a3119d036cc",
+=======
+            "version": "1.11.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/components/jqueryui.git",
+                "reference": "c34f8dbf3ba57b3784b93f26119f436c0e8288e1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/components/jqueryui/zipball/c34f8dbf3ba57b3784b93f26119f436c0e8288e1",
+                "reference": "c34f8dbf3ba57b3784b93f26119f436c0e8288e1",
+>>>>>>> 984168ad95eb34edce8d8e852ffbbebf639a1255
                 "shasum": ""
             },
             "require": {
@@ -187,11 +230,15 @@
                     "jquery-ui.js"
                 ],
                 "bower-asset-ignore": []
+<<<<<<< HEAD
             },
             "license": [
                 "MIT"
             ],
             "time": "2016-09-16T05:47:55+00:00"
+=======
+            }
+>>>>>>> 984168ad95eb34edce8d8e852ffbbebf639a1255
         },
         {
             "name": "bower-asset/punycode",
@@ -827,6 +874,7 @@
         },
         {
             "name": "onokumus/metismenu",
+<<<<<<< HEAD
             "version": "v2.7.4",
             "source": {
                 "type": "git",
@@ -837,6 +885,18 @@
                 "type": "zip",
                 "url": "https://files.phpcomposer.com/files/onokumus/metismenu/d10aefc23f873405b883dac72ef72cb115d1540e.zip",
                 "reference": "d10aefc23f873405b883dac72ef72cb115d1540e",
+=======
+            "version": "v2.7.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/onokumus/metismenu.git",
+                "reference": "524e4d347d1f5168bdb5ba3059700a37110ae931"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/onokumus/metismenu/524e4d347d1f5168bdb5ba3059700a37110ae931.zip",
+                "reference": "524e4d347d1f5168bdb5ba3059700a37110ae931",
+>>>>>>> 984168ad95eb34edce8d8e852ffbbebf639a1255
                 "shasum": ""
             },
             "suggest": {
@@ -865,7 +925,11 @@
                 "plugin",
                 "web"
             ],
+<<<<<<< HEAD
             "time": "2018-02-16T20:06:17+00:00"
+=======
+            "time": "2017-10-30T18:48:24+00:00"
+>>>>>>> 984168ad95eb34edce8d8e852ffbbebf639a1255
         },
         {
             "name": "oonne/yii2-sortable-grid-view",
@@ -967,6 +1031,7 @@
         },
         {
             "name": "yiisoft/yii2",
+<<<<<<< HEAD
             "version": "2.0.14.1",
             "source": {
                 "type": "git",
@@ -977,6 +1042,18 @@
                 "type": "zip",
                 "url": "https://files.phpcomposer.com/files/yiisoft/yii2-framework/d99969394c66dc3606134af092b8ec561ea5d7c6.zip",
                 "reference": "d99969394c66dc3606134af092b8ec561ea5d7c6",
+=======
+            "version": "2.0.13.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yiisoft/yii2-framework.git",
+                "reference": "7af96d8da5ea3e9a5dd05d0e734b21c5726a6ddf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/yiisoft/yii2-framework/7af96d8da5ea3e9a5dd05d0e734b21c5726a6ddf.zip",
+                "reference": "7af96d8da5ea3e9a5dd05d0e734b21c5726a6ddf",
+>>>>>>> 984168ad95eb34edce8d8e852ffbbebf639a1255
                 "shasum": ""
             },
             "require": {
@@ -1063,6 +1140,7 @@
                 "framework",
                 "yii2"
             ],
+<<<<<<< HEAD
             "time": "2018-02-24T20:23:06+00:00"
         },
         {
@@ -1077,6 +1155,22 @@
                 "type": "zip",
                 "url": "https://files.phpcomposer.com/files/yiisoft/yii2-bootstrap/3f49c47924bb9fa5363c3fc7b073d954168cf438.zip",
                 "reference": "3f49c47924bb9fa5363c3fc7b073d954168cf438",
+=======
+            "time": "2017-11-14T11:08:21+00:00"
+        },
+        {
+            "name": "yiisoft/yii2-bootstrap",
+            "version": "2.0.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yiisoft/yii2-bootstrap.git",
+                "reference": "02a54d868343ed11d02f0f0f8cbbecb590e0cb3f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/yiisoft/yii2-bootstrap/02a54d868343ed11d02f0f0f8cbbecb590e0cb3f.zip",
+                "reference": "02a54d868343ed11d02f0f0f8cbbecb590e0cb3f",
+>>>>>>> 984168ad95eb34edce8d8e852ffbbebf639a1255
                 "shasum": ""
             },
             "require": {
@@ -1123,7 +1217,11 @@
                 "bootstrap",
                 "yii2"
             ],
+<<<<<<< HEAD
             "time": "2018-02-16T10:41:52+00:00"
+=======
+            "time": "2017-10-09T19:48:22+00:00"
+>>>>>>> 984168ad95eb34edce8d8e852ffbbebf639a1255
         },
         {
             "name": "yiisoft/yii2-composer",
@@ -1391,6 +1489,7 @@
         },
         {
             "name": "yiisoft/yii2-debug",
+<<<<<<< HEAD
             "version": "2.0.13",
             "source": {
                 "type": "git",
@@ -1401,6 +1500,18 @@
                 "type": "zip",
                 "url": "https://files.phpcomposer.com/files/yiisoft/yii2-debug/b37f414959c2fafefb332020b42037cd17c1cb7f.zip",
                 "reference": "b37f414959c2fafefb332020b42037cd17c1cb7f",
+=======
+            "version": "2.0.12",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yiisoft/yii2-debug.git",
+                "reference": "93082f46d3568b4431a26f264e0d16a12c42bd50"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/yiisoft/yii2-debug/93082f46d3568b4431a26f264e0d16a12c42bd50.zip",
+                "reference": "93082f46d3568b4431a26f264e0d16a12c42bd50",
+>>>>>>> 984168ad95eb34edce8d8e852ffbbebf639a1255
                 "shasum": ""
             },
             "require": {
@@ -1434,7 +1545,11 @@
                 "debugger",
                 "yii2"
             ],
+<<<<<<< HEAD
             "time": "2017-12-05T07:36:23+00:00"
+=======
+            "time": "2017-10-09T20:30:01+00:00"
+>>>>>>> 984168ad95eb34edce8d8e852ffbbebf639a1255
         },
         {
             "name": "yiisoft/yii2-faker",

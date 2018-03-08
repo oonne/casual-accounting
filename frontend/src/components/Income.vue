@@ -14,7 +14,7 @@
                         {{getHandlerName(editingIncome.income_handler)}}
                     </div>
                     <div class="item">
-                        <input v-model.trim="editingIncome.income_item">
+                        <input v-model.trim="editingIncome.income_item" placeholder="内容">
                     </div>
                 </div>
                 <div class="date">
@@ -413,6 +413,9 @@ export default {
                     height: 60px;
                     line-height: 36px;
                     padding: 12px 2px;
+                }
+                input::-webkit-input-placeholder {
+                    color: #dfdfdf;
                 }
             }
         }
