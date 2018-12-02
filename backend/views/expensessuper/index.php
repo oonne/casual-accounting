@@ -55,6 +55,7 @@ $this->title = '消费记录';
                     'filter' => Category::getKeyValuePairs(),
                     'filterInputOptions' => ['class' => 'form-control input-sm'],
                     'headerOptions' => ['class' => 'col-md-1'],
+                    'format' => 'html',
                     'value' => function ($model, $key, $index, $column) {
                         return $model->category ? $model->category->category_name : Html::tag('b', '分类错误', ['class' => 'text-danger']);
                     }
@@ -64,6 +65,7 @@ $this->title = '消费记录';
                     'filter' => Handler::getKeyValuePairs(),
                     'filterInputOptions' => ['class' => 'form-control input-sm'],
                     'headerOptions' => ['class' => 'col-md-1'],
+                    'format' => 'html',
                     'value' => function ($model, $key, $index, $column) {
                         return $model->handler ? $model->handler->handler_name : Html::tag('b', '经手人错误', ['class' => 'text-danger']);
                     }
