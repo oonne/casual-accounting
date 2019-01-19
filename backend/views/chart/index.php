@@ -36,7 +36,7 @@ $this->title = '统计图表';
             ],
             'pluginOptions' => [
                 'option' => [
-                    'color' => ['#72a4bb', '#add536'],
+                    'color' => ['#d15346', '#add536'],
                     'grid' => [
                         'left' => '2%',
                         'right' => '6%',
@@ -181,7 +181,7 @@ $this->title = '统计图表';
             ],
             'pluginOptions' => [
                 'option' => [
-                    'color' => ['#a0c824', '#72a4bb', '#6c6669'],
+                    'color' => ['#d15346', '#72a4bb', '#a0c824', '#c18c30'],
                     'tooltip' => [
                         'trigger' => 'item',
                         'formatter' => '{a} <br/>{b}: {c} ({d}%)'
