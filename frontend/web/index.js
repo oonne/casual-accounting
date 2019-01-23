@@ -12768,14 +12768,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     }
                 }).then(function (data) {
                     vm.loading = false;
-                    if (data) {
-                        if (!data.Ret) {
-                            vm.expensesList.unshift(vm.editingExpenses);
-                            vm.editingIndex = null;
-                        } else {
-                            vm.errorMsg = vm.getFirstAttr(data.Data.errors);
-                            console.warn(data.Data.errors);
-                        }
+                    if (data && data.Ret == 0) {
+                        vm.editingExpenses.id = data.Data.id;
+                        vm.expensesList.unshift(vm.editingExpenses);
+                        vm.editingIndex = null;
+                    } else {
+                        vm.errorMsg = vm.getFirstAttr(data.Data.errors);
+                        console.warn(data.Data.errors);
                     }
                 }).catch(function (error) {
                     vm.loading = false;
@@ -12850,15 +12849,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     }
                 }).then(function (data) {
                     vm.loading = false;
-                    if (data) {
-                        if (!data.Ret) {
-                            console.log('OK');
-                            vm.expensesList.splice(vm.editingIndex, 1);
-                            vm.editingIndex = null;
-                        } else {
-                            vm.errorMsg = vm.getFirstAttr(data.Data.errors);
-                            console.warn(data.Data.errors);
-                        }
+                    if (data && data.Ret == 0) {
+                        vm.expensesList.splice(vm.editingIndex, 1);
+                        vm.editingIndex = null;
+                    } else {
+                        vm.errorMsg = vm.getFirstAttr(data.Data.errors);
+                        console.warn(data.Data.errors);
                     }
                 }).catch(function (error) {
                     vm.loading = false;
@@ -12891,14 +12887,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     }
                 }).then(function (data) {
                     vm.loading = false;
-                    if (data) {
-                        if (!data.Ret) {
-                            vm.expensesList[vm.editingIndex] = vm.editingExpenses;
-                            vm.editingIndex = null;
-                        } else {
-                            vm.errorMsg = vm.getFirstAttr(data.Data.errors);
-                            console.warn(data.Data.errors);
-                        }
+                    if (data && data.Ret == 0) {
+                        vm.expensesList[vm.editingIndex] = vm.editingExpenses;
+                        vm.editingIndex = null;
+                    } else {
+                        vm.errorMsg = vm.getFirstAttr(data.Data.errors);
+                        console.warn(data.Data.errors);
                     }
                 }).catch(function (error) {
                     vm.loading = false;
@@ -13124,14 +13118,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     }
                 }).then(function (data) {
                     vm.loading = false;
-                    if (data) {
-                        if (!data.Ret) {
-                            vm.incomeList.unshift(vm.editingIncome);
-                            vm.editingIndex = null;
-                        } else {
-                            vm.errorMsg = vm.getFirstAttr(data.Data.errors);
-                            console.warn(data.Data.errors);
-                        }
+                    if (data && data.Ret == 0) {
+                        vm.editingIncome.id = data.Data.id;
+                        vm.incomeList.unshift(vm.editingIncome);
+                        vm.editingIndex = null;
+                    } else {
+                        vm.errorMsg = vm.getFirstAttr(data.Data.errors);
+                        console.warn(data.Data.errors);
                     }
                 }).catch(function (error) {
                     vm.loading = false;
@@ -13190,15 +13183,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     }
                 }).then(function (data) {
                     vm.loading = false;
-                    if (data) {
-                        if (!data.Ret) {
-                            console.log('OK');
-                            vm.incomeList.splice(vm.editingIndex, 1);
-                            vm.editingIndex = null;
-                        } else {
-                            vm.errorMsg = vm.getFirstAttr(data.Data.errors);
-                            console.warn(data.Data.errors);
-                        }
+                    if (data && data.Ret == 0) {
+                        vm.incomeList.splice(vm.editingIndex, 1);
+                        vm.editingIndex = null;
+                    } else {
+                        vm.errorMsg = vm.getFirstAttr(data.Data.errors);
+                        console.warn(data.Data.errors);
                     }
                 }).catch(function (error) {
                     vm.loading = false;
@@ -13231,14 +13221,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     }
                 }).then(function (data) {
                     vm.loading = false;
-                    if (data) {
-                        if (!data.Ret) {
-                            vm.incomeList[vm.editingIndex] = vm.editingIncome;
-                            vm.editingIndex = null;
-                        } else {
-                            vm.errorMsg = vm.getFirstAttr(data.Data.errors);
-                            console.warn(data.Data.errors);
-                        }
+                    if (data && data.Ret == 0) {
+                        vm.incomeList[vm.editingIndex] = vm.editingIncome;
+                        vm.editingIndex = null;
+                    } else {
+                        vm.errorMsg = vm.getFirstAttr(data.Data.errors);
+                        console.warn(data.Data.errors);
                     }
                 }).catch(function (error) {
                     vm.loading = false;

@@ -227,14 +227,13 @@ export default {
                 })
                 .then(function (data) {
                     vm.loading = false
-                    if (data) {
-                        if (!data.Ret) {
-                            vm.expensesList.unshift(vm.editingExpenses)
-                            vm.editingIndex = null
-                        } else {
-                            vm.errorMsg = vm.getFirstAttr(data.Data.errors)
-                            console.warn(data.Data.errors)
-                        }
+                    if (data && data.Ret == 0) {
+                        vm.editingExpenses.id = data.Data.id
+                        vm.expensesList.unshift(vm.editingExpenses)
+                        vm.editingIndex = null
+                    } else {
+                        vm.errorMsg = vm.getFirstAttr(data.Data.errors)
+                        console.warn(data.Data.errors)
                     }
                 })
                 .catch(function (error) {
@@ -312,15 +311,12 @@ export default {
                 })
                 .then(function (data) {
                     vm.loading = false
-                    if (data) {
-                        if (!data.Ret) {
-                            console.log('OK')
-                            vm.expensesList.splice(vm.editingIndex, 1)
-                            vm.editingIndex = null
-                        } else {
-                            vm.errorMsg = vm.getFirstAttr(data.Data.errors)
-                            console.warn(data.Data.errors)
-                        }
+                    if (data && data.Ret == 0) {
+                        vm.expensesList.splice(vm.editingIndex, 1)
+                        vm.editingIndex = null
+                    } else {
+                        vm.errorMsg = vm.getFirstAttr(data.Data.errors)
+                        console.warn(data.Data.errors)
                     }
                 })
                 .catch(function (error) {
@@ -356,14 +352,12 @@ export default {
                 })
                 .then(function (data) {
                     vm.loading = false
-                    if (data) {
-                        if (!data.Ret) {
-                            vm.expensesList[vm.editingIndex] = vm.editingExpenses
-                            vm.editingIndex = null
-                        } else {
-                            vm.errorMsg = vm.getFirstAttr(data.Data.errors)
-                            console.warn(data.Data.errors)
-                        }
+                    if (data && data.Ret == 0) {
+                        vm.expensesList[vm.editingIndex] = vm.editingExpenses
+                        vm.editingIndex = null
+                    } else {
+                        vm.errorMsg = vm.getFirstAttr(data.Data.errors)
+                        console.warn(data.Data.errors)
                     }
                 })
                 .catch(function (error) {

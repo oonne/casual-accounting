@@ -203,14 +203,13 @@ export default {
                 })
                 .then(function (data) {
                     vm.loading = false
-                    if (data) {
-                        if (!data.Ret) {
-                            vm.incomeList.unshift(vm.editingIncome)
-                            vm.editingIndex = null
-                        } else {
-                            vm.errorMsg = vm.getFirstAttr(data.Data.errors)
-                            console.warn(data.Data.errors)
-                        }
+                    if (data && data.Ret == 0) {
+                        vm.editingIncome.id = data.Data.id
+                        vm.incomeList.unshift(vm.editingIncome)
+                        vm.editingIndex = null
+                    } else {
+                        vm.errorMsg = vm.getFirstAttr(data.Data.errors)
+                        console.warn(data.Data.errors)
                     }
                 })
                 .catch(function (error) {
@@ -272,15 +271,12 @@ export default {
                 })
                 .then(function (data) {
                     vm.loading = false
-                    if (data) {
-                        if (!data.Ret) {
-                            console.log('OK')
-                            vm.incomeList.splice(vm.editingIndex, 1)
-                            vm.editingIndex = null
-                        } else {
-                            vm.errorMsg = vm.getFirstAttr(data.Data.errors)
-                            console.warn(data.Data.errors)
-                        }
+                    if (data && data.Ret == 0) {
+                        vm.incomeList.splice(vm.editingIndex, 1)
+                        vm.editingIndex = null
+                    } else {
+                        vm.errorMsg = vm.getFirstAttr(data.Data.errors)
+                        console.warn(data.Data.errors)
                     }
                 })
                 .catch(function (error) {
@@ -316,14 +312,12 @@ export default {
                 })
                 .then(function (data) {
                     vm.loading = false
-                    if (data) {
-                        if (!data.Ret) {
-                            vm.incomeList[vm.editingIndex] = vm.editingIncome
-                            vm.editingIndex = null
-                        } else {
-                            vm.errorMsg = vm.getFirstAttr(data.Data.errors)
-                            console.warn(data.Data.errors)
-                        }
+                    if (data && data.Ret == 0) {
+                        vm.incomeList[vm.editingIndex] = vm.editingIncome
+                        vm.editingIndex = null
+                    } else {
+                        vm.errorMsg = vm.getFirstAttr(data.Data.errors)
+                        console.warn(data.Data.errors)
                     }
                 })
                 .catch(function (error) {
