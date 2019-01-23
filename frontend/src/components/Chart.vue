@@ -125,7 +125,7 @@ export default {
             // monthly expenses & monthly income
             let monthChart = echarts.init(document.getElementById('monthly'))
             monthChart.setOption({
-                color: ['#72a4bb', '#add536'],
+                color: ['#d15346', '#add536'],
                 grid: {
                     left: '2%',
                     right: '6%',
@@ -244,7 +244,7 @@ export default {
             // expenses category
             let categoryChart = echarts.init(document.getElementById('category'))
             categoryChart.setOption({
-                color: ['#a0c824', '#72a4bb', '#6c6669'],
+                color: ['#d15346', '#72a4bb', '#a0c824', '#c18c30'],
                 tooltip: {
                     trigger: 'item',
                     formatter: '{a} <br/>{b}: {c} ({d}%)'
@@ -299,11 +299,11 @@ export default {
 
             .summary-item {
                 color: #fff;
-                margin: 0 5px 20px;
+                margin: 0 0 20px;
                 padding: 10px 16px;
                 border-radius: 3px;
                 width: 30%;
-                min-width: 120px;
+                // min-width: 120px;
 
                 .summary-attr{
                     line-height: 1rem;
@@ -312,7 +312,7 @@ export default {
                 }
                 .summary-num{
                     line-height: 1.6rem;
-                    font-size: 1.2rem;
+                    font-size: 1.1rem;
                     color: #fff;
                 }
             }
