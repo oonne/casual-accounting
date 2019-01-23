@@ -41,7 +41,7 @@ class IncomeController extends Controller
                 if ($model->save(false)) {
                     return [
                         'Ret' => 0,
-                        'Data' => '添加成功'
+                        'Data' => $model->toArray(['id', 'income_date', 'income_handler', 'income_item', 'income_money', 'income_remark'])
                     ];
                 } else {
                     return [

@@ -81,7 +81,7 @@ class ExpensesController extends Controller
                 if ($model->save(false)) {
                     return [
                         'Ret' => 0,
-                        'Data' => '添加成功'
+                        'Data' => $model->toArray(['id', 'expenses_category', 'expenses_date', 'expenses_handler', 'expenses_item', 'expenses_money', 'expenses_remark'])
                     ];
                 } else {
                     return [
