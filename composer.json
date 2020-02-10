@@ -15,13 +15,13 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=5.4.0",
-        "yiisoft/yii2": "~2.0.15.1",
+        "yiisoft/yii2": "2.0.31",
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
         "kartik-v/yii2-datecontrol": "*",
         "kartik-v/yii2-date-range": "1.6.7",
         "kartik-v/yii2-widget-datepicker": "*",
-        "onokumus/metismenu": "*",
+        "onokumus/metismenu": "2.7.4",
         "nterms/yii2-pagesize-widget": "*",
         "oonne/yii2-sortable-grid-view": "*",
         "daixianceng/yii2-echarts": "*"
